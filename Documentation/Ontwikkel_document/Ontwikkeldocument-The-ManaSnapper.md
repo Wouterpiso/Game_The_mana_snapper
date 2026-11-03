@@ -44,25 +44,47 @@ Team: The ManaEngineer
 
 ## Inleiding
 
+Het doel van het project is het maken van **The ManaSnapper**. een draagbaar apparaat waarmee gebruikers fysieke kaarten kunnen scannen en beheren in een digitale collectie. Het apparaat beschikt hiervoor over een camera en een scherm met een stylus. Na het herkennen van een kaart worden de bijbehorende kaartgegevens opgehaald, waarna de gebruiker de kaart aan de collectie kan toevoegen, de collectie kan bekijken of kaarten kan verwijderen.
 
-
-``Van wie komt de opdracht? Waar gaat de opdracht in hoofdlijnen over? Leg verder uit dat dit document bedoeld is om op heldere wijze overzicht en samenhang te geven voor het team tijdens het werken aan het project, en na afloop als overdrachts-document voor eventuele follow-ups.``
+Naast het fysieke apparaat wordt een computer app voorzien. De collectie kan tussen het apparaat en de applicatie worden geïmporteerd en geëxporteerd, zodat de gebruiker de kaartgegevens ook op een computer kan beheren. In de verdere uitwerking zijn onder andere het maken en beheren van decks, het testen van decks, een kaart van de dag en mogelijke uitbreidingen. De MVP richt zich op het fyzieke apperaat en de data kunnen overzetten op de computer (zonder app).
 
 ## Leeswijzer
 
+Dit ontwikkeldocument beschrijft de ontwikkeling van The ManaSnapper van aanleiding en uitgangspunten tot ontwerp, realisatie en evaluatie.
+
+In het hoofdstuk **Uitgangspunten** wordt beschreven welke uitgangspunten de basis vormen voor de requirements. Hierbij worden de systeemcontext, de betrokken stakeholders en de belangrijkste key drivers van The ManaSnapper behandeld.
+
 ``leg uit wat er in de hoogste-niveau-hoofdstukken wordt behandeld en hoe deze onderwerpen met elkaar in verband staan``
+
+``zal gemaakt worden per hoofdstuk zodra ze klaar zijn - wouter``
 
 ## Uitgangspunten
 
-``Leg uit dat dit hoofdstuk de uitgangspunten voor de requirements inventariseert. Verwijs naar een appendix met genoteerde input (verslag van speech, gespreksverslagen) van de opdrachtgever - (de echte, tijdens de kickoff-meeting of diens vervanger (Marius,Bart) erna) ``
+Dit hoofdstuk beschrijft de uitgangspunten voor de requirements van The ManaSnapper. Hierbij worden de systeemcontext, de systeemgrenzen, de betrokken stakeholders en de belangrijkste key drivers behandeld. Deze uitgangspunten zijn gebaseerd op de projectinformatie en de input van de opdrachtgevers.
 
 ### Systeem Context
 
-``Modelleer en beschrijf de Systeem Context – gebruik een systeem context diagram. Onderdelen van binnen je System of Interest horen er niet in thuis. Een decompositie van je systeem ook niet. Zijn er geen belangrijke actoren vergeten? Tip: maak eerst met je team een mindmap (zie appendix)``
+![Systeem context diagram](../../Media/Systeem_context_diagram.png)
+
+The ManaSnapper is het systeem binnen de systeemgrens. Het systeem bestaat uit het fysieke apparaat en de bijbehorende functionaliteit voor het beheren van kaartgegevens. De gebruiker bedient The ManaSnapper, voert keuzes in en biedt fysieke kaarten aan om te scannen. 
+
+The ManaSnapper gebruikt Scryfall als externe bron voor kaartgegevens via de gratis api. Nadat een kaart is herkend, worden de bijbehorende gegevens uit Scryfall opgehaald en gebruikt binnen de collectie.
+
+Daarnaast wisselt The ManaSnapper collectiegegevens uit met de computer app. Hierdoor kan de gebruiker een collectie vanaf het apparaat naar de app exporteren en bestaande collectiegegevens vanuit de app importeren.
 
 ### Identificatie en prioritering van Key Drivers
 
-``Voor semester 3 beperken we ons tot 3 stakeholders: opdrachtgever, klant en gebruiker. Geef middels een tabel een overzicht van de key drivers weer. Belangrijkere key drivers staan hoger in de tabel. Er is ook een kolom die aangeeft voor welke stakeholder het van toepassing is, en een kolom voor omschrijving. Licht de ordening van de key drivers toe in de begeleidende tekst.``
+| Prioriteit | Key driver | Stakeholder | Omschrijving |
+|---|---|---|---|
+| 1 | Werkende MVP | Opdrachtgever | De minimale versie van The ManaSnapper moet de afgesproken kernfunctionaliteiten bevatten: kaarten scannen, kaartgegevens ophalen, kaarten opslaan in een collectie, de collectie bekijken en kaarten verwijderen. |
+| 2 | Betrouwbare kaartherkenning en kaartgegevens | Gebruiker, opdrachtgever | Een fysieke kaart moet correct herkend worden en de bijbehorende gegevens moeten betrouwbaar uit Scryfall worden opgehaald. Bij een mislukte herkenning of ontbrekende gegevens moet het systeem dit duidelijk melden. |
+| 3 | Eenvoudige bediening | Gebruiker, klant | De gebruiker moet het apparaat en de computerapplicatie zonder onnodige complexiteit kunnen bedienen. De belangrijkste handelingen, zoals scannen, bekijken, toevoegen en verwijderen, moeten duidelijk en logisch verlopen. |
+| 4 | Beheer van de collectie | Gebruiker, klant | De gebruiker moet de opgeslagen kaarten kunnen bekijken, toevoegen en verwijderen. De collectie moet na wijzigingen correct worden opgeslagen, zodat kaartgegevens niet onbedoeld verloren gaan. |
+| 5 | Uitwisselbaarheid van gegevens | Gebruiker, opdrachtgever | Collectiegegevens moeten tussen The ManaSnapper en de computerapplicatie kunnen worden geïmporteerd en geëxporteerd. Hierdoor kan de gebruiker de collectie op beide systemen beheren en bewaren. |
+| 6 | Draagbaarheid en zelfstandigheid | Gebruiker, klant | Het fysieke apparaat moet zelfstandig gebruikt kunnen worden en over een oplaadbare voeding beschikken. Hierdoor is de gebruiker niet voortdurend afhankelijk van een vaste computer of voedingskabel. |
+| 7 | Uitbreidbaarheid | Opdrachtgever, klant | De opzet van het systeem moet toekomstige functies, zoals decks beheren, playtesten en een kaart van de dag, mogelijk maken zonder de basisfunctionaliteiten opnieuw te moeten ontwerpen. |
+
+De werkende MVP staat bovenaan omdat het project zonder deze kernfunctionaliteiten zijn hoofddoel niet bereikt. Betrouwbare herkenning en eenvoudige bediening volgen daarna, omdat een apparaat pas waardevol is wanneer het de juiste kaartgegevens oplevert en begrijpelijk te gebruiken is. Collectiebeheer en gegevensuitwisseling ondersteunen de volledige gebruikersworkflow. Draagbaarheid en uitbreidbaarheid zijn belangrijk voor de kwaliteit en toekomstige waarde van het product, maar zijn voor de eerste MVP minder bepalend dan de kernfunctionaliteiten.
 
 ## Requirements
 
@@ -70,27 +92,31 @@ Team: The ManaEngineer
 
 ### Functionele Requirements
 
-``Beschrijf de relevante functionele requirements``
-
-| Naam                | ``F01 - Houvast``                                       |
-| ------------------- | ------------------------------------------------------- |
-| Omschrijving        |                                                         |
-| Rationale           | ``reden, verband met key driver of parent-requirement`` |
-| Business prioriteit | ``MoSCoW``                                              |
-
-``etc..``
+| Naam | Omschrijving | Rationale | Business prioriteit |
+|---|---|---|---|
+| **F01 - Navigeren door het systeem** | Het systeem toont een hoofdmenu waaruit de beschikbare functies kunnen worden gestart. Vanuit iedere functie kan het systeem via een terugknop of annuleeractie terugkeren naar het hoofdmenu of het bijbehorende bovenliggende menu. | Een duidelijke navigatiestructuur ondersteunt de key driver **Eenvoudige bediening** en voorkomt dat de gebruiker in een functie blijft vastzitten. | **Must** |
+| **F02 - Kaart identificeren** | Het systeem gebruikt de camera om een aangeboden fysieke kaart te scannen en de kaartnaam te identificeren. | Kaarten scannen is een kernfunctionaliteit van de MVP en ondersteunt de key driver **Werkende MVP**. | **Must** |
+| **F03 - Kaartgegevens ophalen** | Het systeem zoekt de geïdentificeerde kaart op via de Scryfall API en ontvangt de bijbehorende kaartgegevens. | Betrouwbare kaartgegevens zijn nodig om een kaart correct te tonen en aan de collectie toe te voegen. Dit ondersteunt de key driver **Betrouwbare kaartherkenning en kaartgegevens**. | **Must** |
+| **F04 - Kaartgegevens tonen** | Het systeem toont de opgehaalde kaartgegevens en biedt de mogelijkheid om het toevoegen aan de collectie te bevestigen of te annuleren. | De gebruiker moet kunnen controleren of de herkende kaart juist is voordat de collectie wordt gewijzigd. | **Must** |
+| **F05 - Kaart aan collectie toevoegen** | Het systeem voegt een bevestigde kaart toe aan de collectie en slaat de bijgewerkte collectie op. | Het opslaan van herkende kaarten vormt de kern van het kaartbeheer en ondersteunt de key drivers **Werkende MVP** en **Beheer van de collectie**. | **Must** |
+| **F06 - Collectie bekijken** | Het systeem toont de opgeslagen kaarten in de collectie en kan de details van een geselecteerde kaart tonen. | De gebruiker moet de opgeslagen collectie kunnen controleren en beheren. | **Must** |
+| **F07 - Kaart uit collectie verwijderen** | Het systeem verwijdert een geselecteerde kaart pas na bevestiging en slaat de bijgewerkte collectie op. | De gebruiker moet de collectie kunnen beheren en ongewenste kaarten kunnen verwijderen. | **Must** |
+| **F08 - Collectie importeren** | Het systeem leest een geldig collectiebestand vanaf een computer in, controleert het bestand en voegt de kaartgegevens toe aan de collectie. | Importeren maakt gegevensuitwisseling met een computer mogelijk en ondersteunt de key driver **Uitwisselbaarheid van gegevens**. | **Should** |
+| **F09 - Collectie exporteren** | Het systeem zet de collectie om naar een ondersteund bestandsformaat en slaat het bestand op een gekozen locatie op de computer op. | Exporteren maakt het mogelijk om een back-up te bewaren en de collectie op een computer te gebruiken. | **Should** |
+| **F10 - Fouten en resultaten melden** | Het systeem toont een duidelijke melding wanneer een handeling succesvol is afgerond, wordt geannuleerd of niet kan worden uitgevoerd. De bestaande collectie blijft ongewijzigd wanneer een bewerking mislukt. | Duidelijke feedback ondersteunt **Eenvoudige bediening** en voorkomt onbedoeld verlies van kaartgegevens. | **Must** |
 
 ### Niet-Functionele Requirements
 
-``Beschrijf de relevante Niet-Functionele Requirements``
-
-| Naam                | ``NF03 - Betrouwbaarheid``                                                                                                           |
-| ------------------- | ------------------------------------------------------------------------------------------------------------------------------------ |
-| Omschrijving        | ``quantificeerbare of anderszins meetbare omschrijving ``                                                                            |
-| Rationale           | ``reden: wat zou er anders mis gaan?``                                                                                               |
-| Business prioriteit | ``MoSCoW. Deze regel alleen gebruiken bij niet quantificeerbare opdrachtgever-bepaalde ontwerp/realisatie keuzes, anders weglaten.`` |
-
-``etc..``
+| Naam | Omschrijving | Rationale | Business prioriteit |
+|---|---|---|---|
+| **NF01 - Betrouwbaarheid** | Bij een mislukte kaartidentificatie, ontbrekende kaartgegevens of een niet-bereikbaar extern systeem toont The ManaSnapper een foutmelding en blijft de bestaande collectie ongewijzigd. | De gebruiker moet erop kunnen vertrouwen dat een fout niet leidt tot verkeerde of verloren kaartgegevens. | **Must** |
+| **NF02 - Gegevensbehoud** | Na het succesvol toevoegen of verwijderen van een kaart worden de wijzigingen opgeslagen voordat het systeem de handeling als voltooid meldt. | Hierdoor blijven wijzigingen behouden en raakt de collectie niet ongemerkt verouderd. | **Must** |
+| **NF03 - Gebruiksvriendelijkheid** | Iedere functie toont duidelijk welke actie beschikbaar is en bevat een zichtbare terug- of annuleeractie waarmee de gebruiker naar het hoofdmenu of het bovenliggende menu kan terugkeren. | Dit ondersteunt eenvoudige bediening en voorkomt dat de gebruiker vast komt te zitten in een scherm. | **Must** |
+| **NF04 - Prestaties** | Het systeem toont binnen 3 seconden een reactie nadat de gebruiker een menuoptie of knop heeft geselecteerd, exclusief de tijd die nodig is voor een externe Scryfall-aanvraag. | Een snelle reactie maakt de bediening begrijpelijk en voorkomt dat de gebruiker opnieuw op een knop drukt. | **Should** |
+| **NF05 - Foutmeldingen** | Foutmeldingen beschrijven in begrijpelijke taal wat er is misgegaan en geven aan wat de gebruiker vervolgens kan doen. | De gebruiker moet problemen kunnen herkennen en zelfstandig kunnen herstellen of terugkeren naar het hoofdmenu. | **Must** |
+| **NF06 - Draagbaarheid** | Het fysieke apparaat kan zonder permanente aansluiting op een computer worden gebruikt en beschikt over een oplaadbare voeding. | Dit ondersteunt de key driver **Draagbaarheid en zelfstandigheid**. | **Must** |
+| **NF07 - Gegevensuitwisseling** | Geëxporteerde collectiegegevens kunnen door de computerapplicatie worden ingelezen en geïmporteerde geldige collectiegegevens kunnen door The ManaSnapper worden gebruikt. | De collectie moet tussen het apparaat en de computer kunnen worden uitgewisseld zonder handmatige omzetting van kaartgegevens. | **Should** |
+| **NF08 - Uitbreidbaarheid** | De softwarestructuur scheidt kaartidentificatie, externe kaartgegevens, collectiebeheer en gebruikersinterface, zodat toekomstige functies kunnen worden toegevoegd zonder de bestaande kernfunctionaliteiten opnieuw te ontwerpen. | Dit ondersteunt de key driver **Uitbreidbaarheid** en beperkt de impact van toekomstige uitbreidingen. | **Could** |
 
 ### Constraints
 
