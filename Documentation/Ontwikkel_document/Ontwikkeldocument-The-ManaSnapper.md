@@ -54,6 +54,8 @@ Dit ontwikkeldocument beschrijft de ontwikkeling van The ManaSnapper van aanleid
 
 In het hoofdstuk **Uitgangspunten** wordt beschreven welke uitgangspunten de basis vormen voor de requirements. Hierbij worden de systeemcontext, de betrokken stakeholders en de belangrijkste key drivers van The ManaSnapper behandeld.
 
+In het hoofdstuk **Requirements** wordt beschreven wat The ManaSnapper moet kunnen en aan welke voorwaarden het systeem moet voldoen. De functionele en niet-functionele requirements, constraints en use cases vormen samen de basis voor het ontwerp.
+
 ``leg uit wat er in de hoogste-niveau-hoofdstukken wordt behandeld en hoe deze onderwerpen met elkaar in verband staan``
 
 ``zal gemaakt worden per hoofdstuk zodra ze klaar zijn - wouter``
@@ -85,7 +87,7 @@ Daarnaast wisselt The ManaSnapper collectiegegevens uit met de computer app. Hie
 
 ## Requirements
 
-``leg uit hoe de requirements opgesteld worden door de samenhang te verwoorden van de onderwerpen uit de sub-hoofdstukken.``
+Dit hoofdstuk beschrijft wat The ManaSnapper moet kunnen en aan welke voorwaarden het moet voldoen. De functionele requirements beschrijven het gedrag, de niet-functionele requirements de kwaliteit, de constraints de ontwerpgrenzen en de use cases de interactie met de gebruiker. Samen vormen deze onderdelen de basis voor het ontwerp van The ManaSnapper.
 
 ### Functionele Requirements
 
@@ -117,31 +119,34 @@ Daarnaast wisselt The ManaSnapper collectiegegevens uit met de computer app. Hie
 
 ### Constraints
 
-``Beschrijf de relevante Constraints``
-
-| Naam         | ``C02 - Jaarlijkse onderhoudskosten``                     |
-| ------------ | --------------------------------------------------------- |
-| Omschrijving | ``quantificeerbare of anderszins meetbare omschrijving `` |
-| Rationale    | ``reden: waarom kan het niet anders?``                    |
+| Naam | Omschrijving | Rationale |
+|---|---|---|
+| **C01 - Bediening via het apparaat** | De gebruiker bedient het fysieke apparaat via het scherm en een stylus. De MVP vereist geen toetsenbord, muis of permanente bediening vanaf een computer. | The ManaSnapper moet als draagbaar zelfstandig apparaat kunnen functioneren. De gekozen interface en navigatie moeten daarom op het scherm uitvoerbaar zijn. |
+| **C02 - Oplaadbare voeding** | Het apparaat gebruikt een oplaadbare 18650-batterij met de aanwezige TP4056-laadmodule en moet zonder permanente aansluiting op een computer kunnen werken. | Draagbaarheid is een uitgangspunt van het product. De voeding mag daarom niet afhankelijk zijn van een vaste USB- of computerverbinding tijdens normaal gebruik. |
+| **C03 - Lokale opslag** | De collectie wordt lokaal op het apparaat opgeslagen via de microSD-module. De oplossing moet rekening houden met de eindige opslagcapaciteit en met het behoud van geldige collectiegegevens bij het uitschakelen van het apparaat. | Het apparaat moet kaarten kunnen bewaren zonder dat de gebruiker voortdurend online of met een computer verbonden is. De beschikbare opslag bepaalt tegelijk de maximale omvang van de collectie. |
+| **C04 - Afhankelijkheid van Scryfall** | Voor kaartgegevens wordt de gratis Scryfall API gebruikt. Kaartgegevens kunnen alleen automatisch worden opgehaald wanneer de API bereikbaar is en de aanvraag binnen de voorwaarden en limieten van die API valt. | Het project gebruikt Scryfall als externe bron en ontwikkelt geen eigen volledige kaartdatabase. Een storing, netwerkprobleem of limiet van Scryfall mag daarom niet als lokale kaartdata worden behandeld. |
+| **C05 - Eenduidig gegevensformaat** | Import en export gebruiken hetzelfde vooraf vastgelegde tekst- of databaseformaat, inclusief een herkenbare representatie van de kaartgegevens. Ongeldige of onbekende bestanden mogen niet in de collectie worden verwerkt. | Gegevens moeten zonder handmatige omzetting tussen het apparaat en de computer kunnen worden uitgewisseld. Een vast formaat voorkomt dat beide kanten verschillende interpretaties van dezelfde collectie gebruiken. |
 
 ### Use Cases
 
-`` Een of meerdere use case diagram(men) met bijbehorende use case beschrijvingen ``
+#### use case diagram
 
-| Naam           | ``UC04 - Lamp Selecteren``                                                                                                                                                                                                                 |
-| -------------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------ |
-| Actor          | ``gebruiker``                                                                                                                                                                                                                              |
-| Samenvatting   | ``evt. een beschrijving, voor zover de naam het niet al voldoende dekt``                                                                                                                                                                   |
-| Preconditie    | ``alleen voor zover niet triviaal. typisch alleen nodig indien onderdeel van een parent-usecase, bijvoorbeeld "Lamp Selectie Menu" is geselecteerd in het hoofdmenu``                                                                      |
-| Scenario       | ``voorbeeld van een typische volgorde van interacties, bij voorkeur geschreven vanuit het gezichtspunt van het systeem.``                                                                                                                  |
-| Scenario 2     | ``... indien nodig additionele``                                                                                                                                                                                                           |
-| Invariant      | ``Iets waarvoor het systeem voortdurend zorgt, waardoor dat niet steeds herhaald hoeft te worden. (kan soms van toepassing zijn. Bijvoorbeeld: 'ten alle tijde kan "apply" worden geselecteerd om aangepaste eigenschappen op te slaan')`` |
-| Postconditie   | ``alleen voor zover niet triviaal. typisch alleen indien onderdeel van parent-usecase. bijvoorbeeld teruggekeerd naar het parent menu``                                                                                                    |
-| Uitzonderingen | ``alleen als er tijdens het scenario iets gebeurt wat niet in lijn is met de oorspronkelijke bedoeling van de usecase.``                                                                                                                   |
+![no image](../../Media/UseCaseDiagramTheManaSnapper.drawio.png)
+
+#### use cases
+
+| Naam | Beschrijving | Pre-condities | Scenario | Post-condities | Uitzonderingen |
+|---|---|---|---|---|---|
+| **UC01 - Collectie bekijken** | Het systeem toont de opgeslagen kaarten in de collectie. | Het systeem kan de collectie openen. | 1. Het systeem opent de collectie. <br> 2. Het systeem haalt de opgeslagen kaarten op. <br> 3. Het systeem geeft de kaarten weer. <br> 4. Het systeem wacht totdat een kaart wordt geselecteerd of totdat terugkeren naar het hoofdmenu (back button op scherm) wordt gekozen. <br> 5. Het systeem toont de geselecteerde kaart in meer detail en wacht totdat de terug nop word geraakt (X button op scherm). <br> 6. Het systeem keert terug naar de collection menu. | De kaarten uit de collectie zijn weergegeven en het systeem keert terug naar het hoofdmenu. | Als de collectie geen kaarten bevat, toont het systeem een melding dat de collectie leeg is en keert het systeem terug naar het hoofdmenu. Als de collectie niet kan worden ingelezen, toont het systeem een foutmelding en keert het systeem terug naar het hoofdmenu. |
+| **UC02 - Kaart toevoegen** | Het systeem voegt een kaart aan de collectie toe. | Het systeem kan de collectie aanpassen. | 1. Het systeem wacht totdat een kaart wordt opgegeven. <br> 2. Het systeem identificeert de kaart naam. <br> 3. Het systeem haalt de kaartgegevens op. <br> 4. Het systeem toont de opgehaalde kaartgegevens. <br> 5. Het systeem wacht op bevestiging om de kaart toe te voegen of op de keuze om terug te keren naar het hoofdmenu. <br> 6. Het systeem voegt de kaart aan de collectie toe. <br> 7. Het systeem slaat de bijgewerkte collectie op. <br> 8. Het systeem keert terug naar het hoofdmenu. | De gescande of gekozen kaart is toegevoegd en het systeem keert terug naar het hoofdmenu. | Als het systeem geen kaart kan identificeren, toont het systeem een melding dat de kaart niet herkend is en keert het systeem terug naar het hoofdmenu. Als het systeem de kaartgegevens niet kan ophalen, toont het systeem een melding dat de kaart niet gevonden is en keert het systeem terug naar het hoofdmenu. Als het toevoegen wordt geannuleerd, voegt het systeem de kaart niet toe en keert het systeem terug naar het hoofdmenu. |
+| **UC03 - Kaart verwijderen** | Het systeem verwijdert een kaart uit de collectie. | Het systeem toont de collectie. | 1. Het systeem toont de kaarten uit de collectie. <br> 2. Het systeem wacht totdat een kaart wordt geselecteerd of totdat terugkeren naar het hoofdmenu wordt gekozen. <br> 3. Het systeem toont de geselecteerde kaart met een back en een verwijder button. <br> 4. Het systeem vraagt om bevestiging voor het verwijderen. <br> 5. Het systeem wacht op bevestiging. <br> 6. Het systeem verwijdert de geselecteerde kaart uit de collectie. <br> 7. Het systeem slaat de bijgewerkte collectie op. <br> 8. Het systeem toont de bijgewerkte collectie. <br> 9. Het systeem keert terug naar het hoofdmenu. | De geselecteerde kaart is verwijderd en het systeem keert terug naar het hoofdmenu. | Als het verwijderen wordt geannuleerd, laat het systeem de kaart in de collectie staan en keert het systeem terug naar het hoofdmenu. Als de geselecteerde kaart niet meer in de collectie staat, toont het systeem een foutmelding, blijft de collectie ongewijzigd en keert het systeem terug naar het hoofdmenu. |
+| **UC04 - Kaartgegevens ophalen** | Het systeem haalt de gegevens van een kaart op uit Scryfall. | Het systeem heeft een kaart geïdentificeerd en beschikt over de benodigde kaartinformatie. | 1. Het systeem ontvangt de kaart naam. <br> 2. Het systeem zoekt de kaart op bij Scryfall. <br> 3. Het systeem ontvangt de kaartgegevens. <br> 4. Het systeem stelt de kaartgegevens beschikbaar aan de aanroepende use case. <br> 5. Na afronding of beëindiging keert het systeem terug naar het hoofdmenu. | De gegevens van de kaart zijn ontvangen en beschikbaar om aan de collectie toe te voegen. Daarna keert het systeem terug naar het hoofdmenu of naar de aanroepende use case. | Als Scryfall geen kaart met de opgegeven gegevens vindt, toont het systeem een melding dat de kaart niet gevonden is en keert het systeem terug naar het hoofdmenu. Als Scryfall niet bereikbaar is, toont het systeem een melding dat de kaartgegevens niet opgehaald kunnen worden en keert het systeem terug naar het hoofdmenu. Als de ontvangen kaartgegevens ongeldig zijn, voegt het systeem de gegevens niet toe aan de collectie en keert het systeem terug naar het hoofdmenu. |
+| **UC05 - Collectie importeren** | Het systeem importeert een bestaande collectie vanaf de computer. | Het systeem kan een collectiebestand openen. | 1. Het systeem wacht totdat een collectiebestand wordt geselecteerd of totdat terugkeren naar het hoofdmenu wordt gekozen. <br> 2. Het systeem leest het geselecteerde bestand in. <br> 3. Het systeem controleert de inhoud van het bestand. <br> 4. Het systeem voegt de kaarten uit het bestand toe aan de collectie. <br> 5. Het systeem slaat de bijgewerkte collectie op. <br> 6. Het systeem meldt dat de collectie succesvol is geïmporteerd. <br> 7. Het systeem keert terug naar het hoofdmenu. | De kaarten uit het geïmporteerde bestand zijn opgeslagen in de collectie en het systeem keert terug naar het hoofdmenu. | Als geen bestand wordt geselecteerd, annuleert het systeem de import en keert het systeem terug naar het hoofdmenu. Als het bestand niet kan worden gelezen, toont het systeem een foutmelding, laat het systeem de bestaande collectie ongewijzigd en keert het systeem terug naar het hoofdmenu. Als het bestand geen geldig collectieformaat bevat, toont het systeem een foutmelding, past het systeem de collectie niet aan en keert het systeem terug naar het hoofdmenu. |
+| **UC06 - Collectie exporteren** | Het systeem exporteert de opgeslagen collectie naar de computer. | Het systeem beschikt over een collectie die kan worden geëxporteerd. | 1. Het systeem haalt de collectie op. <br> 2. Het systeem wacht totdat een locatie en bestandsnaam worden opgegeven of totdat terugkeren naar het hoofdmenu wordt gekozen. <br> 3. Het systeem zet de collectie om naar het gekozen bestandsformaat. <br> 4. Het systeem slaat het bestand op de computer op. <br> 5. Het systeem meldt dat de collectie succesvol is geëxporteerd. <br> 6. Het systeem keert terug naar het hoofdmenu. | De collectie is opgeslagen in een bestand op de computer en het systeem keert terug naar het hoofdmenu. | Als geen locatie wordt geselecteerd, annuleert het systeem de export en keert het systeem terug naar het hoofdmenu. Als het bestand niet kan worden opgeslagen, toont het systeem een foutmelding en keert het systeem terug naar het hoofdmenu. Als de collectie leeg is, meldt het systeem dat er geen kaarten zijn om te exporteren en keert het systeem terug naar het hoofdmenu. |
 
 ### Activity Diagrammen
 
-`` Voor belangrijke, wat complexere usecases kan het extra verduidelijking opleveren om er SysML - activity diagrammen bij te maken. ``
+![no image](../../Media/activitydiagram-The-ManaSnapper.drawio.png)
 
 ## Ontwerp
 
@@ -149,45 +154,60 @@ Daarnaast wisselt The ManaSnapper collectiegegevens uit met de computer app. Hie
 
 ### Functionele decompositie / (sub)systems and interfaces
 
-`` Geef met een functionele decompositie van het systeem grafisch weer hoe de verschillende functies (uit de functionele requirements) van het systeem met elkaar samenhangen. Dat geeft goede handvaten voor de decompositie van software en hardware verder op de rit. ``
+![no image](../../Media/functioneleDecompositieDiagramTheManaSnapper.png)
 
 ### Objectmodellen
 
-`` Ontwerp, uitgaande van use case beschrijvingen en activity diagrammen, de delen van het objectmodel die dat kunnen waarmaken. Beperk de interactie met het web-subsysteem tot een enkel object (een web proxy object oid). Een gedetailleerde uitwerking van het web-subsysteem is in een apart ontwikkeldocument te vinden.``
+![no image](../../Media/ObjectDiagramTheManaSnapper.png)
 
 #### Lijst met Objecten
 
-`` Voeg elk object uit de objectmodellen toe in de "lijst met objecten" Let op dat de beschrijvingen niet de relatie tussen de objecten duiden, maar louter wat objecten "los bekeken" doen. Dus niet: InstelControl stuurt een signaal naar .. Maar Instelcontrol is de "dirigent" van de usecase "Instellen" (meteen link toevoegen naar die usecase).``
-
-| Object Naam   | Stereotype | Beschrijving                                                    |
-| ------------- | ---------- | --------------------------------------------------------------- |
-| InstelControl | Control    | "Dirigent" van de use case "Instellen" (zie use case Instellen) |
-| Display       | Boundary   | Stuurt display hardware aan.                                    |
-| etc..         |            |                                                                 |
+| Object Naam | Stereotype | Beschrijving |
+|---|---|---|
+| **MenuController** | Control | Verwerkt de menukeuzes van de gebruiker en start de bijbehorende functionaliteit. |
+| **CardTitleRecognitionController** | Control | Verwerkt de herkenning van een kaarttitel. |
+| **APIController** | Control | Verzorgt het ophalen en verwerken van kaartgegevens via een externe API. |
+| **CollectionController** | Control | Beheert het bekijken, toevoegen en verwijderen van kaarten in de collectie. |
+| **ExportAndImportController** | Control | Verzorgt het importeren en exporteren van collectiegegevens. |
+| **Camera** | Boundary | Legt beelden van een fysieke kaart vast. |
+| **Display** | Boundary | Toont menu's, kaartgegevens en meldingen aan de gebruiker. |
+| **ComputerApp** | Boundary | Biedt een extern systeem voor het ontvangen en aanleveren van collectiegegevens. |
+| **Card** | Entity | Bevat de gegevens van één kaart. |
+| **CardCollection** | Entity | Bevat de opgeslagen kaarten en vertegenwoordigt de collectie. |
 
 ### Taakstructurering
 
-``leg uit wat het doel is van taakstructurering en hoe de deelstappen (sub-hoofdstukken) samen dat doel reliseren``
+Taakstructurering beschrijft wanneer de objecten uit het objectmodel actief
+worden en hoeveel tijd zij voor hun taak mogen gebruiken. Hierdoor wordt
+duidelijk welke onderdelen direct op gebruikersinput reageren en welke
+onderdelen op de achtergrond of op vaste momenten werken. De taaksoort en
+deadline worden eerst per object bepaald. Daarna kunnen taken die dezelfde
+soort verwerking uitvoeren worden samengevoegd tot één taak.
 
 #### Taaksoort en deadline
 
-`` Maak een tabel die per object taaksoort, deadline, periode en prioriteit weergeeft. Belangrijk: Deadline is zo lang mogelijk waarbij het nog net geen irritatie oplevert. Deadline <= Periode, Prioriteit is omgekeerd evenredig met deadline ``
-
-| Object Naam   | Taaksoort     | Periode | Deadline | Prioriteit |
-| ------------- | ------------- | ------- | -------- | ---------- |
-| InstelControl | Demand Driven |         | 30ms     | 1          |
-| PlusKnop      | Periodiek     | 60ms    | 60ms     | 2          |
-| etc..         |               |         |          |            |
+| Object Naam | Taaksoort | Periode | Deadline | Prioriteit |
+|---|---|---|---|---|
+| **MenuController** | Demand Driven | n.v.t. | 100 ms | 1 |
+| **Display** | Demand Driven | n.v.t. | 100 ms | 1 |
+| **CollectionController** | Demand Driven | n.v.t. | 500 ms | 2 |
+| **Camera** | Demand Driven | n.v.t. | 1 s | 3 |
+| **CardTitleRecognitionController** | Demand Driven | n.v.t. | 3 s | 4 |
+| **ExportAndImportController** | Demand Driven | n.v.t. | 3 s | 4 |
+| **APIController** | Demand Driven | n.v.t. | 5 s | 5 |
+| **ComputerApp** | Demand Driven | n.v.t. | 5 s | 5 |
+| **Card** | Geen eigen taak | n.v.t. | n.v.t. | n.v.t. |
+| **CardCollection** | Geen eigen taak | n.v.t. | n.v.t. | n.v.t. |
 
 #### Taken samenvoegen
 
-`` Maak een tabel waarin je laat zien welke objecten een eigen taak hebben en van welke de taken worden samenvoegd in een enkele "Taak". Noem in het laatste geval het object (bijvoorbeeld een handler) dat eigenaar wordt van die Taak als eerste.``
-
-| Taak Naam  | Object Naam                            | Taaksoort     | Periode | Deadline | Prioriteit |
-| ---------- | -------------------------------------- | ------------- | ------- | -------- | ---------- |
-| InstelTaak | InstelControl                          | Demand Driven |         | 30ms     | 1          |
-| ButtonTaak | <u>ButtonHandler</u> PlusKnop, MinKnop | Periodiek     | 60ms    | 60ms     | 2          |
-| etc..      |                                        |               |         |          |            |
+| Taak Naam | Objecten | Taaksoort | Periode | Deadline | Prioriteit |
+|---|---|---|---|---|---|
+| **InterfaceTaak** | **MenuController**, Display | Demand Driven | n.v.t. | 100 ms | 1 |
+| **CollectieTaak** | **CollectionController**, Card, CardCollection | Demand Driven | n.v.t. | 500 ms | 2 |
+| **ScanTaak** | **CardTitleRecognitionController**, Camera | Demand Driven | n.v.t. | 3 s | 3 |
+| **ImportExportTaak** | **ExportAndImportController**, ComputerApp | Demand Driven | n.v.t. | 3 s | 3 |
+| **APITaak** | **APIController** | Demand Driven | n.v.t. | 5 s | 4 |
 
 ### Klassediagrammen
 
