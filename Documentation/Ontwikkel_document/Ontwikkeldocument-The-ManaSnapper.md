@@ -56,6 +56,8 @@ In het hoofdstuk **Uitgangspunten** wordt beschreven welke uitgangspunten de bas
 
 In het hoofdstuk **Requirements** wordt beschreven wat The ManaSnapper moet kunnen en aan welke voorwaarden het systeem moet voldoen. De functionele en niet-functionele requirements, constraints en use cases vormen samen de basis voor het ontwerp.
 
+In het hoofdstuk **Ontwerp** wordt uitgewerkt hoe The ManaSnapper wordt opgebouwd om aan de requirements te voldoen. De functionele decompositie beschrijft de hoofdonderdelen en hun interfaces, waarna de objectmodellen, taakstructurering, klassediagrammen en state transition diagrams de samenwerking, verwerking en toestanden van deze onderdelen verder uitwerken.
+
 ``leg uit wat er in de hoogste-niveau-hoofdstukken wordt behandeld en hoe deze onderwerpen met elkaar in verband staan``
 
 ``zal gemaakt worden per hoofdstuk zodra ze klaar zijn - wouter``
@@ -150,7 +152,7 @@ Dit hoofdstuk beschrijft wat The ManaSnapper moet kunnen en aan welke voorwaarde
 
 ## Ontwerp
 
-``leg uit hoe het ontwerp volgt door het volgen van de stappen die in de sub-hoofdstukken worden behandeld en hoe deze onderwerpen met elkaar in verband staan``
+Dit hoofdstuk vertaalt de requirements naar een technische structuur voor The ManaSnapper. Eerst wordt met de functionele decompositie bepaald welke subsystemen en interfaces nodig zijn. Daarna worden deze onderdelen uitgewerkt in objectmodellen, taken, klassediagrammen en state transition diagrams, waarbij elk onderdeel voortbouwt op het vorige en samen de basis vormt voor de realisatie.
 
 ### Functionele decompositie / (sub)systems and interfaces
 
@@ -215,7 +217,7 @@ soort verwerking uitvoeren worden samengevoegd tot één taak.
 
 ### STD's
 
-``Ontwerp voor elke Taak de STD van de bijbehorende klasse(n), indien van toepassing vanuit activity diagram of usecase beschrijving, protocol of anderszins. Belangrijk: alle toestanden moeten gerepresenteerd worden in het diagram. Code zonder toestanden en zonder directe invloed op de flow tussen de toestanden kunnen gerepresenteerd worden door calls naar helper-functies. Vergeet niet bovenaan een geschikte STD-interface toe te voegen``
+![no image](../../Media/TheManaSnapperSTD.png)
 
 ## Realisatie
 
