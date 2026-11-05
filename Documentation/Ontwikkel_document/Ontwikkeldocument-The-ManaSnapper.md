@@ -211,7 +211,7 @@ soort verwerking uitvoeren worden samengevoegd tot één taak.
 
 ### Klassediagrammen
 
-`` Ontwerp, uitgaande van de objectmodellen de bijbehorende klassediagrammen. Vergroot eventueel in latere verbeteringsronden de herbruikbaarheid en het gebruiksgemak van de klassen door het toepassen van geschikte Design Patterns of templating. Voeg de klassen ook toe in de Requirements Traceability diagrammen zodat duidelijk is welke requirements de klasse adresseert``
+![no image](../../Media/TheManaSnapperKD.png)
 
 ### STD's
 
