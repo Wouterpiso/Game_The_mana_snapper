@@ -1,0 +1,9 @@
+[1/5] C:\Windows\system32\cmd.exe /C "cd /D C:\Users\wpiso\Documents\GitHub\Game_The_mana_snapper\Code\Screen\build\esp-idf\esptool_py && C:\Users\wpiso\.espressif\python_env\idf5.4_py3.11_env\Scripts\python.exe C:/Espressif/esp-idf/components/partition_table/check_sizes.py --offset 0x8000 partition --type app C:/Users/wpiso/Documents/GitHub/Game_The_mana_snapper/Code/Screen/build/partition_table/partition-table.bin C:/Users/wpiso/Documents/GitHub/Game_The_mana_snapper/Code/Screen/build/Game_sprites.bin"
+FAILED: esp-idf/esptool_py/CMakeFiles/app_check_size C:/Users/wpiso/Documents/GitHub/Game_The_mana_snapper/Code/Screen/build/esp-idf/esptool_py/CMakeFiles/app_check_size 
+C:\Windows\system32\cmd.exe /C "cd /D C:\Users\wpiso\Documents\GitHub\Game_The_mana_snapper\Code\Screen\build\esp-idf\esptool_py && C:\Users\wpiso\.espressif\python_env\idf5.4_py3.11_env\Scripts\python.exe C:/Espressif/esp-idf/components/partition_table/check_sizes.py --offset 0x8000 partition --type app C:/Users/wpiso/Documents/GitHub/Game_The_mana_snapper/Code/Screen/build/partition_table/partition-table.bin C:/Users/wpiso/Documents/GitHub/Game_The_mana_snapper/Code/Screen/build/Game_sprites.bin"
+Error: app partition is too small for binary Game_sprites.bin size 0x2ce8e0:
+  - Part 'factory' 0/0 @ 0x10000 size 0x100000 (overflow 0x1ce8e0)
+[2/5] Performing build step for 'bootloader'
+[1/1] C:\Windows\system32\cmd.exe /C "cd /D C:\Users\wpiso\Documents\GitHub\Game_The_mana_snapper\Code\Screen\build\bootloader\esp-idf\esptool_py && C:\Users\wpiso\.espressif\python_env\idf5.4_py3.11_env\Scripts\python.exe C:/Espressif/esp-idf/components/partition_table/check_sizes.py --offset 0x8000 bootloader 0x1000 C:/Users/wpiso/Documents/GitHub/Game_The_mana_snapper/Code/Screen/build/bootloader/bootloader.bin"
+Bootloader binary size 0x6560 bytes. 0xaa0 bytes (9%) free.
+ninja: build stopped: subcommand failed.

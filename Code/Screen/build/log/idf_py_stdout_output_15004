@@ -1,0 +1,30 @@
+[1/988] Generating C:/Users/wpiso/Documents/GitHub/Game_The_mana_snapper/Code/Screen/build/esp-idf/esp_system/ld/memory.ld linker script...
+[2/988] Generating C:/Users/wpiso/Documents/GitHub/Game_The_mana_snapper/Code/Screen/build/esp-idf/esp_system/ld/sections.ld.in linker script...
+[3/988] Generating ../../partition_table/partition-table.bin
+FAILED: partition_table/partition-table.bin C:/Users/wpiso/Documents/GitHub/Game_The_mana_snapper/Code/Screen/build/partition_table/partition-table.bin 
+C:\Windows\system32\cmd.exe /C "cd /D C:\Users\wpiso\Documents\GitHub\Game_The_mana_snapper\Code\Screen\build\esp-idf\partition_table && C:\Users\wpiso\.espressif\python_env\idf5.4_py3.11_env\Scripts\python.exe C:/Espressif/esp-idf/components/partition_table/gen_esp32part.py -q --offset 0x8000 --flash-size 2MB -- C:/Users/wpiso/Documents/GitHub/Game_The_mana_snapper/Code/Screen/partitions.csv C:/Users/wpiso/Documents/GitHub/Game_The_mana_snapper/Code/Screen/build/partition_table/partition-table.bin && C:\Users\wpiso\.espressif\tools\cmake\3.30.2\bin\cmake.exe -E echo "Partition table binary generated. Contents:" && C:\Users\wpiso\.espressif\tools\cmake\3.30.2\bin\cmake.exe -E echo ******************************************************************************* && C:\Users\wpiso\.espressif\python_env\idf5.4_py3.11_env\Scripts\python.exe C:/Espressif/esp-idf/components/partition_table/gen_esp32part.py -q --offset 0x8000 --flash-size 2MB -- C:/Users/wpiso/Documents/GitHub/Game_The_mana_snapper/Code/Screen/build/partition_table/partition-table.bin && C:\Users\wpiso\.espressif\tools\cmake\3.30.2\bin\cmake.exe -E echo *******************************************************************************"
+Partitions tables occupies 3.1MB of flash (3211264 bytes) which does not fit in configured flash size 2MB. Change the flash size in menuconfig under the 'Serial Flasher Config' menu.
+[4/988] Building ASM object esp-idf/esp_gdbstub/CMakeFiles/__idf_esp_gdbstub.dir/src/port/xtensa/gdbstub-entry.S.obj
+[5/988] Building C object esp-idf/esp_http_client/CMakeFiles/__idf_esp_http_client.dir/lib/http_utils.c.obj
+[6/988] Building C object esp-idf/esp_http_client/CMakeFiles/__idf_esp_http_client.dir/lib/http_header.c.obj
+[7/988] Building C object esp-idf/esp_gdbstub/CMakeFiles/__idf_esp_gdbstub.dir/src/packet.c.obj
+[8/988] Building C object esp-idf/esp_gdbstub/CMakeFiles/__idf_esp_gdbstub.dir/src/port/xtensa/gdbstub_xtensa.c.obj
+[9/988] Building C object esp-idf/esp_gdbstub/CMakeFiles/__idf_esp_gdbstub.dir/src/gdbstub_transport.c.obj
+[10/988] Building C object esp-idf/esp_gdbstub/CMakeFiles/__idf_esp_gdbstub.dir/src/gdbstub.c.obj
+[11/988] Building C object esp-idf/esp_adc/CMakeFiles/__idf_esp_adc.dir/adc_oneshot.c.obj
+[12/988] Building C object esp-idf/esp_https_ota/CMakeFiles/__idf_esp_https_ota.dir/src/esp_https_ota.c.obj
+[13/988] Building C object esp-idf/esp_http_server/CMakeFiles/__idf_esp_http_server.dir/src/httpd_parse.c.obj
+[14/988] Building C object esp-idf/esp_http_server/CMakeFiles/__idf_esp_http_server.dir/src/util/ctrl_sock.c.obj
+[15/988] Building C object esp-idf/esp_http_server/CMakeFiles/__idf_esp_http_server.dir/src/httpd_sess.c.obj
+[16/988] Building C object esp-idf/esp_http_server/CMakeFiles/__idf_esp_http_server.dir/src/httpd_uri.c.obj
+[17/988] Building C object esp-idf/tcp_transport/CMakeFiles/__idf_tcp_transport.dir/transport_socks_proxy.c.obj
+[18/988] Building C object esp-idf/esp_http_server/CMakeFiles/__idf_esp_http_server.dir/src/httpd_main.c.obj
+[19/988] Building C object esp-idf/esp_http_server/CMakeFiles/__idf_esp_http_server.dir/src/httpd_txrx.c.obj
+[20/988] Building C object esp-idf/esp_http_client/CMakeFiles/__idf_esp_http_client.dir/lib/http_auth.c.obj
+[21/988] Building C object esp-idf/esp_http_server/CMakeFiles/__idf_esp_http_server.dir/src/httpd_ws.c.obj
+[22/988] Building C object esp-idf/tcp_transport/CMakeFiles/__idf_tcp_transport.dir/transport.c.obj
+[23/988] Building C object esp-idf/tcp_transport/CMakeFiles/__idf_tcp_transport.dir/transport_internal.c.obj
+[24/988] Building C object esp-idf/tcp_transport/CMakeFiles/__idf_tcp_transport.dir/transport_ssl.c.obj
+[25/988] Building C object esp-idf/tcp_transport/CMakeFiles/__idf_tcp_transport.dir/transport_ws.c.obj
+[26/988] Building C object esp-idf/esp_http_client/CMakeFiles/__idf_esp_http_client.dir/esp_http_client.c.obj
+ninja: build stopped: subcommand failed.
