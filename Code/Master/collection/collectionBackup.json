@@ -1,0 +1,56 @@
+{
+  "object": "list",
+  "total_cards": 1,
+  "has_more": false,
+  "next_page": null,
+  "data": [
+    {
+      "name": "Test Card",
+      "mana_cost": "{W}",
+      "cmc": 1,
+      "type_line": "Test Creature",
+      "oracle_text": "This is a test card for the collection.",
+      "colors": [
+        "W"
+      ],
+      "color_identity": [
+        "W"
+      ],
+      "keywords": [
+        "Test"
+      ],
+      "legalities": {
+        "standard": "legal",
+        "future": "legal",
+        "historic": "legal",
+        "timeless": "legal",
+        "gladiator": "legal",
+        "pioneer": "legal",
+        "modern": "legal",
+        "legacy": "legal",
+        "pauper": "not_legal",
+        "vintage": "legal",
+        "penny": "legal",
+        "commander": "legal",
+        "oathbreaker": "legal",
+        "standardbrawl": "legal",
+        "brawl": "legal",
+        "alchemy": "legal",
+        "paupercommander": "not_legal",
+        "duel": "legal",
+        "oldschool": "not_legal",
+        "premodern": "not_legal",
+        "predh": "not_legal",
+        "tlr": "legal"
+      },
+      "reserved": false,
+      "game_changer": false,
+      "set": "test",
+      "rarity": "common",
+      "flavor_text": "A test card is the first step toward a complete collection.",
+      "image": {
+        "thumb": "https://wsrv.nl/?url=https%3A%2F%2Fcards.scryfall.io%2Fsmall%2Ffront%2F6%2F4%2F642e1b90-c240-44fe-82b2-7522026224ae.jpg%3F1783904788&output=jpg&w=146&h=204&q=85"
+      }
+    }
+  ]
+}

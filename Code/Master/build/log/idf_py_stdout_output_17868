@@ -1,0 +1,25 @@
+[1/12] Performing build step for 'bootloader'
+[1/1] C:\Windows\system32\cmd.exe /C "cd /D C:\Users\wpiso\Documents\GitHub\Game_The_mana_snapper\Code\Master\build\bootloader\esp-idf\esptool_py && C:\Users\wpiso\.espressif\python_env\idf5.4_py3.11_env\Scripts\python.exe C:/Espressif/esp-idf/components/partition_table/check_sizes.py --offset 0x8000 bootloader 0x1000 C:/Users/wpiso/Documents/GitHub/Game_The_mana_snapper/Code/Master/build/bootloader/bootloader.bin"
+Bootloader binary size 0x6560 bytes. 0xaa0 bytes (9%) free.
+[2/12] No install step for 'bootloader'
+[3/12] Building CXX object esp-idf/main/CMakeFiles/__idf_main.dir/__/States/StateMachine.cpp.obj
+[4/12] Building CXX object esp-idf/main/CMakeFiles/__idf_main.dir/__/collection/Data.cpp.obj
+[5/12] Completed 'bootloader'
+[6/12] Building CXX object esp-idf/main/CMakeFiles/__idf_main.dir/main.cpp.obj
+[7/12] Building CXX object esp-idf/main/CMakeFiles/__idf_main.dir/__/display/DisplayCommunication.cpp.obj
+C:/Users/wpiso/Documents/GitHub/Game_The_mana_snapper/Code/Master/display/DisplayCommunication.cpp: In function 'void displayCommunicationInit()':
+C:/Users/wpiso/Documents/GitHub/Game_The_mana_snapper/Code/Master/display/DisplayCommunication.cpp:35:5: warning: missing initializer for member 'uart_config_t::rx_flow_ctrl_thresh' [-Wmissing-field-initializers]
+   35 |     };
+      |     ^
+C:/Users/wpiso/Documents/GitHub/Game_The_mana_snapper/Code/Master/display/DisplayCommunication.cpp:35:5: warning: missing initializer for member 'uart_config_t::flags' [-Wmissing-field-initializers]
+[8/12] Linking C static library esp-idf\main\libmain.a
+[9/12] Generating ld/sections.ld
+[10/12] Linking CXX executable ManaSnapperMaster.elf
+[11/12] Generating binary image from built executable
+esptool.py v4.12.0
+Creating esp32 image...
+Merged 2 ELF sections
+Successfully created esp32 image.
+Generated C:/Users/wpiso/Documents/GitHub/Game_The_mana_snapper/Code/Master/build/ManaSnapperMaster.bin
+[12/12] C:\Windows\system32\cmd.exe /C "cd /D C:\Users\wpiso\Documents\GitHub\Game_The_mana_snapper\Code\Master\build\esp-idf\esptool_py && C:\Users\wpiso\.espressif\python_env\idf5.4_py3.11_env\Scripts\python.exe C:/Espressif/esp-idf/components/partition_table/check_sizes.py --offset 0x8000 partition --type app C:/Users/wpiso/Documents/GitHub/Game_The_mana_snapper/Code/Master/build/partition_table/partition-table.bin C:/Users/wpiso/Documents/GitHub/Game_The_mana_snapper/Code/Master/build/ManaSnapperMaster.bin"
+ManaSnapperMaster.bin binary size 0x3c2a0 bytes. Smallest app partition is 0x100000 bytes. 0xc3d60 bytes (76%) free.
