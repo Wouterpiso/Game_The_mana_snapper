@@ -1,6 +1,7 @@
 #include "CamCommunication.hpp"
 #include "Data.hpp"
 #include "DisplayCommunication.hpp"
+#include "ImageReconition.hpp"
 #include "StateMachine.hpp"
 #include "freertos/FreeRTOS.h"
 #include "freertos/task.h"
@@ -10,6 +11,7 @@ extern "C" void app_main(void)
 {
     displayCommunicationInit();
     camCommunicationInit();
+    imageRecognitionInit();
     const DataResult dataResult = dataInitializeDefault();
     if (dataResult != DataResult::Ok) {
         printf("Failed to initialize collection data\n");

@@ -1,0 +1,11 @@
+menu "Mana Snapper"
+
+config MANA_SNAPPER_WIFI_SSID
+    string "Wi-Fi SSID"
+    default ""
+
+config MANA_SNAPPER_WIFI_PASSWORD
+    string "Wi-Fi password"
+    default ""
+
+endmenu
