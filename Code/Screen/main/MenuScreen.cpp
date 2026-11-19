@@ -46,25 +46,90 @@ const uint8_t* glyph(char character) {
         return patterns[character - 'A'];
     }
     static const uint8_t digits[][5] = {
-        {0x3E, 0x45, 0x49, 0x51, 0x3E}, // 0
-        {0x00, 0x21, 0x7F, 0x01, 0x00}, // 1
-        {0x23, 0x45, 0x49, 0x49, 0x31}, // 2
+        {0x3E, 0x51, 0x49, 0x45, 0x3E}, // 0
+        {0x00, 0x42, 0x7F, 0x40, 0x00}, // 1
+        {0x62, 0x51, 0x49, 0x49, 0x46}, // 2
         {0x22, 0x41, 0x49, 0x49, 0x36}, // 3
-        {0x0C, 0x14, 0x24, 0x7F, 0x04}, // 4
-        {0x72, 0x51, 0x51, 0x51, 0x4E}, // 5
-        {0x1E, 0x29, 0x49, 0x49, 0x06}, // 6
-        {0x40, 0x47, 0x48, 0x50, 0x60}, // 7
+        {0x18, 0x14, 0x12, 0x7F, 0x10}, // 4
+        {0x27, 0x45, 0x45, 0x45, 0x39}, // 5
+        {0x3C, 0x4A, 0x49, 0x49, 0x30}, // 6
+        {0x01, 0x71, 0x09, 0x05, 0x03}, // 7
         {0x36, 0x49, 0x49, 0x49, 0x36}, // 8
-        {0x30, 0x49, 0x49, 0x4A, 0x3C}, // 9
+        {0x06, 0x49, 0x49, 0x29, 0x1E}, // 9
     };
     if (character >= '0' && character <= '9') {
         return digits[character - '0'];
     }
-    static const uint8_t slash[] = {0x04, 0x08, 0x10, 0x20, 0x40};
+    static const uint8_t slash[] = {0x20, 0x10, 0x08, 0x04, 0x02};
     if (character == '/') {
         return slash;
     }
     return nullptr;
+}
+
+// The panel is used in portrait: the reader sees the 320x240 back buffer
+// turned a quarter. All page content below is laid out in "reader" coordinates
+// (u = right, 0..239; v = down, 0..319) and mapped onto the buffer here, the
+// same way drawRotatedText() does it.
+constexpr int kReaderWidth = Ili9341Display::HEIGHT;   // 240
+inline int bufferX(int /*u*/, int v) { return v; }
+inline int bufferY(int u, int /*v*/) { return kReaderWidth - 1 - u; }
+
+// Collection page layout (reader coordinates).
+constexpr int kCollectionFirstRowV = 58;
+constexpr int kCollectionRowHeight = 24;
+constexpr int kCollectionMaxRows = 8;
+constexpr int kNavV = 284;
+constexpr int kNavHeight = 26;
+constexpr int kNavWidth = 48;
+constexpr int kNavPreviousU = 24;
+constexpr int kNavPageU = 96;
+constexpr int kNavNextU = 168;
+constexpr int kNavTouchPadding = 8;
+
+// Width in pixels that drawText() needs for `text` (same advance rules).
+int textWidth(const char* text, int scale) {
+    int width = 0;
+    for (const char* character = text; *character != '\0'; ++character) {
+        width += (*character == ' ') ? 4 * scale : 6 * scale;
+    }
+    return width;
+}
+
+// Touch coordinates -> reader coordinates. The touch driver scales its two raw
+// axes to 0..319 (x) and 0..239 (y), but x runs along the buffer height and y
+// along the buffer width, so each one is stretched back to the buffer size.
+void touchToReader(int touchX, int touchY, int& u, int& v) {
+    const int bufferXPos = touchY * Ili9341Display::WIDTH / Ili9341Display::HEIGHT;
+    const int bufferYPos = touchX * Ili9341Display::HEIGHT / Ili9341Display::WIDTH;
+    u = kReaderWidth - 1 - bufferYPos;
+    v = bufferXPos;
+}
+
+bool insideReaderRect(int touchX, int touchY, int u, int v, int width,
+                      int height, int padding) {
+    int touchU = 0;
+    int touchV = 0;
+    touchToReader(touchX, touchY, touchU, touchV);
+    return touchU >= u - padding && touchU <= u + width + padding &&
+           touchV >= v - padding && touchV <= v + height + padding;
+}
+
+uint16_t colorPipValue(Ili9341Display& display, char color) {
+    switch (color) {
+    case 'W':
+        return display.rgb565(255, 255, 255);
+    case 'U':
+        return display.rgb565(30, 100, 255);
+    case 'B':
+        return display.rgb565(0, 0, 0);
+    case 'R':
+        return display.rgb565(230, 30, 30);
+    case 'G':
+        return display.rgb565(30, 180, 60);
+    default:
+        return display.rgb565(128, 128, 128);
+    }
 }
 }
 
@@ -195,35 +260,87 @@ void MenuScreen::drawCollection(Ili9341Display& display,
     drawCollectionPage(display, 0);
 }
 
-void MenuScreen::drawCollectionPage(Ili9341Display& display, int page) const {
+void MenuScreen::readerRect(Ili9341Display& display, int u, int v, int width,
+                            int height, uint16_t color, bool fill) const {
+    // A reader rectangle (width x height) is a (height x width) buffer rectangle.
+    display.drawRectangle(bufferX(u, v), bufferY(u + width, v), height, width,
+                          color, fill);
+}
+
+void MenuScreen::readerLine(Ili9341Display& display, int u0, int v0, int u1,
+                            int v1, uint16_t color) const {
+    display.drawLine(bufferX(u0, v0), bufferY(u0, v0), bufferX(u1, v1),
+                     bufferY(u1, v1), color);
+}
+
+void MenuScreen::readerText(Ili9341Display& display, const char* text, int u,
+                            int v, uint16_t color, int scale) const {
+    int currentU = u;
+    for (const char* character = text; *character != '\0'; ++character) {
+        const char upper =
+            static_cast<char>(std::toupper(static_cast<unsigned char>(*character)));
+        const uint8_t* pattern = glyph(upper);
+        if (pattern != nullptr) {
+            for (int column = 0; column < 5; ++column) {
+                for (int row = 0; row < 7; ++row) {
+                    if ((pattern[column] & (1 << row)) == 0) {
+                        continue;
+                    }
+                    for (int offsetU = 0; offsetU < scale; ++offsetU) {
+                        for (int offsetV = 0; offsetV < scale; ++offsetV) {
+                            const int pixelU = currentU + column * scale + offsetU;
+                            const int pixelV = v + row * scale + offsetV;
+                            display.drawPixel(bufferX(pixelU, pixelV),
+                                              bufferY(pixelU, pixelV), color);
+                        }
+                    }
+                }
+            }
+        }
+        currentU += (*character == ' ') ? 4 * scale : 6 * scale;
+    }
+}
+
+void MenuScreen::drawExitButton(Ili9341Display& display) const {
+    const uint16_t black = display.rgb565(0, 0, 0);
+    const uint16_t white = display.rgb565(255, 255, 255);
+    display.drawRectangle(8, 8, 38, 30, white, true);
+    drawRotatedText(display, "EXIT", 27, 23, black);
+}
+
+int MenuScreen::drawCollectionPage(Ili9341Display& display, int page) const {
     cJSON* cards = cJSON_Parse(collectionJson_.c_str());
     if (cards == nullptr || !cJSON_IsArray(cards)) {
         cJSON_Delete(cards);
         const uint16_t black = display.rgb565(0, 0, 0);
         const uint16_t white = display.rgb565(255, 255, 255);
         display.fillScreen(black);
-        display.drawRectangle(8, 8, 38, 30, white, true);
-        drawRotatedText(display, "EXIT", 27, 23, black);
+        drawExitButton(display);
         drawRotatedText(display, "COLLECTION", 32, 160, white);
         drawRotatedText(display, "DATA ERROR", 160, 120, white);
         display.present();
-        return;
+        return 0;
     }
 
     const uint16_t black = display.rgb565(0, 0, 0);
     const uint16_t white = display.rgb565(255, 255, 255);
+    const uint16_t separator = display.rgb565(60, 60, 60);
+    const uint16_t outline = display.rgb565(140, 140, 140);
     display.fillScreen(black);
+    drawExitButton(display);
     drawRotatedText(display, "COLLECTION", 32, 160, white);
 
-    constexpr int firstRowY = 35;
-    constexpr int rowHeight = 24;
-    constexpr int maxRows = 8;
+    constexpr int margin = 6;
+    constexpr int pipWidth = 8;
+    constexpr int pipHeight = 14;
+    constexpr int pipSpacing = 3;
+    constexpr int maxPips = 5;
     const int totalCards = cJSON_GetArraySize(cards);
-    const int totalPages = std::max(1, (totalCards + maxRows - 1) / maxRows);
+    const int totalPages =
+        std::max(1, (totalCards + kCollectionMaxRows - 1) / kCollectionMaxRows);
     const int safePage = std::max(0, std::min(page, totalPages - 1));
-    const int firstCard = safePage * maxRows;
-    const int cardCount =
-        std::min(totalCards - firstCard, maxRows);
+    const int firstCard = safePage * kCollectionMaxRows;
+    const int cardCount = std::min(totalCards - firstCard, kCollectionMaxRows);
     for (int index = 0; index < cardCount; ++index) {
         cJSON* card = cJSON_GetArrayItem(cards, firstCard + index);
         cJSON* name = cJSON_GetObjectItemCaseSensitive(card, "name");
@@ -232,64 +349,74 @@ void MenuScreen::drawCollectionPage(Ili9341Display& display, int page) const {
             continue;
         }
 
-        char displayName[30] = {};
-        std::strncpy(displayName, name->valuestring,
-                     sizeof(displayName) - 1);
-        displayName[23] = '\0';
-        const int rowY = firstRowY + index * rowHeight;
-        drawText(display, displayName, 8, rowY, white, 2);
+        const int rowV = kCollectionFirstRowV + index * kCollectionRowHeight;
 
-        const int colorCount = std::min(cJSON_GetArraySize(colors), 5);
-        for (int colorIndex = 0; colorIndex < colorCount; ++colorIndex) {
+        // Colour pips on the right, one per colour (white/blue/black/red/green).
+        const int pipCount = std::min(cJSON_GetArraySize(colors), maxPips);
+        const int pipsWidth =
+            pipCount * pipWidth + std::max(0, pipCount - 1) * pipSpacing;
+        const int pipsStartU = kReaderWidth - margin - pipsWidth;
+        int drawnPips = 0;
+        for (int colorIndex = 0; colorIndex < pipCount; ++colorIndex) {
             cJSON* color = cJSON_GetArrayItem(colors, colorIndex);
             if (!cJSON_IsString(color) || color->valuestring[0] == '\0') {
                 continue;
             }
-
-            uint16_t colorValue = display.rgb565(128, 128, 128);
-            switch (color->valuestring[0]) {
-            case 'W':
-                colorValue = display.rgb565(255, 255, 255);
-                break;
-            case 'U':
-                colorValue = display.rgb565(40, 100, 255);
-                break;
-            case 'B':
-                colorValue = display.rgb565(100, 100, 100);
-                break;
-            case 'R':
-                colorValue = display.rgb565(255, 50, 50);
-                break;
-            case 'G':
-                colorValue = display.rgb565(50, 220, 80);
-                break;
-            default:
-                break;
-            }
-            display.drawRectangle(270 + colorIndex * 10, rowY + 2, 6, 12,
-                                  colorValue, true);
+            const int pipU = pipsStartU + drawnPips * (pipWidth + pipSpacing);
+            readerRect(display, pipU, rowV, pipWidth, pipHeight,
+                       colorPipValue(display, color->valuestring[0]), true);
+            // Outline so a black pip stays visible on the black background.
+            readerRect(display, pipU, rowV, pipWidth, pipHeight, outline, false);
+            ++drawnPips;
         }
-        display.drawLine(8, rowY + 19, 312, rowY + 19,
-                         display.rgb565(60, 60, 60));
+
+        // Name on the left: big text when it fits, small text otherwise.
+        const int nameWidthLimit =
+            (pipCount > 0 ? pipsStartU - margin : kReaderWidth - margin) - margin;
+        char displayName[48] = {};
+        std::strncpy(displayName, name->valuestring, sizeof(displayName) - 1);
+        int scale = textWidth(displayName, 2) <= nameWidthLimit ? 2 : 1;
+        while (textWidth(displayName, scale) > nameWidthLimit &&
+               std::strlen(displayName) > 0) {
+            displayName[std::strlen(displayName) - 1] = '\0';
+        }
+        const int textV = rowV + (scale == 2 ? 0 : 4);
+        readerText(display, displayName, margin, textV, white, scale);
+
+        readerLine(display, margin, rowV + 19, kReaderWidth - margin, rowV + 19,
+                   separator);
     }
 
     if (cardCount == 0) {
-        drawText(display, "NO CARDS", 112, 110, white, 2);
+        const int width = textWidth("NO CARDS", 2);
+        readerText(display, "NO CARDS", (kReaderWidth - width) / 2, 150, white, 2);
     }
+
+    // Previous / page indicator / next.
     const uint16_t buttonColor = display.rgb565(80, 80, 80);
-    display.drawRectangle(55, 207, 42, 25, buttonColor, false);
-    display.drawLine(84, 213, 70, 219, white);
-    display.drawLine(70, 219, 84, 225, white);
-    display.drawRectangle(136, 207, 48, 25, buttonColor, false);
+    readerRect(display, kNavPreviousU, kNavV, kNavWidth, kNavHeight, buttonColor, false);
+    readerLine(display, kNavPreviousU + 28, kNavV + 7, kNavPreviousU + 20,
+               kNavV + 13, white);
+    readerLine(display, kNavPreviousU + 20, kNavV + 13, kNavPreviousU + 28,
+               kNavV + 19, white);
+
+    readerRect(display, kNavPageU, kNavV, kNavWidth, kNavHeight, buttonColor, false);
     char pageText[24] = {};
-    std::snprintf(pageText, sizeof(pageText), "%d/%d", safePage + 1,
-                  totalPages);
-    drawText(display, pageText, 145, 215, white, 1);
-    display.drawRectangle(223, 207, 42, 25, buttonColor, false);
-    display.drawLine(236, 213, 250, 219, white);
-    display.drawLine(250, 219, 236, 225, white);
+    std::snprintf(pageText, sizeof(pageText), "%d/%d", safePage + 1, totalPages);
+    const int pageScale = textWidth(pageText, 2) <= kNavWidth - 6 ? 2 : 1;
+    const int pageTextWidth = textWidth(pageText, pageScale);
+    readerText(display, pageText, kNavPageU + (kNavWidth - pageTextWidth) / 2,
+               kNavV + (kNavHeight - 7 * pageScale) / 2 + 1, white, pageScale);
+
+    readerRect(display, kNavNextU, kNavV, kNavWidth, kNavHeight, buttonColor, false);
+    readerLine(display, kNavNextU + 20, kNavV + 7, kNavNextU + 28, kNavV + 13,
+               white);
+    readerLine(display, kNavNextU + 28, kNavV + 13, kNavNextU + 20, kNavV + 19,
+               white);
+
     display.present();
     cJSON_Delete(cards);
+    return safePage;
 }
 
 int MenuScreen::hitTest(int x, int y) const {
@@ -311,9 +438,11 @@ bool MenuScreen::hitExit(int x, int y) const {
 }
 
 bool MenuScreen::hitCollectionPrevious(int x, int y) const {
-    return x >= 55 && x < 97 && y >= 207 && y < 232;
+    return insideReaderRect(x, y, kNavPreviousU, kNavV, kNavWidth, kNavHeight,
+                            kNavTouchPadding);
 }
 
 bool MenuScreen::hitCollectionNext(int x, int y) const {
-    return x >= 223 && x < 265 && y >= 207 && y < 232;
+    return insideReaderRect(x, y, kNavNextU, kNavV, kNavWidth, kNavHeight,
+                            kNavTouchPadding);
 }

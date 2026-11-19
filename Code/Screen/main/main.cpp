@@ -178,12 +178,10 @@ extern "C" void app_main(void) {
             }
         } else if (page == 1 && menu.hitCollectionPrevious(point.x, point.y)) {
             if (collectionPage > 0) {
-                --collectionPage;
-                menu.drawCollectionPage(display, collectionPage);
+                collectionPage = menu.drawCollectionPage(display, collectionPage - 1);
             }
         } else if (page == 1 && menu.hitCollectionNext(point.x, point.y)) {
-            ++collectionPage;
-            menu.drawCollectionPage(display, collectionPage);
+            collectionPage = menu.drawCollectionPage(display, collectionPage + 1);
         } else if (menu.hitExit(point.x, point.y)) {
             page = -1;
             collectionPage = 0;
