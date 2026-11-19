@@ -14,7 +14,10 @@ idf_component_register(
         "../collection"
         "../display"
         "../image_reconition"
-    EMBED_FILES
-        "../test_Image/test.jpeg"
-    REQUIRES driver json esp_http_client esp_wifi esp_netif nvs_flash esp_event esp-tls mbedtls
+    REQUIRES driver json esp_http_client esp_wifi esp_netif nvs_flash esp_event esp-tls mbedtls spiffs
 )
+
+# The OCR demo cards (test1.jpeg .. test9.jpeg) are packed into the storage
+# partition instead of the app, which is nearly full. Flashing the storage
+# partition replaces the saved collection.
+spiffs_create_partition_image(storage ../test_Image FLASH_IN_PROJECT)

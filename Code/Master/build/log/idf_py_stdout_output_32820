@@ -1,0 +1,291 @@
+ets Jul 29 2019 12:21:46
+
+rst:0x1 (POWERON_RESET),boot:0x13 (SPI_FAST_FLASH_BOOT)
+configsip: 0, SPIWP:0xee
+clk_drv:0x00,q_drv:0x00,d_drv:0x00,cs0_drv:0x00,hd_drv:0x00,wp_drv:0x00
+mode:DIO, clock div:2
+load:0x3fff0030,len:6276
+load:0x40078000,len:15716
+load:0x40080400,len:4
+ho 8 tail 4 room 4
+load:0x40080404,len:3860
+entry 0x4008063c
+[0;32mI (31) boot: ESP-IDF HEAD-HASH-NOTFOUND 2nd stage bootloader[0m
+[0;32mI (31) boot: compile time Nov 19 2026 16:48:54[0m
+[0;32mI (31) boot: Multicore bootloader[0m
+[0;32mI (34) boot: chip revision: v3.1[0m
+[0;32mI (36) boot.esp32: SPI Speed      : 40MHz[0m
+[0;32mI (40) boot.esp32: SPI Mode       : DIO[0m
+[0;32mI (44) boot.esp32: SPI Flash Size : 2MB[0m
+[0;32mI (47) boot: Enabling RNG early entropy source...[0m
+[0;32mI (52) boot: Partition Table:[0m
+[0;32mI (54) boot: ## Label            Usage          Type ST Offset   Length[0m
+[0;32mI (61) boot:  0 nvs              WiFi data        01 02 00009000 00006000[0m
+[0;32mI (67) boot:  1 phy_init         RF data          01 01 0000f000 00001000[0m
+[0;32mI (74) boot:  2 factory          factory app      00 00 00010000 00100000[0m
+[0;32mI (80) boot:  3 storage          Unknown data     01 82 00110000 000e0000[0m
+[0;32mI (87) boot: End of partition table[0m
+[0;32mI (90) esp_image: segment 0: paddr=00010020 vaddr=3f400020 size=32608h (206344) map[0m
+[0;32mI (168) esp_image: segment 1: paddr=00042630 vaddr=3ff80000 size=0001ch (    28) load[0m
+[0;32mI (168) esp_image: segment 2: paddr=00042654 vaddr=3ffb0000 size=03f68h ( 16232) load[0m
+[0;32mI (178) esp_image: segment 3: paddr=000465c4 vaddr=40080000 size=09a54h ( 39508) load[0m
+[0;32mI (195) esp_image: segment 4: paddr=00050020 vaddr=400d0020 size=b0134h (721204) map[0m
+[0;32mI (441) esp_image: segment 5: paddr=0010015c vaddr=40089a54 size=0ebb0h ( 60336) load[0m
+[0;32mI (477) boot: Loaded app from partition at offset 0x10000[0m
+[0;32mI (477) boot: Disabling RNG early entropy source...[0m
+[0;32mI (487) cpu_start: Multicore app[0m
+[0;32mI (496) cpu_start: Pro cpu start user code[0m
+[0;32mI (496) cpu_start: cpu freq: 160000000 Hz[0m
+[0;32mI (496) app_init: Application information:[0m
+[0;32mI (496) app_init: Project name:     ManaSnapperMaster[0m
+[0;32mI (500) app_init: App version:      1[0m
+[0;32mI (504) app_init: Compile time:     Nov 19 2026 16:49:45[0m
+[0;32mI (509) app_init: ELF file SHA256:  c7637cbb9...[0m
+[0;32mI (513) app_init: ESP-IDF:          HEAD-HASH-NOTFOUND[0m
+[0;32mI (518) efuse_init: Min chip rev:     v0.0[0m
+[0;32mI (522) efuse_init: Max chip rev:     v3.99 [0m
+[0;32mI (526) efuse_init: Chip rev:         v3.1[0m
+[0;32mI (530) heap_init: Initializing. RAM available for dynamic allocation:[0m
+[0;32mI (536) heap_init: At 3FFAE6E0 len 00001920 (6 KiB): DRAM[0m
+[0;32mI (541) heap_init: At 3FFBA700 len 00025900 (150 KiB): DRAM[0m
+[0;32mI (546) heap_init: At 3FFE0440 len 00003AE0 (14 KiB): D/IRAM[0m
+[0;32mI (552) heap_init: At 3FFE4350 len 0001BCB0 (111 KiB): D/IRAM[0m
+[0;32mI (557) heap_init: At 40098604 len 000079FC (30 KiB): IRAM[0m
+[0;32mI (564) spi_flash: detected chip: generic[0m
+[0;32mI (566) spi_flash: flash io: dio[0m
+[0;33mW (569) spi_flash: Detected size(4096k) larger than the size in the binary image header(2048k). Using the size in the binary image header.[0m
+[0;32mI (583) main_task: Started on CPU0[0m
+[0;32mI (593) main_task: Calling app_main()[0m
+[0;33mW (593) CamCommunication: Listening for the camera on IO26[0m
+[0;32mI (623) wifi:wifi driver task: 3ffccd20, prio:23, stack:6656, core=0[0m
+[0;32mI (633) wifi:wifi firmware version: 48ea317a7[0m
+[0;32mI (633) wifi:wifi certification version: v7.0[0m
+[0;32mI (633) wifi:config NVS flash: enabled[0m
+[0;32mI (633) wifi:config nano formatting: disabled[0m
+[0;32mI (643) wifi:Init data frame dynamic rx buffer num: 32[0m
+[0;32mI (643) wifi:Init static rx mgmt buffer num: 5[0m
+[0;32mI (643) wifi:Init management short buffer num: 32[0m
+[0;32mI (653) wifi:Init dynamic tx buffer num: 32[0m
+[0;32mI (653) wifi:Init static rx buffer size: 1600[0m
+[0;32mI (663) wifi:Init static rx buffer num: 10[0m
+[0;32mI (663) wifi:Init dynamic rx buffer num: 32[0m
+[0;32mI (673) wifi_init: rx ba win: 6[0m
+[0;32mI (673) wifi_init: accept mbox: 6[0m
+[0;32mI (673) wifi_init: tcpip mbox: 32[0m
+[0;32mI (673) wifi_init: udp mbox: 6[0m
+[0;32mI (683) wifi_init: tcp mbox: 6[0m
+[0;32mI (683) wifi_init: tcp tx win: 5760[0m
+[0;32mI (683) wifi_init: tcp rx win: 5760[0m
+[0;32mI (693) wifi_init: tcp mss: 1440[0m
+[0;32mI (693) wifi_init: WiFi IRAM OP enabled[0m
+[0;32mI (693) wifi_init: WiFi RX IRAM OP enabled[0m
+[0;33mW (703) wifi:Password length matches WPA2 standards, authmode threshold changes from OPEN to WPA2[0m
+[0;32mI (713) phy_init: phy_version 4840,02e0d70,Sep  2 2024,19:39:07[0m
+[0;33mW (803) phy_init: saving new calibration data because of checksum failure, mode(0)[0m
+[0;32mI (823) wifi:mode : sta (58:2a:bd:60:60:5c)[0m
+[0;32mI (823) wifi:enable tsf[0m
+[0;32mI (843) wifi:new:<10,2>, old:<1,0>, ap:<255,255>, sta:<10,2>, prof:1, snd_ch_cfg:0x0[0m
+[0;32mI (843) wifi:state: init -> auth (0xb0)[0m
+OCR demo images on /storage: test1 test2 test3 test4 test5 test6 test7 test8 test9
+Master ready; display UART RX=IO16, TX=IO17; heap free 205832, largest 110592
+[0;32mI (963) wifi:state: auth -> assoc (0x0)[0m
+[0;32mI (983) wifi:state: assoc -> run (0x10)[0m
+[0;32mI (1123) wifi:connected with pamelawifi, aid = 20, channel 10, 40D, bssid = e6:aa:c4:ee:ae:b2[0m
+[0;32mI (1123) wifi:security: WPA2-PSK, phy: bgn, rssi: -69[0m
+[0;32mI (1133) wifi:pm start, type: 1[0m
+
+[0;32mI (1133) wifi:dp: 1, bi: 102400, li: 3, scale listen interval from 307200 us to 307200 us[0m
+[0;32mI (1143) wifi:AP's beacon interval = 102400 us, DTIM period = 1[0m
+[0;32mI (2333) esp_netif_handlers: sta ip: 192.168.1.146, mask: 255.255.255.0, gw: 192.168.1.254[0m
+[0;32mI (2333) ImageRecognition: Got IP: 192.168.1.146[0m
+[0;32mI (4323) wifi:<ba-add>idx:0 (ifx:0, e6:aa:c4:ee:ae:b2), tid:0, ssn:5, winSize:64[0m
+[0;33mW (4603) CamCommunication: Listening for the camera on IO25[0m
+ets Jul 29 2019 12:21:46
+
+rst:0x1 (POWERON_RESET),boot:0x13 (SPI_FAST_FLASH_BOOT)
+configsip: 0, SPIWP:0xee
+clk_drv:0x00,q_drv:0x00,d_drv:0x00,cs0_drv:0x00,hd_drv:0x00,wp_drv:0x00
+mode:DIO, clock div:2
+load:0x3fff0030,len:6276
+load:0x40078000,len:15716
+load:0x40080400,len:4
+ho 8 tail 4 room 4
+load:0x40080404,len:3860
+entry 0x4008063c
+[0;32mI (31) boot: ESP-IDF HEAD-HASH-NOTFOUND 2nd stage bootloader[0m
+[0;32mI (31) boot: compile time Nov 19 2026 16:48:54[0m
+[0;32mI (31) boot: Multicore bootloader[0m
+[0;32mI (34) boot: chip revision: v3.1[0m
+[0;32mI (36) boot.esp32: SPI Speed      : 40MHz[0m
+[0;32mI (40) boot.esp32: SPI Mode       : DIO[0m
+[0;32mI (44) boot.esp32: SPI Flash Size : 2MB[0m
+[0;32mI (47) boot: Enabling RNG early entropy source...[0m
+[0;32mI (52) boot: Partition Table:[0m
+[0;32mI (54) boot: ## Label            Usage          Type ST Offset   Length[0m
+[0;32mI (61) boot:  0 nvs              WiFi data        01 02 00009000 00006000[0m
+[0;32mI (67) boot:  1 phy_init         RF data          01 01 0000f000 00001000[0m
+[0;32mI (74) boot:  2 factory          factory app      00 00 00010000 00100000[0m
+[0;32mI (80) boot:  3 storage          Unknown data     01 82 00110000 000e0000[0m
+[0;32mI (87) boot: End of partition table[0m
+[0;32mI (90) esp_image: segment 0: paddr=00010020 vaddr=3f400020 size=32608h (206344) map[0m
+[0;32mI (168) esp_image: segment 1: paddr=00042630 vaddr=3ff80000 size=0001ch (    28) load[0m
+[0;32mI (168) esp_image: segment 2: paddr=00042654 vaddr=3ffb0000 size=03f68h ( 16232) load[0m
+[0;32mI (178) esp_image: segment 3: paddr=000465c4 vaddr=40080000 size=09a54h ( 39508) load[0m
+[0;32mI (195) esp_image: segment 4: paddr=00050020 vaddr=400d0020 size=b0134h (721204) map[0m
+[0;32mI (441) esp_image: segment 5: paddr=0010015c vaddr=40089a54 size=0ebb0h ( 60336) load[0m
+[0;32mI (477) boot: Loaded app from partition at offset 0x10000[0m
+[0;32mI (477) boot: Disabling RNG early entropy source...[0m
+[0;32mI (487) cpu_start: Multicore app[0m
+[0;32mI (496) cpu_start: Pro cpu start user code[0m
+[0;32mI (496) cpu_start: cpu freq: 160000000 Hz[0m
+[0;32mI (496) app_init: Application information:[0m
+[0;32mI (496) app_init: Project name:     ManaSnapperMaster[0m
+[0;32mI (500) app_init: App version:      1[0m
+[0;32mI (504) app_init: Compile time:     Nov 19 2026 16:49:45[0m
+[0;32mI (509) app_init: ELF file SHA256:  c7637cbb9...[0m
+[0;32mI (513) app_init: ESP-IDF:          HEAD-HASH-NOTFOUND[0m
+[0;32mI (518) efuse_init: Min chip rev:     v0.0[0m
+[0;32mI (522) efuse_init: Max chip rev:     v3.99 [0m
+[0;32mI (526) efuse_init: Chip rev:         v3.1[0m
+[0;32mI (530) heap_init: Initializing. RAM available for dynamic allocation:[0m
+[0;32mI (536) heap_init: At 3FFAE6E0 len 00001920 (6 KiB): DRAM[0m
+[0;32mI (541) heap_init: At 3FFBA700 len 00025900 (150 KiB): DRAM[0m
+[0;32mI (546) heap_init: At 3FFE0440 len 00003AE0 (14 KiB): D/IRAM[0m
+[0;32mI (552) heap_init: At 3FFE4350 len 0001BCB0 (111 KiB): D/IRAM[0m
+[0;32mI (557) heap_init: At 40098604 len 000079FC (30 KiB): IRAM[0m
+[0;32mI (564) spi_flash: detected chip: generic[0m
+[0;32mI (566) spi_flash: flash io: dio[0m
+[0;33mW (569) spi_flash: Detected size(4096k) larger than the size in the binary image header(2048k). Using the size in the binary image header.[0m
+[0;32mI (583) main_task: Started on CPU0[0m
+[0;32mI (593) main_task: Calling app_main()[0m
+[0;33mW (593) CamCommunication: Listening for the camera on IO26[0m
+[0;32mI (623) wifi:wifi driver task: 3ffccd20, prio:23, stack:6656, core=0[0m
+[0;32mI (633) wifi:wifi firmware version: 48ea317a7[0m
+[0;32mI (633) wifi:wifi certification version: v7.0[0m
+[0;32mI (633) wifi:config NVS flash: enabled[0m
+[0;32mI (633) wifi:config nano formatting: disabled[0m
+[0;32mI (643) wifi:Init data frame dynamic rx buffer num: 32[0m
+[0;32mI (643) wifi:Init static rx mgmt buffer num: 5[0m
+[0;32mI (643) wifi:Init management short buffer num: 32[0m
+[0;32mI (653) wifi:Init dynamic tx buffer num: 32[0m
+[0;32mI (653) wifi:Init static rx buffer size: 1600[0m
+[0;32mI (663) wifi:Init static rx buffer num: 10[0m
+[0;32mI (663) wifi:Init dynamic rx buffer num: 32[0m
+[0;32mI (673) wifi_init: rx ba win: 6[0m
+[0;32mI (673) wifi_init: accept mbox: 6[0m
+[0;32mI (673) wifi_init: tcpip mbox: 32[0m
+[0;32mI (673) wifi_init: udp mbox: 6[0m
+[0;32mI (683) wifi_init: tcp mbox: 6[0m
+[0;32mI (683) wifi_init: tcp tx win: 5760[0m
+[0;32mI (683) wifi_init: tcp rx win: 5760[0m
+[0;32mI (693) wifi_init: tcp mss: 1440[0m
+[0;32mI (693) wifi_init: WiFi IRAM OP enabled[0m
+[0;32mI (693) wifi_init: WiFi RX IRAM OP enabled[0m
+[0;33mW (703) wifi:Password length matches WPA2 standards, authmode threshold changes from OPEN to WPA2[0m
+[0;32mI (713) phy_init: phy_version 4840,02e0d70,Sep  2 2024,19:39:07[0m
+[0;33mW (793) phy_init: saving new calibration data because of checksum failure, mode(0)[0m
+[0;32mI (843) wifi:mode : sta (58:2a:bd:60:60:5c)[0m
+[0;32mI (843) wifi:enable tsf[0m
+[0;32mI (863) wifi:new:<10,2>, old:<1,0>, ap:<255,255>, sta:<10,2>, prof:1, snd_ch_cfg:0x0[0m
+[0;32mI (863) wifi:state: init -> auth (0xb0)[0m
+OCR demo images on /storage: test1 test2 test3 test4 test5 test6 test7 test8 test9
+Master ready; display UART RX=IO16, TX=IO17; heap free 205572, largest 110592
+DISPLAY RX 5 bytes: IDLE
+
+[0;32mI (1023) wifi:state: auth -> assoc (0x0)[0m
+[0;32mI (1043) wifi:state: assoc -> run (0x10)[0m
+DISPLAY RX 5 bytes: IDLE
+
+[0;32mI (1843) wifi:connected with pamelawifi, aid = 21, channel 10, 40D, bssid = e6:aa:c4:ee:ae:d2[0m
+[0;32mI (1843) wifi:security: WPA2-PSK, phy: bgn, rssi: -81[0m
+[0;32mI (1843) wifi:pm start, type: 1[0m
+
+[0;32mI (1843) wifi:dp: 1, bi: 102400, li: 3, scale listen interval from 307200 us to 307200 us[0m
+[0;32mI (3003) wifi:AP's beacon interval = 102400 us, DTIM period = 1[0m
+[0;32mI (3023) wifi:<ba-add>idx:0 (ifx:0, e6:aa:c4:ee:ae:d2), tid:0, ssn:4, winSize:64[0m
+[0;32mI (3643) esp_netif_handlers: sta ip: 192.168.1.146, mask: 255.255.255.0, gw: 192.168.1.254[0m
+[0;32mI (3643) ImageRecognition: Got IP: 192.168.1.146[0m
+DISPLAY RX 9 bytes: OCR_DEMO
+
+[0;32mI (8033) ImageRecognition: OCR HTTP status: 200[0m
+[0;32mI (8033) ImageRecognition: OCR word: Everglove Courier[0m
+[0;32mI (8033) ImageRecognition: OCR word: 2[0m
+OCR demo: test4.jpeg -> "Everglove Courier"
+Add card: looking up printings of "Everglove Courier"
+[0;32mI (9243) esp-x509-crt-bundle: Certificate validated[0m
+[0;32mI (10743) API: Scryfall printings of Everglove Courier, page 1[0m
+[0;32mI (11933) esp-x509-crt-bundle: Certificate validated[0m
+[0;32mI (13393) API: 1 printings of Everglove Courier[0m
+Add card: 1 printings of "Everglove Courier" sent to the screen
+Current state: OCR_DEMO
+[0;33mW (13403) CamCommunication: Listening for the camera on IO25[0m
+DISPLAY RX 15 bytes: ADD_CARD_SET 0
+
+Add card: fetching ons #262 (Onslaught)
+[0;32mI (18583) API: Scryfall card: https://api.scryfall.com/cards/ons/262[0m
+[0;32mI (19873) esp-x509-crt-bundle: Certificate validated[0m
+[0;32mI (21433) Data: Collection saved to /storage/collection.json (1220 bytes)[0m
+Current state: ADD_CARD
+DISPLAY RX 5 bytes: IDLE
+
+DISPLAY RX 9 bytes: OCR_DEMO
+
+[0;32mI (28413) ImageRecognition: OCR HTTP status: 200[0m
+[0;32mI (28413) ImageRecognition: OCR word: True Conviction[0m
+[0;32mI (28413) ImageRecognition: OCR word: 3[0m
+OCR demo: test3.jpeg -> "True Conviction"
+Add card: looking up printings of "True Conviction"
+[0;32mI (29823) esp-x509-crt-bundle: Certificate validated[0m
+[0;32mI (31093) API: Scryfall printings of True Conviction, page 1[0m
+[0;32mI (32373) esp-x509-crt-bundle: Certificate validated[0m
+[0;32mI (35023) API: 6 printings of True Conviction[0m
+Add card: 6 printings of "True Conviction" sent to the screen
+Current state: OCR_DEMO
+DISPLAY RX 15 bytes: ADD_CARD_SET 3
+
+Add card: fetching sld #1082 (Secret Lair Drop)
+[0;32mI (42823) API: Scryfall card: https://api.scryfall.com/cards/sld/1082[0m
+[0;32mI (44083) esp-x509-crt-bundle: Certificate validated[0m
+[0;32mI (45523) Data: Collection saved to /storage/collection.json (2265 bytes)[0m
+Current state: ADD_CARD
+DISPLAY RX 5 bytes: IDLE
+
+DISPLAY RX 11 bytes: COLLECTION
+
+Collection list sent to display
+Current state: COLLECTION
+DISPLAY RX 12 bytes: CARD_INFO 1
+
+Current state: CARD_INFO
+DISPLAY RX 13 bytes: CARD_IMAGE 1
+
+[0;32mI (50533) API: Download: https://wsrv.nl/?url=https%3A%2F%2Fcards.scryfall.io%2Fsmall%2Ffront%2F1%2F3%2F13bf5786-e41a-4839-b8a0-5c7a413b23d0.jpg%3F1783945042&output=jpg&w=146&h=204&q=85[0m
+[0;32mI (51833) esp-x509-crt-bundle: Certificate validated[0m
+Card image: sent 12148 bytes
+Current state: CARD_IMAGE
+DISPLAY RX 12 bytes: CARD_INFO 2
+
+Current state: CARD_INFO
+DISPLAY RX 13 bytes: CARD_IMAGE 2
+
+[0;32mI (57093) API: Download: https://wsrv.nl/?url=https%3A%2F%2Fcards.scryfall.io%2Fsmall%2Ffront%2F1%2F8%2F1879adda-c2a7-4e5e-99db-31024e75b585.jpg%3F1783918776&output=jpg&w=146&h=204&q=85[0m
+[0;32mI (58383) esp-x509-crt-bundle: Certificate validated[0m
+Card image: sent 12973 bytes
+Current state: CARD_IMAGE
+DISPLAY RX 5 bytes: IDLE
+
+DISPLAY RX 27 bytes: ADD_CARD_TITLE NICOL BOLAS
+
+Add card: looking up printings of "NICOL BOLAS"
+[0;32mI (90723) esp-x509-crt-bundle: Certificate validated[0m
+[0;32mI (91733) API: Scryfall printings of Nicol Bolas, page 1[0m
+[0;32mI (93013) esp-x509-crt-bundle: Certificate validated[0m
+[0;32mI (95523) API: 10 printings of Nicol Bolas[0m
+Add card: 10 printings of "NICOL BOLAS" sent to the screen
+Current state: ADD_CARD
+DISPLAY RX 15 bytes: ADD_CARD_SET 9
+
+Add card: fetching bchr #81 (Chronicles Foreign Black Border)
+[0;32mI (104703) API: Scryfall card: https://api.scryfall.com/cards/bchr/81[0m
+[0;32mI (106013) esp-x509-crt-bundle: Certificate validated[0m
+[0;32mI (107683) Data: Collection saved to /storage/col

@@ -1,0 +1,21 @@
+[0/1] C:\Windows\system32\cmd.exe /C "cd /D C:\Users\wpiso\Documents\GitHub\Game_The_mana_snapper\Code\Screen\build && C:\Users\wpiso\.espressif\tools\cmake\3.30.2\bin\cmake.exe -D IDF_SIZE_TOOL=C:/Users/wpiso/.espressif/python_env/idf5.4_py3.11_env/Scripts/python.exe;-m;esp_idf_size -D MAP_FILE=C:/Users/wpiso/Documents/GitHub/Game_The_mana_snapper/Code/Screen/build/Game_sprites.map -D OUTPUT_JSON= -P C:/Espressif/esp-idf/tools/cmake/run_size_tool.cmake"
+                             Memory Type Usage Summary                              
++----------------------------------------------------------------------------------+
+| Memory Type/Section   | Used [bytes] | Used [%] | Remain [bytes] | Total [bytes] |
+|-----------------------+--------------+----------+----------------+---------------|
+| Flash Data            |      2779204 |          |                |               |
+|    .rodata            |      2778948 |          |                |               |
+|    .appdesc           |          256 |          |                |               |
+| Flash Code            |       147154 |          |                |               |
+|    .text              |       147154 |          |                |               |
+| IRAM                  |        64090 |     48.9 |          66982 |        131072 |
+|    .text              |        63063 |    48.11 |                |               |
+|    .vectors           |         1027 |     0.78 |                |               |
+| DRAM                  |        17932 |     9.92 |         162804 |        180736 |
+|    .data              |         9404 |      5.2 |                |               |
+|    .bss               |         8528 |     4.72 |                |               |
+| RTC FAST              |           28 |     0.34 |           8164 |          8192 |
+|    .force_fast        |           28 |     0.34 |                |               |
+| RTC SLOW              |           24 |     0.29 |           8168 |          8192 |
+|    .rtc_slow_reserved |           24 |     0.29 |                |               |
++----------------------------------------------------------------------------------+

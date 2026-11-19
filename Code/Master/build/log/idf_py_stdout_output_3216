@@ -1,0 +1,352 @@
+ets Jul 29 2019 12:21:46
+
+rst:0x1 (POWERON_RESET),boot:0x13 (SPI_FAST_FLASH_BOOT)
+configsip: 0, SPIWP:0xee
+clk_drv:0x00,q_drv:0x00,d_drv:0x00,cs0_drv:0x00,hd_drv:0x00,wp_drv:0x00
+mode:DIO, clock div:2
+load:0x3fff0030,len:6276
+load:0x40078000,len:15716
+load:0x40080400,len:4
+ho 8 tail 4 room 4
+load:0x40080404,len:3860
+entry 0x4008063c
+[0;32mI (31) boot: ESP-IDF HEAD-HASH-NOTFOUND 2nd stage bootloader[0m
+[0;32mI (31) boot: compile time Nov 19 2026 16:48:54[0m
+[0;32mI (31) boot: Multicore bootloader[0m
+[0;32mI (34) boot: chip revision: v3.1[0m
+[0;32mI (36) boot.esp32: SPI Speed      : 40MHz[0m
+[0;32mI (40) boot.esp32: SPI Mode       : DIO[0m
+[0;32mI (44) boot.esp32: SPI Flash Size : 2MB[0m
+[0;32mI (47) boot: Enabling RNG early entropy source...[0m
+[0;32mI (52) boot: Partition Table:[0m
+[0;32mI (54) boot: ## Label            Usage          Type ST Offset   Length[0m
+[0;32mI (61) boot:  0 nvs              WiFi data        01 02 00009000 00006000[0m
+[0;32mI (67) boot:  1 phy_init         RF data          01 01 0000f000 00001000[0m
+[0;32mI (74) boot:  2 factory          factory app      00 00 00010000 00100000[0m
+[0;32mI (80) boot:  3 storage          Unknown data     01 82 00110000 000e0000[0m
+[0;32mI (87) boot: End of partition table[0m
+[0;32mI (90) esp_image: segment 0: paddr=00010020 vaddr=3f400020 size=31fb8h (204728) map[0m
+[0;32mI (167) esp_image: segment 1: paddr=00041fe0 vaddr=3ff80000 size=0001ch (    28) load[0m
+[0;32mI (168) esp_image: segment 2: paddr=00042004 vaddr=3ffb0000 size=03f68h ( 16232) load[0m
+[0;32mI (177) esp_image: segment 3: paddr=00045f74 vaddr=40080000 size=0a0a4h ( 41124) load[0m
+[0;32mI (195) esp_image: segment 4: paddr=00050020 vaddr=400d0020 size=aee68h (716392) map[0m
+[0;32mI (440) esp_image: segment 5: paddr=000fee90 vaddr=4008a0a4 size=0e560h ( 58720) load[0m
+[0;32mI (474) boot: Loaded app from partition at offset 0x10000[0m
+[0;32mI (475) boot: Disabling RNG early entropy source...[0m
+[0;32mI (485) cpu_start: Multicore app[0m
+[0;32mI (493) cpu_start: Pro cpu start user code[0m
+[0;32mI (493) cpu_start: cpu freq: 160000000 Hz[0m
+[0;32mI (493) app_init: Application information:[0m
+[0;32mI (494) app_init: Project name:     ManaSnapperMaster[0m
+[0;32mI (498) app_init: App version:      1[0m
+[0;32mI (502) app_init: Compile time:     Nov 19 2026 16:49:45[0m
+[0;32mI (507) app_init: ELF file SHA256:  8761fea18...[0m
+[0;32mI (511) app_init: ESP-IDF:          HEAD-HASH-NOTFOUND[0m
+[0;32mI (516) efuse_init: Min chip rev:     v0.0[0m
+[0;32mI (520) efuse_init: Max chip rev:     v3.99 [0m
+[0;32mI (524) efuse_init: Chip rev:         v3.1[0m
+[0;32mI (528) heap_init: Initializing. RAM available for dynamic allocation:[0m
+[0;32mI (534) heap_init: At 3FFAE6E0 len 00001920 (6 KiB): DRAM[0m
+[0;32mI (539) heap_init: At 3FFB8940 len 000276C0 (157 KiB): DRAM[0m
+[0;32mI (544) heap_init: At 3FFE0440 len 00003AE0 (14 KiB): D/IRAM[0m
+[0;32mI (550) heap_init: At 3FFE4350 len 0001BCB0 (111 KiB): D/IRAM[0m
+[0;32mI (555) heap_init: At 40098604 len 000079FC (30 KiB): IRAM[0m
+[0;32mI (562) spi_flash: detected chip: generic[0m
+[0;32mI (564) spi_flash: flash io: dio[0m
+[0;33mW (567) spi_flash: Detected size(4096k) larger than the size in the binary image header(2048k). Using the size in the binary image header.[0m
+[0;32mI (580) main_task: Started on CPU0[0m
+[0;32mI (590) main_task: Calling app_main()[0m
+[0;33mW (590) CamCommunication: Listening for the camera on IO26[0m
+[0;32mI (620) wifi:wifi driver task: 3ffcaedc, prio:23, stack:6656, core=0[0m
+[0;32mI (630) wifi:wifi firmware version: 48ea317a7[0m
+[0;32mI (630) wifi:wifi certification version: v7.0[0m
+[0;32mI (630) wifi:config NVS flash: enabled[0m
+[0;32mI (630) wifi:config nano formatting: disabled[0m
+[0;32mI (640) wifi:Init data frame dynamic rx buffer num: 32[0m
+[0;32mI (640) wifi:Init static rx mgmt buffer num: 5[0m
+[0;32mI (640) wifi:Init management short buffer num: 32[0m
+[0;32mI (650) wifi:Init dynamic tx buffer num: 32[0m
+[0;32mI (650) wifi:Init static rx buffer size: 1600[0m
+[0;32mI (660) wifi:Init static rx buffer num: 10[0m
+[0;32mI (660) wifi:Init dynamic rx buffer num: 32[0m
+[0;32mI (670) wifi_init: rx ba win: 6[0m
+[0;32mI (670) wifi_init: accept mbox: 6[0m
+[0;32mI (670) wifi_init: tcpip mbox: 32[0m
+[0;32mI (670) wifi_init: udp mbox: 6[0m
+[0;32mI (680) wifi_init: tcp mbox: 6[0m
+[0;32mI (680) wifi_init: tcp tx win: 5760[0m
+[0;32mI (680) wifi_init: tcp rx win: 5760[0m
+[0;32mI (680) wifi_init: tcp mss: 1440[0m
+[0;32mI (690) wifi_init: WiFi IRAM OP enabled[0m
+[0;32mI (690) wifi_init: WiFi RX IRAM OP enabled[0m
+[0;33mW (700) wifi:Password length matches WPA2 standards, authmode threshold changes from OPEN to WPA2[0m
+[0;32mI (710) phy_init: phy_version 4840,02e0d70,Sep  2 2024,19:39:07[0m
+[0;33mW (810) phy_init: saving new calibration data because of checksum failure, mode(0)[0m
+[0;32mI (860) wifi:mode : sta (58:2a:bd:60:60:5c)[0m
+[0;32mI (860) wifi:enable tsf[0m
+[0;32mI (880) wifi:new:<10,2>, old:<1,0>, ap:<255,255>, sta:<10,2>, prof:1, snd_ch_cfg:0x0[0m
+[0;32mI (880) wifi:state: init -> auth (0xb0)[0m
+[0;32mI (940) Data: Collection loaded from /storage/collection.json[0m
+Master ready; display UART RX=IO16, TX=IO17; heap free 206568, largest 110592
+[0;32mI (970) wifi:state: auth -> assoc (0x0)[0m
+[0;32mI (1970) wifi:state: assoc -> init (0x400)[0m
+[0;32mI (1980) wifi:new:<10,0>, old:<10,2>, ap:<255,255>, sta:<10,2>, prof:1, snd_ch_cfg:0x0[0m
+[0;33mW (1980) ImageRecognition: WiFi disconnected, retrying[0m
+[0;32mI (1990) wifi:new:<10,2>, old:<10,0>, ap:<255,255>, sta:<10,2>, prof:1, snd_ch_cfg:0x0[0m
+[0;32mI (1990) wifi:state: init -> auth (0xb0)[0m
+[0;32mI (2010) wifi:state: auth -> assoc (0x0)[0m
+[0;32mI (2040) wifi:state: assoc -> run (0x10)[0m
+[0;32mI (2210) wifi:connected with pamelawifi, aid = 23, channel 10, 40D, bssid = e6:aa:c4:ee:dc:62[0m
+[0;32mI (2210) wifi:security: WPA2-PSK, phy: bgn, rssi: -71[0m
+[0;32mI (2210) wifi:pm start, type: 1[0m
+
+[0;32mI (2210) wifi:dp: 1, bi: 102400, li: 3, scale listen interval from 307200 us to 307200 us[0m
+[0;32mI (2300) wifi:AP's beacon interval = 102400 us, DTIM period = 1[0m
+[0;32mI (3290) esp_netif_handlers: sta ip: 192.168.1.146, mask: 255.255.255.0, gw: 192.168.1.254[0m
+[0;32mI (3290) ImageRecognition: Got IP: 192.168.1.146[0m
+DISPLAY RX 5 bytes: IDLE
+
+Current state: IDLE
+DISPLAY RX 19 bytes: ADD_CARD
+CAM_FRAME
+
+Add card: camera preview started
+Current state: CAM
+[0;32mI (7220) wifi:<ba-add>idx:0 (ifx:0, e6:aa:c4:ee:dc:62), tid:0, ssn:5, winSize:64[0m
+DISPLAY RX 10 bytes: CAM_FRAME
+
+[0;33mW (10930) CamCommunication: Listening for the camera on IO25[0m
+DISPLAY RX 10 bytes: CAM_FRAME
+
+[0;32mI (11210) CamCommunication: Received image frame: 13523 bytes[0m
+[0;32mI (11690) CamCommunication: Received image frame: 13501 bytes[0m
+DISPLAY RX 10 bytes: CAM_FRAME
+
+[0;32mI (12010) CamCommunication: Received image frame: 13499 bytes[0m
+[0;32mI (12290) CamCommunication: Received image frame: 13506 bytes[0m
+DISPLAY RX 10 bytes: CAM_FRAME
+
+[0;32mI (12780) CamCommunication: Received image frame: 13475 bytes[0m
+[0;32mI (13170) CamCommunication: Received image frame: 13487 bytes[0m
+DISPLAY RX 10 bytes: CAM_FRAME
+
+[0;32mI (13510) CamCommunication: Received image frame: 13493 bytes[0m
+DISPLAY RX 10 bytes: CAM_FRAME
+
+[0;32mI (14000) CamCommunication: Received image frame: 13552 bytes[0m
+[0;32mI (14060) CamCommunication: Received image frame: 13693 bytes[0m
+DISPLAY RX 10 bytes: CAM_FRAME
+
+[0;32mI (14760) CamCommunication: Received image frame: 14195 bytes[0m
+[0;32mI (15120) CamCommunication: Received image frame: 15153 bytes[0m
+DISPLAY RX 10 bytes: CAM_FRAME
+
+[0;32mI (15680) CamCommunication: Received image frame: 14705 bytes[0m
+DISPLAY RX 10 bytes: CAM_FRAME
+
+[0;32mI (16200) CamCommunication: Received image frame: 14899 bytes[0m
+[0;32mI (16560) CamCommunication: Received image frame: 14857 bytes[0m
+DISPLAY RX 10 bytes: CAM_FRAME
+
+[0;32mI (16920) CamCommunication: Received image frame: 14740 bytes[0m
+DISPLAY RX 10 bytes: CAM_FRAME
+
+[0;32mI (17640) CamCommunication: Received image frame: 15110 bytes[0m
+[0;32mI (17990) CamCommunication: Received image frame: 14059 bytes[0m
+DISPLAY RX 10 bytes: CAM_FRAME
+
+[0;32mI (18540) CamCommunication: Received image frame: 14215 bytes[0m
+DISPLAY RX 10 bytes: CAM_FRAME
+
+[0;32mI (19410) CamCommunication: Received image frame: 14574 bytes[0m
+DISPLAY RX 10 bytes: CAM_FRAME
+
+[0;32mI (19900) CamCommunication: Received image frame: 12813 bytes[0m
+DISPLAY RX 10 bytes: CAM_FRAME
+
+[0;32mI (20440) CamCommunication: Received image frame: 13221 bytes[0m
+DISPLAY RX 10 bytes: CAM_FRAME
+
+[0;32mI (21110) CamCommunication: Received image frame: 12622 bytes[0m
+DISPLAY RX 10 bytes: CAM_FRAME
+
+[0;32mI (21580) CamCommunication: Received image frame: 12666 bytes[0m
+[0;32mI (21910) CamCommunication: Received image frame: 12697 bytes[0m
+DISPLAY RX 10 bytes: CAM_FRAME
+
+[0;32mI (22260) CamCommunication: Received image frame: 12793 bytes[0m
+DISPLAY RX 10 bytes: CAM_FRAME
+
+[0;32mI (22930) CamCommunication: Received image frame: 13265 bytes[0m
+[0;32mI (23280) CamCommunication: Received image frame: 13075 bytes[0m
+DISPLAY RX 10 bytes: CAM_FRAME
+
+[0;32mI (23810) CamCommunication: Received image frame: 12598 bytes[0m
+DISPLAY RX 10 bytes: CAM_FRAME
+
+[0;32mI (24660) CamCommunication: Received image frame: 28602 bytes[0m
+DISPLAY RX 10 bytes: CAM_FRAME
+
+[0;32mI (25140) CamCommunication: Received image frame: 13435 bytes[0m
+DISPLAY RX 10 bytes: CAM_FRAME
+
+[0;32mI (25820) CamCommunication: Received image frame: 13079 bytes[0m
+[0;32mI (26160) CamCommunication: Received image frame: 13110 bytes[0m
+DISPLAY RX 10 bytes: CAM_FRAME
+
+[0;32mI (26500) CamCommunication: Received image frame: 13103 bytes[0m
+[0;32mI (26840) CamCommunication: Received image frame: 13249 bytes[0m
+DISPLAY RX 10 bytes: CAM_FRAME
+
+[0;32mI (27190) CamCommunication: Received image frame: 13088 bytes[0m
+[0;32mI (27380) CamCommunication: Received image frame: 13026 bytes[0m
+DISPLAY RX 10 bytes: CAM_FRAME
+
+[0;32mI (27920) CamCommunication: Received image frame: 13443 bytes[0m
+DISPLAY RX 10 bytes: CAM_FRAME
+
+[0;32mI (28450) CamCommunication: Received image frame: 12506 bytes[0m
+DISPLAY RX 10 bytes: CAM_FRAME
+
+[0;32mI (29040) CamCommunication: Received image frame: 12441 bytes[0m
+DISPLAY RX 10 bytes: CAM_FRAME
+
+[0;32mI (29720) CamCommunication: Received image frame: 26254 bytes[0m
+[0;32mI (30050) CamCommunication: Received image frame: 12517 bytes[0m
+DISPLAY RX 10 bytes: CAM_FRAME
+
+[0;32mI (30450) CamCommunication: Received image frame: 12253 bytes[0m
+DISPLAY RX 10 bytes: CAM_FRAME
+
+[0;32mI (30950) CamCommunication: Received image frame: 12760 bytes[0m
+[0;32mI (31270) CamCommunication: Received image frame: 13077 bytes[0m
+DISPLAY RX 10 bytes: CAM_FRAME
+
+[0;32mI (31610) CamCommunication: Received image frame: 11180 bytes[0m
+DISPLAY RX 10 bytes: CAM_FRAME
+
+[0;32mI (32220) CamCommunication: Received image frame: 10874 bytes[0m
+[0;32mI (32550) CamCommunication: Received image frame: 11102 bytes[0m
+DISPLAY RX 10 bytes: CAM_FRAME
+
+[0;32mI (32870) CamCommunication: Received image frame: 11039 bytes[0m
+DISPLAY RX 10 bytes: CAM_FRAME
+
+[0;32mI (33510) CamCommunication: Received image frame: 11085 bytes[0m
+[0;32mI (33830) CamCommunication: Received image frame: 11020 bytes[0m
+DISPLAY RX 10 bytes: CAM_FRAME
+
+[0;32mI (34150) CamCommunication: Received image frame: 11223 bytes[0m
+DISPLAY RX 10 bytes: CAM_FRAME
+
+[0;32mI (34780) CamCommunication: Received image frame: 11138 bytes[0m
+[0;32mI (35110) CamCommunication: Received image frame: 11583 bytes[0m
+DISPLAY RX 10 bytes: CAM_FRAME
+
+[0;32mI (35440) CamCommunication: Received image frame: 11419 bytes[0m
+DISPLAY RX 10 bytes: CAM_FRAME
+
+[0;32mI (36070) CamCommunication: Received image frame: 11194 bytes[0m
+DISPLAY RX 10 bytes: CAM_FRAME
+
+[0;32mI (37020) CamCommunication: Received image frame: 50496 bytes[0m
+DISPLAY RX 10 bytes: CAM_FRAME
+
+[0;32mI (37670) CamCommunication: Received image frame: 14489 bytes[0m
+[0;32mI (37880) CamCommunication: Received image frame: 14080 bytes[0m
+DISPLAY RX 10 bytes: CAM_FRAME
+
+[0;32mI (38610) CamCommunication: Received image frame: 30260 bytes[0m
+DISPLAY RX 10 bytes: CAM_FRAME
+
+[0;32mI (39300) CamCommunication: Received image frame: 14584 bytes[0m
+[0;32mI (39690) CamCommunication: Received image frame: 15106 bytes[0m
+DISPLAY RX 10 bytes: CAM_FRAME
+
+[0;32mI (40210) CamCommunication: Received image frame: 14619 bytes[0m
+DISPLAY RX 10 bytes: CAM_FRAME
+
+[0;32mI (40760) CamCommunication: Received image frame: 13885 bytes[0m
+DISPLAY RX 10 bytes: CAM_FRAME
+
+[0;32mI (41460) CamCommunication: Received image frame: 14039 bytes[0m
+DISPLAY RX 10 bytes: CAM_FRAME
+
+[0;32mI (41960) CamCommunication: Received image frame: 13862 bytes[0m
+DISPLAY RX 10 bytes: CAM_FRAME
+
+[0;32mI (42660) CamCommunication: Received image frame: 13750 bytes[0m
+[0;32mI (43000) CamCommunication: Received image frame: 13592 bytes[0m
+DISPLAY RX 10 bytes: CAM_FRAME
+
+[0;32mI (43360) CamCommunication: Received image frame: 13233 bytes[0m
+[0;32mI (43690) CamCommunication: Received image frame: 13446 bytes[0m
+DISPLAY RX 10 bytes: CAM_FRAME
+
+[0;32mI (44420) CamCommunication: Received image frame: 43532 bytes[0m
+DISPLAY RX 10 bytes: CAM_FRAME
+
+[0;32mI (44970) CamCommunication: Received image frame: 13237 bytes[0m
+[0;32mI (45240) CamCommunication: Received image frame: 13213 bytes[0m
+DISPLAY RX 10 bytes: CAM_FRAME
+
+[0;32mI (45780) CamCommunication: Received image frame: 13263 bytes[0m
+DISPLAY RX 10 bytes: CAM_FRAME
+
+[0;32mI (46460) CamCommunication: Received image frame: 13203 bytes[0m
+DISPLAY RX 10 bytes: CAM_FRAME
+
+[0;32mI (46950) CamCommunication: Received image frame: 12505 bytes[0m
+[0;32mI (47330) CamCommunication: Received image frame: 13179 bytes[0m
+DISPLAY RX 10 bytes: CAM_FRAME
+
+[0;32mI (47820) CamCommunication: Received image frame: 13751 bytes[0m
+DISPLAY RX 10 bytes: CAM_FRAME
+
+[0;32mI (48140) CamCommunication: Received image frame: 13672 bytes[0m
+[0;32mI (48570) CamCommunication: Received image frame: 14212 bytes[0m
+DISPLAY RX 10 bytes: CAM_FRAME
+
+[0;32mI (49070) CamCommunication: Received image frame: 13668 bytes[0m
+DISPLAY RX 10 bytes: CAM_FRAME
+
+[0;32mI (49620) CamCommunication: Received image frame: 13776 bytes[0m
+DISPLAY RX 10 bytes: CAM_FRAME
+
+[0;32mI (50110) CamCommunication: Received image frame: 13472 bytes[0m
+[0;32mI (50440) CamCommunication: Received image frame: 12705 bytes[0m
+DISPLAY RX 10 bytes: CAM_FRAME
+
+[0;32mI (50790) CamCommunication: Received image frame: 12403 bytes[0m
+[0;32mI (51110) CamCommunication: Received image frame: 12622 bytes[0m
+DISPLAY RX 10 bytes: CAM_FRAME
+
+[0;32mI (51420) CamCommunication: Received image frame: 12596 bytes[0m
+[0;32mI (51710) CamCommunication: Received image frame: 12548 bytes[0m
+DISPLAY RX 10 bytes: CAM_FRAME
+
+[0;32mI (52380) CamCommunication: Received image frame: 12670 bytes[0m
+DISPLAY RX 10 bytes: CAM_FRAME
+
+[0;32mI (52910) CamCommunication: Received image frame: 12647 bytes[0m
+DISPLAY RX 10 bytes: CAM_FRAME
+
+[0;32mI (53440) CamCommunication: Received image frame: 12683 bytes[0m
+DISPLAY RX 10 bytes: CAM_FRAME
+
+[0;32mI (54020) CamCommunication: Received image frame: 12516 bytes[0m
+[0;32mI (54430) CamCommunication: Received image frame: 12464 bytes[0m
+DISPLAY RX 10 bytes: CAM_FRAME
+
+[0;32mI (54890) CamCommunication: Received image frame: 12499 bytes[0m
+DISPLAY RX 10 bytes: CAM_FRAME
+
+[0;32mI (55420) CamCommunication: Received image frame: 12620 bytes[0m
+DISPLAY RX 10 bytes: CAM_FRAME
+
+[0;32mI (56100) CamCommunication: Received image frame: 12906 bytes[0m
+DISPLAY RX 10 bytes: CAM_FRAME
+
+[0;32mI (56580) CamCommunication: Received image frame: 12654 bytes[0m
+[0;32mI (56770) CamCommunication: Received image frame: 12686 bytes[0m
+DISPLAY RX 10 b

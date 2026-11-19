@@ -4,7 +4,15 @@ enum class State {
     Idle,
     Display,
     Collection,
-    Cam
+    Cam,
+    AddCard,
+    OcrDemo,
+    CardInfo,
+    CardImage,
+    CardRemove,
+    CardRemoveOne,
+    Import,
+    Export
 };
 
 void stateMachineInit();

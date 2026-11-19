@@ -17,6 +17,13 @@
 #include "esp_lcd_panel_io.h"
 #include "esp_lcd_panel_ops.h"
 #include "esp_lcd_panel_vendor.h"
+#include "esp_lcd_panel_st7789.h"
+
+// The ILI9341 expects RGB565 with the high byte first, but colors are stored
+// natively (little endian) in the backbuffer, so swap on every pixel write.
+static inline uint16_t panelColor(uint16_t color) {
+  return static_cast<uint16_t>((color >> 8) | (color << 8));
+}
 
 Ili9341Display::Ili9341Display(int mosi, int sclk, int cs, int dc, int rst, int bl)
     : _mosi(mosi), _sclk(sclk), _cs(cs), _dc(dc), _rst(rst), _bl(bl) {}
@@ -96,18 +103,30 @@ void Ili9341Display::setupSPI()
 
 void Ili9341Display::setupPanel() {
 
-#ifdef DISPLAY28 // 2.8 inch display
+// The TPM408-2.8 (Cheap Yellow Display) ships with either an ILI9341 or an
+// ST7789 controller depending on the batch; the box label "7789" marks the
+// ST7789 units. Running ST7789 silicon with the ILI9341 init/gamma gives a
+// washed out image with lifted blacks, so the driver is selected here.
+#define PANEL_ST7789
+
+#if defined(PANEL_ST7789)
   const bool SWAP_AXES = true;
   const bool MIRROR_X = true;
   const bool MIRROR_Y = false;
   const bool INVERT_COLOR = false;
-  #define LCD_ELEMENT_ORDER LCD_RGB_ELEMENT_ORDER_RGB
+  const auto LCD_ELEMENT_ORDER = LCD_RGB_ELEMENT_ORDER_RGB;
+#elif defined(DISPLAY28) // 2.8 inch display
+  const bool SWAP_AXES = true;
+  const bool MIRROR_X = true;
+  const bool MIRROR_Y = false;
+  const bool INVERT_COLOR = false;
+  const auto LCD_ELEMENT_ORDER = LCD_RGB_ELEMENT_ORDER_RGB;
 #else // 2.4 inch display
   const bool SWAP_AXES = true;
   const bool MIRROR_X = false;
   const bool MIRROR_Y = true;
   const bool INVERT_COLOR = false;
-  #define LCD_ELEMENT_ORDER LCD_RGB_ELEMENT_ORDER_RGB
+  const auto LCD_ELEMENT_ORDER = LCD_RGB_ELEMENT_ORDER_RGB;
 #endif
 
   esp_lcd_panel_dev_config_t panel_config = {
@@ -119,7 +138,11 @@ void Ili9341Display::setupPanel() {
       .vendor_config = NULL};
 
     // Create raw panel object without auto init
+#if defined(PANEL_ST7789)
+    ESP_ERROR_CHECK(esp_lcd_new_panel_st7789(_io, &panel_config, &_panel));
+#else
     ESP_ERROR_CHECK(esp_lcd_new_panel_ili9341(_io, &panel_config, &_panel));
+#endif
 
     ESP_ERROR_CHECK(esp_lcd_panel_reset(_panel));
     ESP_ERROR_CHECK(esp_lcd_panel_init(_panel));
@@ -129,6 +152,7 @@ void Ili9341Display::setupPanel() {
     ESP_ERROR_CHECK(esp_lcd_panel_mirror(_panel, MIRROR_X, MIRROR_Y));
     ESP_ERROR_CHECK(esp_lcd_panel_set_gap(_panel, 0, 0));
     ESP_ERROR_CHECK(esp_lcd_panel_invert_color(_panel, INVERT_COLOR));
+    ESP_ERROR_CHECK(esp_lcd_panel_disp_on_off(_panel, true));
 
     ESP_LOGI(TAG, "ESP LCD-panel setup complete.");
 }
@@ -169,7 +193,7 @@ void Ili9341Display::fillScreen(uint16_t color) {
   }
   // Fill the backbuffer
   for (int i = 0; i < (int)backbuffer_len_; ++i) {
-    backbuffer_[i] = color;
+    backbuffer_[i] = panelColor(color);
   }
 }
 
@@ -328,7 +352,7 @@ void Ili9341Display::drawPixel(int x, int y, uint16_t color) {
     return;
   }
   // draw into backbuffer
-  backbuffer_[y * WIDTH + x] = color;
+  backbuffer_[y * WIDTH + x] = panelColor(color);
 }
 
 void Ili9341Display::drawLine(int x0, int y0, int x1, int y1, uint16_t color) {
@@ -449,8 +473,11 @@ void Ili9341Display::drawBitmapRGB565(int x, int y, int w, int h, const uint8_t*
                           + (static_cast<size_t>(srcSkipY + row) * srcRowBytes)
                           + (static_cast<size_t>(srcSkipX) * 2);
 
-    // Copy one clipped scanline (copyW pixels -> copyW*2 bytes)
-    std::memcpy(dst, srow, static_cast<size_t>(copyW) * 2);
+    // Copy one clipped scanline, swapping to the panel's byte order
+    for (int column = 0; column < copyW; ++column) {
+      dst[column] = static_cast<uint16_t>((srow[column * 2] << 8) |
+                                          srow[column * 2 + 1]);
+    }
   }
 }
 

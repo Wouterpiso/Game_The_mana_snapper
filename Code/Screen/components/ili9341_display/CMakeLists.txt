@@ -2,5 +2,5 @@
 idf_component_register(
     SRCS "Ili9341Display.cpp"
     INCLUDE_DIRS "."
-    REQUIRES drawables driver esp_timer drawables esp_lcd_ili9341
+    REQUIRES drawables driver esp_timer esp_lcd esp_lcd_ili9341
 )

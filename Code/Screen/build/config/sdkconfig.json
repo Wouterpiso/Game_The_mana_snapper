@@ -517,6 +517,7 @@
     "IDF_TARGET_ESP32": true,
     "IDF_TOOLCHAIN": "gcc",
     "IDF_TOOLCHAIN_GCC": true,
+    "JD_USE_ROM": true,
     "LCD_ENABLE_DEBUG_LOG": false,
     "LEDC_CTRL_FUNC_IN_IRAM": false,
     "LOG_COLORS": false,

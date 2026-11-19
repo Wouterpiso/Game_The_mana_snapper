@@ -1190,12 +1190,12 @@
             "dir": "C:/Users/wpiso/Documents/GitHub/Game_The_mana_snapper/Code/Master/main",
             "type": "LIBRARY",
             "lib": "__idf_main",
-            "reqs": [ "driver", "json", "esp_http_client", "esp_wifi", "esp_netif", "nvs_flash", "esp_event", "esp-tls", "mbedtls" ],
+            "reqs": [ "driver", "json", "esp_http_client", "esp_wifi", "esp_netif", "nvs_flash", "esp_event", "esp-tls", "mbedtls", "spiffs" ],
             "priv_reqs": [],
             "managed_reqs": [],
             "managed_priv_reqs": [],
             "file": "C:/Users/wpiso/Documents/GitHub/Game_The_mana_snapper/Code/Master/build/esp-idf/main/libmain.a",
-            "sources": [ "C:/Users/wpiso/Documents/GitHub/Game_The_mana_snapper/Code/Master/main/main.cpp", "C:/Users/wpiso/Documents/GitHub/Game_The_mana_snapper/Code/Master/States/StateMachine.cpp", "C:/Users/wpiso/Documents/GitHub/Game_The_mana_snapper/Code/Master/API/API.cpp", "C:/Users/wpiso/Documents/GitHub/Game_The_mana_snapper/Code/Master/collection/Data.cpp", "C:/Users/wpiso/Documents/GitHub/Game_The_mana_snapper/Code/Master/display/DisplayCommunication.cpp", "C:/Users/wpiso/Documents/GitHub/Game_The_mana_snapper/Code/Master/image_reconition/CamCommunication.cpp", "C:/Users/wpiso/Documents/GitHub/Game_The_mana_snapper/Code/Master/image_reconition/ImageReconition.cpp", "C:/Users/wpiso/Documents/GitHub/Game_The_mana_snapper/Code/Master/build/test.jpeg.S" ],
+            "sources": [ "C:/Users/wpiso/Documents/GitHub/Game_The_mana_snapper/Code/Master/main/main.cpp", "C:/Users/wpiso/Documents/GitHub/Game_The_mana_snapper/Code/Master/States/StateMachine.cpp", "C:/Users/wpiso/Documents/GitHub/Game_The_mana_snapper/Code/Master/API/API.cpp", "C:/Users/wpiso/Documents/GitHub/Game_The_mana_snapper/Code/Master/collection/Data.cpp", "C:/Users/wpiso/Documents/GitHub/Game_The_mana_snapper/Code/Master/display/DisplayCommunication.cpp", "C:/Users/wpiso/Documents/GitHub/Game_The_mana_snapper/Code/Master/image_reconition/CamCommunication.cpp", "C:/Users/wpiso/Documents/GitHub/Game_The_mana_snapper/Code/Master/image_reconition/ImageReconition.cpp" ],
             "include_dirs": [ ".", "../States", "../API", "../collection", "../display", "../image_reconition" ]
         },
         "mbedtls": {
@@ -2841,7 +2841,7 @@
             "prefix": "idf",
             "dir": "C:/Users/wpiso/Documents/GitHub/Game_The_mana_snapper/Code/Master/main",
             "lib": "__idf_main",
-            "reqs": [ "driver", "json", "esp_http_client", "esp_wifi", "esp_netif", "nvs_flash", "esp_event", "esp-tls", "mbedtls" ],
+            "reqs": [ "driver", "json", "esp_http_client", "esp_wifi", "esp_netif", "nvs_flash", "esp_event", "esp-tls", "mbedtls", "spiffs" ],
             "priv_reqs": [],
             "managed_reqs": [],
             "managed_priv_reqs": [],

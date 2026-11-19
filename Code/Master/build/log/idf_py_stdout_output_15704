@@ -1,0 +1,100 @@
+[1/14] Performing build step for 'bootloader'
+[1/1] C:\Windows\system32\cmd.exe /C "cd /D C:\Users\wpiso\Documents\GitHub\Game_The_mana_snapper\Code\Master\build\bootloader\esp-idf\esptool_py && C:\Users\wpiso\.espressif\python_env\idf5.4_py3.11_env\Scripts\python.exe C:/Espressif/esp-idf/components/partition_table/check_sizes.py --offset 0x8000 bootloader 0x1000 C:/Users/wpiso/Documents/GitHub/Game_The_mana_snapper/Code/Master/build/bootloader/bootloader.bin"
+Bootloader binary size 0x6560 bytes. 0xaa0 bytes (9%) free.
+[2/14] No install step for 'bootloader'
+[3/14] Completed 'bootloader'
+[4/14] Building CXX object esp-idf/main/CMakeFiles/__idf_main.dir/__/States/StateMachine.cpp.obj
+[5/14] Building CXX object esp-idf/main/CMakeFiles/__idf_main.dir/__/collection/Data.cpp.obj
+[6/14] Building CXX object esp-idf/main/CMakeFiles/__idf_main.dir/main.cpp.obj
+[7/14] Building CXX object esp-idf/main/CMakeFiles/__idf_main.dir/__/display/DisplayCommunication.cpp.obj
+C:/Users/wpiso/Documents/GitHub/Game_The_mana_snapper/Code/Master/display/DisplayCommunication.cpp: In function 'void displayCommunicationInit()':
+C:/Users/wpiso/Documents/GitHub/Game_The_mana_snapper/Code/Master/display/DisplayCommunication.cpp:66:5: warning: missing initializer for member 'uart_config_t::rx_flow_ctrl_thresh' [-Wmissing-field-initializers]
+   66 |     };
+      |     ^
+C:/Users/wpiso/Documents/GitHub/Game_The_mana_snapper/Code/Master/display/DisplayCommunication.cpp:66:5: warning: missing initializer for member 'uart_config_t::flags' [-Wmissing-field-initializers]
+[8/14] Building CXX object esp-idf/main/CMakeFiles/__idf_main.dir/__/API/API.cpp.obj
+[9/14] Linking C static library esp-idf\main\libmain.a
+[10/14] Generating ld/sections.ld
+[11/14] Linking CXX executable ManaSnapperMaster.elf
+[12/14] Generating binary image from built executable
+esptool.py v4.12.0
+Creating esp32 image...
+Merged 2 ELF sections
+Successfully created esp32 image.
+Generated C:/Users/wpiso/Documents/GitHub/Game_The_mana_snapper/Code/Master/build/ManaSnapperMaster.bin
+[13/14] C:\Windows\system32\cmd.exe /C "cd /D C:\Users\wpiso\Documents\GitHub\Game_The_mana_snapper\Code\Master\build\esp-idf\esptool_py && C:\Users\wpiso\.espressif\python_env\idf5.4_py3.11_env\Scripts\python.exe C:/Espressif/esp-idf/components/partition_table/check_sizes.py --offset 0x8000 partition --type app C:/Users/wpiso/Documents/GitHub/Game_The_mana_snapper/Code/Master/build/partition_table/partition-table.bin C:/Users/wpiso/Documents/GitHub/Game_The_mana_snapper/Code/Master/build/ManaSnapperMaster.bin"
+ManaSnapperMaster.bin binary size 0xf6d90 bytes. Smallest app partition is 0x100000 bytes. 0x9270 bytes (4%) free.
+Warning: The smallest app partition is nearly full (4% free space left)!
+[13/14] C:\Windows\system32\cmd.exe /C "cd /D C:\Espressif\esp-idf\components\esptool_py && C:\Users\wpiso\.espressif\tools\cmake\3.30.2\bin\cmake.exe -D IDF_PATH=C:/Espressif/esp-idf -D SERIAL_TOOL=C:/Users/wpiso/.espressif/python_env/idf5.4_py3.11_env/Scripts/python.exe;;C:/Espressif/esp-idf/components/esptool_py/esptool/esptool.py;--chip;esp32 -D SERIAL_TOOL_ARGS=--before=default_reset;--after=hard_reset;write_flash;@flash_args -D WORKING_DIRECTORY=C:/Users/wpiso/Documents/GitHub/Game_The_mana_snapper/Code/Master/build -P C:/Espressif/esp-idf/components/esptool_py/run_serial_tool.cmake"
+esptool.py --chip esp32 -p COM3 -b 460800 --before=default_reset --after=hard_reset write_flash --flash_mode dio --flash_freq 40m --flash_size 2MB 0x1000 bootloader/bootloader.bin 0x10000 ManaSnapperMaster.bin 0x8000 partition_table/partition-table.bin
+esptool.py v4.12.0
+Serial port COM3
+Connecting......
+Chip is ESP32-D0WD-V3 (revision v3.1)
+Features: WiFi, BT, Dual Core, 240MHz, VRef calibration in efuse, Coding Scheme None
+Crystal is 40MHz
+MAC: 58:2a:bd:60:60:5c
+Uploading stub...
+Running stub...
+Stub running...
+Changing baud rate to 460800
+Changed.
+Configuring flash size...
+Flash will be erased from 0x00001000 to 0x00007fff...
+Flash will be erased from 0x00010000 to 0x00106fff...
+Flash will be erased from 0x00008000 to 0x00008fff...
+SHA digest in image updated
+Compressed 25952 bytes to 16377...
+Writing at 0x00001000... (100 %)
+Wrote 25952 bytes (16377 compressed) at 0x00001000 in 0.6 seconds (effective 328.0 kbit/s)...
+Hash of data verified.
+Compressed 1011088 bytes to 647287...
+Writing at 0x00010000... (2 %)
+Writing at 0x0001ce40... (5 %)
+Writing at 0x0002578a... (7 %)
+Writing at 0x0002a45f... (10 %)
+Writing at 0x0002f48f... (12 %)
+Writing at 0x00034b9d... (15 %)
+Writing at 0x0003c834... (17 %)
+Writing at 0x00047864... (20 %)
+Writing at 0x0004d1dc... (22 %)
+Writing at 0x00052e6d... (25 %)
+Writing at 0x0005880b... (27 %)
+Writing at 0x0005e98a... (30 %)
+Writing at 0x000646c2... (32 %)
+Writing at 0x0006a1bf... (35 %)
+Writing at 0x0006fe3e... (37 %)
+Writing at 0x000766a2... (40 %)
+Writing at 0x0007c452... (42 %)
+Writing at 0x00082292... (45 %)
+Writing at 0x0008763e... (47 %)
+Writing at 0x0008c895... (50 %)
+Writing at 0x00092017... (52 %)
+Writing at 0x000976b8... (55 %)
+Writing at 0x0009cafe... (57 %)
+Writing at 0x000a2069... (60 %)
+Writing at 0x000a7c73... (62 %)
+Writing at 0x000ad850... (65 %)
+Writing at 0x000b3144... (67 %)
+Writing at 0x000b8da7... (70 %)
+Writing at 0x000beb42... (72 %)
+Writing at 0x000c4340... (75 %)
+Writing at 0x000ca182... (77 %)
+Writing at 0x000d00d6... (80 %)
+Writing at 0x000d5f80... (82 %)
+Writing at 0x000db9a9... (85 %)
+Writing at 0x000e14cf... (87 %)
+Writing at 0x000eb41c... (90 %)
+Writing at 0x000f2e85... (92 %)
+Writing at 0x000f89fb... (95 %)
+Writing at 0x000feca8... (97 %)
+Writing at 0x00103ee9... (100 %)
+Wrote 1011088 bytes (647287 compressed) at 0x00010000 in 15.6 seconds (effective 517.4 kbit/s)...
+Hash of data verified.
+Compressed 3072 bytes to 103...
+Writing at 0x00008000... (100 %)
+Wrote 3072 bytes (103 compressed) at 0x00008000 in 0.0 seconds (effective 765.8 kbit/s)...
+Hash of data verified.
+
+Leaving...
+Hard resetting via RTS pin...

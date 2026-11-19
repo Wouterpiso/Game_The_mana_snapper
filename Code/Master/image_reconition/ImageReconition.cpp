@@ -96,6 +96,13 @@ void imageRecognitionInit()
     wifiInit();
 }
 
+bool imageRecognitionEnsureWifi()
+{
+    return (xEventGroupWaitBits(wifiEvents, GotIpBit, pdFALSE, pdTRUE,
+                                pdMS_TO_TICKS(10000)) &
+            GotIpBit) != 0;
+}
+
 bool imageRecognitionGetCardName(const uint8_t* imageData, size_t imageLength,
                                  char* name, size_t nameSize)
 {
@@ -103,8 +110,8 @@ bool imageRecognitionGetCardName(const uint8_t* imageData, size_t imageLength,
         return false;
     }
     name[0] = '\0';
-    
-    if ((xEventGroupWaitBits(wifiEvents, GotIpBit, pdFALSE, pdTRUE, pdMS_TO_TICKS(10000)) & GotIpBit) == 0) {
+
+    if (!imageRecognitionEnsureWifi()) {
         ESP_LOGE(Tag, "No WiFi connection (no IP address)");
         return false;
     }
@@ -135,7 +142,7 @@ bool imageRecognitionGetCardName(const uint8_t* imageData, size_t imageLength,
     esp_http_client_config_t config = {};
     config.url = ServerUrl;
     config.method = HTTP_METHOD_POST;
-    config.timeout_ms = 30000;
+    config.timeout_ms = 12000;
 
     esp_http_client_handle_t client = esp_http_client_init(&config);
     if (client == nullptr) {
@@ -202,6 +209,8 @@ bool imageRecognitionGetCardName(const uint8_t* imageData, size_t imageLength,
         ESP_LOGI(Tag, "OCR HTTP status: %d", finalStatus);
         if (finalStatus == 200) {
             gotName = extractCardName(response, name, nameSize);
+        } else {
+            ESP_LOGW(Tag, "OCR response: %s", response);
         }
     }
 
