@@ -27,14 +27,12 @@ def process_ocr():
     if img is None:
         return jsonify({"error": "Ongeldig afbeeldingsbestand ontvangen"}), 400
 
-    # 3. Voer PaddleOCR uit op de afbeelding
-    result = ocr.ocr(img, cls=True)
-    
+    # 3. Voer PaddleOCR uit op de afbeelding (PaddleOCR 3.x: predict, geen cls meer)
+    result = ocr.predict(img)
+
     words_list = []
-    if result and result[0]:
-        for line in result[0]:
-            text = line[1][0]  # Pak alleen de tekst, negeer de coördinaten en de score
-            words_list.append(text)
+    for res in result:
+        words_list.extend(res["rec_texts"])
             
     # 4. Stuur de lijst met woorden terug naar de ESP32
     print(f"Verwerkt op GPU! Gevonden tekst: {words_list}")
