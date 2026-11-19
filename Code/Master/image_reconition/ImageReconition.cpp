@@ -7,16 +7,37 @@
 #include "esp_wifi.h"
 #include "nvs_flash.h"
 #include "sdkconfig.h"
+#include "freertos/FreeRTOS.h"
+#include "freertos/event_groups.h"
 
 #include "cJSON.h"
 
 #include <cstdio>
+#include <cstdlib>
 #include <cstring>
 
 namespace {
 constexpr char Tag[] = "ImageRecognition";
-constexpr char ServerUrl[] = "http://192.168.1.1:5000/ocr";
+constexpr char ServerUrl[] = "http://192.168.1.79:5000/ocr";
 constexpr char MultipartBoundary[] = "ManaSnapperBoundary";
+
+EventGroupHandle_t wifiEvents = nullptr;
+constexpr EventBits_t GotIpBit = BIT0;
+
+void onWifiEvent(void*, esp_event_base_t base, int32_t id, void* data)
+{
+    if (base == WIFI_EVENT && id == WIFI_EVENT_STA_START) {
+        esp_wifi_connect();
+    } else if (base == WIFI_EVENT && id == WIFI_EVENT_STA_DISCONNECTED) {
+        xEventGroupClearBits(wifiEvents, GotIpBit);
+        ESP_LOGW(Tag, "WiFi disconnected, retrying");
+        esp_wifi_connect();
+    } else if (base == IP_EVENT && id == IP_EVENT_STA_GOT_IP) {
+        const auto* event = static_cast<ip_event_got_ip_t*>(data);
+        ESP_LOGI(Tag, "Got IP: " IPSTR, IP2STR(&event->ip_info.ip));
+        xEventGroupSetBits(wifiEvents, GotIpBit);
+    }
+}
 
 void wifiInit()
 {
@@ -24,6 +45,9 @@ void wifiInit()
     ESP_ERROR_CHECK(esp_netif_init());
     ESP_ERROR_CHECK(esp_event_loop_create_default());
     esp_netif_create_default_wifi_sta();
+    wifiEvents = xEventGroupCreate();
+    ESP_ERROR_CHECK(esp_event_handler_register(WIFI_EVENT, ESP_EVENT_ANY_ID, onWifiEvent, nullptr));
+    ESP_ERROR_CHECK(esp_event_handler_register(IP_EVENT, IP_EVENT_STA_GOT_IP, onWifiEvent, nullptr));
 
     wifi_init_config_t wifiConfig = WIFI_INIT_CONFIG_DEFAULT();
     ESP_ERROR_CHECK(esp_wifi_init(&wifiConfig));
@@ -37,25 +61,33 @@ void wifiInit()
     ESP_ERROR_CHECK(esp_wifi_set_mode(WIFI_MODE_STA));
     ESP_ERROR_CHECK(esp_wifi_set_config(WIFI_IF_STA, &config));
     ESP_ERROR_CHECK(esp_wifi_start());
-    ESP_ERROR_CHECK(esp_wifi_connect());
 }
 
-void printWords(const char* responseBody)
+// Logs every OCR line and copies the first non-empty one into `name`.
+// The first line of a card is its title, so that is what we treat as the name.
+bool extractCardName(const char* responseBody, char* name, size_t nameSize)
 {
     cJSON* root = cJSON_Parse(responseBody);
     if (root == nullptr) {
         ESP_LOGW(Tag, "OCR returned invalid JSON");
-        return;
+        return false;
     }
 
+    bool found = false;
     cJSON* words = cJSON_GetObjectItem(root, "words");
     cJSON* word = nullptr;
     cJSON_ArrayForEach(word, words) {
-        if (cJSON_IsString(word)) {
-            ESP_LOGI(Tag, "OCR word: %s", word->valuestring);
+        if (!cJSON_IsString(word) || word->valuestring == nullptr) {
+            continue;
+        }
+        ESP_LOGI(Tag, "OCR word: %s", word->valuestring);
+        if (!found && word->valuestring[0] != '\0') {
+            std::snprintf(name, nameSize, "%s", word->valuestring);
+            found = true;
         }
     }
     cJSON_Delete(root);
+    return found;
 }
 }
 
@@ -64,8 +96,18 @@ void imageRecognitionInit()
     wifiInit();
 }
 
-bool imageRecognitionSubmit(const uint8_t* imageData, size_t imageLength)
+bool imageRecognitionGetCardName(const uint8_t* imageData, size_t imageLength,
+                                 char* name, size_t nameSize)
 {
+    if (name == nullptr || nameSize == 0) {
+        return false;
+    }
+    name[0] = '\0';
+    
+    if ((xEventGroupWaitBits(wifiEvents, GotIpBit, pdFALSE, pdTRUE, pdMS_TO_TICKS(10000)) & GotIpBit) == 0) {
+        ESP_LOGE(Tag, "No WiFi connection (no IP address)");
+        return false;
+    }
     if (imageData == nullptr || imageLength == 0) {
         ESP_LOGW(Tag, "No image received");
         return false;
@@ -142,17 +184,40 @@ bool imageRecognitionSubmit(const uint8_t* imageData, size_t imageLength)
         return false;
     }
 
-    char response[4096] = {};
-    const int bytesRead = esp_http_client_read_response(client, response,
-                                                        sizeof(response) - 1);
-    if (bytesRead >= 0) {
-        response[bytesRead] = '\0';
-        ESP_LOGI(Tag, "OCR HTTP status: %d", esp_http_client_get_status_code(client));
-        printWords(response);
+    constexpr size_t ResponseSize = 4096;
+    char* response = static_cast<char*>(std::calloc(ResponseSize, 1));
+    if (response == nullptr) {
+        ESP_LOGE(Tag, "Failed to allocate response buffer");
+        esp_http_client_close(client);
+        esp_http_client_cleanup(client);
+        return false;
     }
 
+    bool gotName = false;
+    const int bytesRead = esp_http_client_read_response(client, response,
+                                                        ResponseSize - 1);
     const int finalStatus = esp_http_client_get_status_code(client);
+    if (bytesRead >= 0) {
+        response[bytesRead] = '\0';
+        ESP_LOGI(Tag, "OCR HTTP status: %d", finalStatus);
+        if (finalStatus == 200) {
+            gotName = extractCardName(response, name, nameSize);
+        }
+    }
+
+    std::free(response);
     esp_http_client_close(client);
     esp_http_client_cleanup(client);
-    return finalStatus == 200;
+    return gotName;
+}
+
+bool imageRecognitionSubmit(const uint8_t* imageData, size_t imageLength)
+{
+    char name[128];
+    const bool ok = imageRecognitionGetCardName(imageData, imageLength, name,
+                                                sizeof(name));
+    if (ok) {
+        ESP_LOGI(Tag, "Recognised card name: %s", name);
+    }
+    return ok;
 }

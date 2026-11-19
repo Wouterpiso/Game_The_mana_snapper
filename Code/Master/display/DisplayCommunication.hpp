@@ -11,3 +11,4 @@ void displayCommunicationInit();
 bool displayCommunicationHasData();
 DisplayRequest displayCommunicationReadRequest();
 bool displayCommunicationSendCollectionList(const char* collectionListJson);
+bool displayCommunicationSendAddCardResult(bool success);

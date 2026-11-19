@@ -9,6 +9,7 @@ public:
     void drawHome(Ili9341Display& display) const;
     void drawPage(Ili9341Display& display, const char* title) const;
     void drawCollectionLoading(Ili9341Display& display) const;
+    void drawAddCardLoading(Ili9341Display& display) const;
     void drawCollection(Ili9341Display& display, const char* json);
     void drawCollectionPage(Ili9341Display& display, int page) const;
 

@@ -51,12 +51,19 @@ void sendMasterCommand(const char* command)
     ESP_ERROR_CHECK(uart_wait_tx_done(MasterUart, pdMS_TO_TICKS(100)));
 }
 
-void receiveMasterData(Ili9341Display& display, MenuScreen& menu)
+enum class MasterEvent {
+    None,
+    AddCardDone,
+    AddCardFailed,
+};
+
+MasterEvent receiveMasterData(Ili9341Display& display, MenuScreen& menu)
 {
+    MasterEvent event = MasterEvent::None;
     size_t available = 0;
     ESP_ERROR_CHECK(uart_get_buffered_data_len(MasterUart, &available));
     if (available == 0) {
-        return;
+        return event;
     }
 
     uint8_t data[512];
@@ -64,7 +71,7 @@ void receiveMasterData(Ili9341Display& display, MenuScreen& menu)
         available < sizeof(data) - 1 ? available : sizeof(data) - 1;
         const int bytesRead = uart_read_bytes(MasterUart, data, bytesToRead, 0);
     if (bytesRead <= 0) {
-        return;
+        return event;
     }
     ESP_LOGE(Tag, "RX %d bytes", bytesRead);                       // NEW
     for (int index = 0; index < bytesRead; ++index) {
@@ -75,7 +82,11 @@ void receiveMasterData(Ili9341Display& display, MenuScreen& menu)
                      (unsigned)masterReceiveLength, masterReceiveBuffer);
             constexpr char prefix[] = "COLLECTION_LIST ";
             const char* response = std::strstr(masterReceiveBuffer, prefix);
-            if (response != nullptr) {
+            if (std::strstr(masterReceiveBuffer, "ADD_CARD_DONE") != nullptr) {
+                event = MasterEvent::AddCardDone;
+            } else if (std::strstr(masterReceiveBuffer, "ADD_CARD_FAILED") != nullptr) {
+                event = MasterEvent::AddCardFailed;
+            } else if (response != nullptr) {
                 ESP_LOGE(Tag, "COLLECTION_LIST matched, drawing"); // NEW
                 menu.drawCollection(display,
                                     response + sizeof(prefix) - 1);
@@ -92,6 +103,7 @@ void receiveMasterData(Ili9341Display& display, MenuScreen& menu)
             ESP_LOGE(Tag, "Master response exceeded receive buffer");
         }
     }
+    return event;
 }
 }
 
@@ -131,7 +143,18 @@ extern "C" void app_main(void) {
     int page = -1;
     int collectionPage = 0;
     while (true) {
-        receiveMasterData(display, menu);
+        const MasterEvent masterEvent = receiveMasterData(display, menu);
+        if (page == 0 && masterEvent != MasterEvent::None) {
+            // The master finished the ADD CARD job: back to the main menu.
+            if (masterEvent == MasterEvent::AddCardFailed) {
+                menu.drawPage(display, "FAILED");
+                vTaskDelay(pdMS_TO_TICKS(1500));
+            }
+            page = -1;
+            menu.drawHome(display);
+            sendMasterCommand("IDLE\n");
+            continue;
+        }
         if (!touch.touched()) {
             vTaskDelay(pdMS_TO_TICKS(20));
             continue;
@@ -146,7 +169,9 @@ extern "C" void app_main(void) {
                 static constexpr const char* commands[] = {
                     "ADD_CARD\n", "COLLECTION\n", "DECKS\n"};
                 menu.drawPage(display, labels[page]);
-                if (page == 1) {
+                if (page == 0) {
+                    menu.drawAddCardLoading(display);
+                } else if (page == 1) {
                     menu.drawCollectionLoading(display);
                 }
                 sendMasterCommand(commands[page]);

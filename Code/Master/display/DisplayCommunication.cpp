@@ -122,3 +122,10 @@ bool displayCommunicationSendCollectionList(const char* collectionListJson)
            sendBytes(suffix, sizeof(suffix) - 1) &&
            uart_wait_tx_done(DisplayUart, pdMS_TO_TICKS(100)) == ESP_OK;
 }
+
+bool displayCommunicationSendAddCardResult(bool success)
+{
+    const char* message = success ? "ADD_CARD_DONE\n" : "ADD_CARD_FAILED\n";
+    return sendBytes(message, std::strlen(message)) &&
+           uart_wait_tx_done(DisplayUart, pdMS_TO_TICKS(100)) == ESP_OK;
+}

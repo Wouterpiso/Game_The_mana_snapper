@@ -1,0 +1,9 @@
+[0/1] Re-running CMake...
+-- git rev-parse returned ''
+-- ccache will be used for faster recompilation
+-- git rev-parse returned ''
+-- Could not use 'git describe' to determine PROJECT_VER.
+-- Building ESP-IDF components for target esp32
+-- Configuring incomplete, errors occurred!
+FAILED: build.ninja 
+C:\Users\wpiso\.espressif\tools\cmake\3.30.2\bin\cmake.exe --regenerate-during-build -SC:\Users\wpiso\Documents\GitHub\Game_The_mana_snapper\Code\Master -BC:\Users\wpiso\Documents\GitHub\Game_The_mana_snapper\Code\Master\build

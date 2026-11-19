@@ -404,6 +404,13 @@ CONFIG_PARTITION_TABLE_MD5=y
 # end of Partition Table
 
 #
+# Mana Snapper
+#
+CONFIG_MANA_SNAPPER_WIFI_SSID="pamelawifi"
+CONFIG_MANA_SNAPPER_WIFI_PASSWORD="mijnwachtwoordvoorDelta123!"
+# end of Mana Snapper
+
+#
 # Compiler options
 #
 CONFIG_COMPILER_OPTIMIZATION_DEBUG=y

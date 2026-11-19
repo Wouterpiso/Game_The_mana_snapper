@@ -4897,6 +4897,34 @@
     {
         "children": [
             {
+                "children": [],
+                "depends_on": null,
+                "help": null,
+                "id": "MANA_SNAPPER_WIFI_SSID",
+                "name": "MANA_SNAPPER_WIFI_SSID",
+                "range": null,
+                "title": "Wi-Fi SSID",
+                "type": "string"
+            },
+            {
+                "children": [],
+                "depends_on": null,
+                "help": null,
+                "id": "MANA_SNAPPER_WIFI_PASSWORD",
+                "name": "MANA_SNAPPER_WIFI_PASSWORD",
+                "range": null,
+                "title": "Wi-Fi password",
+                "type": "string"
+            }
+        ],
+        "depends_on": null,
+        "id": "mana-snapper",
+        "title": "Mana Snapper",
+        "type": "menu"
+    },
+    {
+        "children": [
+            {
                 "children": [
                     {
                         "children": [],

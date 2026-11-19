@@ -1,0 +1,91 @@
+[1/10] Performing build step for 'bootloader'
+[1/1] C:\Windows\system32\cmd.exe /C "cd /D C:\Users\wpiso\Documents\GitHub\Game_The_mana_snapper\Code\Master\build\bootloader\esp-idf\esptool_py && C:\Users\wpiso\.espressif\python_env\idf5.4_py3.11_env\Scripts\python.exe C:/Espressif/esp-idf/components/partition_table/check_sizes.py --offset 0x8000 bootloader 0x1000 C:/Users/wpiso/Documents/GitHub/Game_The_mana_snapper/Code/Master/build/bootloader/bootloader.bin"
+Bootloader binary size 0x6560 bytes. 0xaa0 bytes (9%) free.
+[2/10] No install step for 'bootloader'
+[3/10] Completed 'bootloader'
+[4/10] Building CXX object esp-idf/main/CMakeFiles/__idf_main.dir/__/image_reconition/ImageReconition.cpp.obj
+[5/10] Linking C static library esp-idf\main\libmain.a
+[6/10] Generating ld/sections.ld
+[7/10] Linking CXX executable ManaSnapperMaster.elf
+[8/10] Generating binary image from built executable
+esptool.py v4.12.0
+Creating esp32 image...
+Merged 2 ELF sections
+Successfully created esp32 image.
+Generated C:/Users/wpiso/Documents/GitHub/Game_The_mana_snapper/Code/Master/build/ManaSnapperMaster.bin
+[9/10] C:\Windows\system32\cmd.exe /C "cd /D C:\Users\wpiso\Documents\GitHub\Game_The_mana_snapper\Code\Master\build\esp-idf\esptool_py && C:\Users\wpiso\.espressif\python_env\idf5.4_py3.11_env\Scripts\python.exe C:/Espressif/esp-idf/components/partition_table/check_sizes.py --offset 0x8000 partition --type app C:/Users/wpiso/Documents/GitHub/Game_The_mana_snapper/Code/Master/build/partition_table/partition-table.bin C:/Users/wpiso/Documents/GitHub/Game_The_mana_snapper/Code/Master/build/ManaSnapperMaster.bin"
+ManaSnapperMaster.bin binary size 0xf65a0 bytes. Smallest app partition is 0x100000 bytes. 0x9a60 bytes (4%) free.
+Warning: The smallest app partition is nearly full (4% free space left)!
+[9/10] C:\Windows\system32\cmd.exe /C "cd /D C:\Espressif\esp-idf\components\esptool_py && C:\Users\wpiso\.espressif\tools\cmake\3.30.2\bin\cmake.exe -D IDF_PATH=C:/Espressif/esp-idf -D SERIAL_TOOL=C:/Users/wpiso/.espressif/python_env/idf5.4_py3.11_env/Scripts/python.exe;;C:/Espressif/esp-idf/components/esptool_py/esptool/esptool.py;--chip;esp32 -D SERIAL_TOOL_ARGS=--before=default_reset;--after=hard_reset;write_flash;@flash_args -D WORKING_DIRECTORY=C:/Users/wpiso/Documents/GitHub/Game_The_mana_snapper/Code/Master/build -P C:/Espressif/esp-idf/components/esptool_py/run_serial_tool.cmake"
+esptool.py --chip esp32 -p COM3 -b 460800 --before=default_reset --after=hard_reset write_flash --flash_mode dio --flash_freq 40m --flash_size 2MB 0x1000 bootloader/bootloader.bin 0x10000 ManaSnapperMaster.bin 0x8000 partition_table/partition-table.bin
+esptool.py v4.12.0
+Serial port COM3
+Connecting....
+Chip is ESP32-D0WD-V3 (revision v3.1)
+Features: WiFi, BT, Dual Core, 240MHz, VRef calibration in efuse, Coding Scheme None
+Crystal is 40MHz
+MAC: 58:2a:bd:60:60:5c
+Uploading stub...
+Running stub...
+Stub running...
+Changing baud rate to 460800
+Changed.
+Configuring flash size...
+Flash will be erased from 0x00001000 to 0x00007fff...
+Flash will be erased from 0x00010000 to 0x00106fff...
+Flash will be erased from 0x00008000 to 0x00008fff...
+SHA digest in image updated
+Compressed 25952 bytes to 16377...
+Writing at 0x00001000... (100 %)
+Wrote 25952 bytes (16377 compressed) at 0x00001000 in 0.6 seconds (effective 328.6 kbit/s)...
+Hash of data verified.
+Compressed 1009056 bytes to 646133...
+Writing at 0x00010000... (2 %)
+Writing at 0x0001cdb8... (5 %)
+Writing at 0x00025629... (7 %)
+Writing at 0x0002a33b... (10 %)
+Writing at 0x0002f2fc... (12 %)
+Writing at 0x00034a07... (15 %)
+Writing at 0x0003c76c... (17 %)
+Writing at 0x0004770a... (20 %)
+Writing at 0x0004d04c... (22 %)
+Writing at 0x00052cf6... (25 %)
+Writing at 0x00058683... (27 %)
+Writing at 0x0005e77d... (30 %)
+Writing at 0x000645ed... (32 %)
+Writing at 0x0006a020... (35 %)
+Writing at 0x0006fcd1... (37 %)
+Writing at 0x000764ac... (40 %)
+Writing at 0x0007c273... (42 %)
+Writing at 0x000820fc... (45 %)
+Writing at 0x00087489... (47 %)
+Writing at 0x0008c696... (50 %)
+Writing at 0x00091e53... (52 %)
+Writing at 0x00097583... (55 %)
+Writing at 0x0009c91b... (57 %)
+Writing at 0x000a1e73... (60 %)
+Writing at 0x000a7b64... (62 %)
+Writing at 0x000ad6a2... (65 %)
+Writing at 0x000b2fe0... (67 %)
+Writing at 0x000b8c40... (70 %)
+Writing at 0x000be968... (72 %)
+Writing at 0x000c418c... (75 %)
+Writing at 0x000ca00d... (77 %)
+Writing at 0x000cffcc... (80 %)
+Writing at 0x000d5e5f... (82 %)
+Writing at 0x000db7ef... (85 %)
+Writing at 0x000e13a4... (87 %)
+Writing at 0x000eb3a4... (90 %)
+Writing at 0x000f2cbd... (92 %)
+Writing at 0x000f8824... (95 %)
+Writing at 0x000feb32... (97 %)
+Writing at 0x00103ce6... (100 %)
+Wrote 1009056 bytes (646133 compressed) at 0x00010000 in 15.7 seconds (effective 515.3 kbit/s)...
+Hash of data verified.
+Compressed 3072 bytes to 103...
+Writing at 0x00008000... (100 %)
+Wrote 3072 bytes (103 compressed) at 0x00008000 in 0.0 seconds (effective 778.8 kbit/s)...
+Hash of data verified.
+
+Leaving...
+Hard resetting via RTS pin...

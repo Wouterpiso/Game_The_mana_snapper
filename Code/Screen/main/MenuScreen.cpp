@@ -178,6 +178,17 @@ void MenuScreen::drawCollectionLoading(Ili9341Display& display) const {
     display.present();
 }
 
+void MenuScreen::drawAddCardLoading(Ili9341Display& display) const {
+    const uint16_t black = display.rgb565(0, 0, 0);
+    const uint16_t white = display.rgb565(255, 255, 255);
+    display.fillScreen(black);
+    display.drawRectangle(8, 8, 38, 30, white, true);
+    drawRotatedText(display, "EXIT", 27, 23, black);
+    drawRotatedText(display, "ADD CARD", 32, 160, white);
+    drawRotatedText(display, "LOADING", 160, 120, white);
+    display.present();
+}
+
 void MenuScreen::drawCollection(Ili9341Display& display,
                                 const char* json) {
     collectionJson_ = json == nullptr ? "" : json;
