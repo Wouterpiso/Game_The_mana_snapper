@@ -5,15 +5,15 @@ idf_component_register(
         "../API/API.cpp"
         "../collection/Data.cpp"
         "../display/DisplayCommunication.cpp"
-        "../image_reconition/CamCommunication.cpp"
-        "../image_reconition/ImageReconition.cpp"
+        "../image_recognition/CamCommunication.cpp"
+        "../image_recognition/ImageRecognition.cpp"
     INCLUDE_DIRS
         "."
         "../States"
         "../API"
         "../collection"
         "../display"
-        "../image_reconition"
+        "../image_recognition"
     REQUIRES driver json esp_http_client esp_wifi esp_netif nvs_flash esp_event esp-tls mbedtls spiffs
 )
 

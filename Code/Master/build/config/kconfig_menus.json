@@ -4915,6 +4915,16 @@
                 "range": null,
                 "title": "Wi-Fi password",
                 "type": "string"
+            },
+            {
+                "children": [],
+                "depends_on": null,
+                "help": "Base URL of the PaddleOCR Flask server, without a trailing slash.\nThe Master uses <base>/ocr, <base>/export and <base>/import.",
+                "id": "MANA_SNAPPER_SERVER_URL",
+                "name": "MANA_SNAPPER_SERVER_URL",
+                "range": null,
+                "title": "Card server base URL",
+                "type": "string"
             }
         ],
         "depends_on": null,

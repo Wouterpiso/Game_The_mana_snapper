@@ -1,17 +1,30 @@
-/*! \brief Headerfile for entity
-*
-* Minimal base for “things" in the world.
-*
-* Entity is an abstract interface with pure virtual functions and an inline default destructor.
-*/
+/**
+ * @file Entity.hpp
+ * @brief Abstract base for drawable objects in the world.
+ */
 #pragma once
 #include <cstdint>
 
-class Ili9341Display;
+class St7789Display;
 
+/**
+ * @brief Abstract interface for objects that update and draw themselves.
+ */
 class Entity {
 public:
-    virtual ~Entity() = default;
-    virtual void update(float dt, int screenW, int screenH) = 0;
-    virtual void draw(Ili9341Display& d) const = 0;
+  virtual ~Entity() = default;
+
+  /**
+   * @brief Updates the entity.
+   * @param dt Time since the previous update in seconds.
+   * @param screenW Screen width in pixels.
+   * @param screenH Screen height in pixels.
+   */
+  virtual void update(float dt, int screenW, int screenH) = 0;
+
+  /**
+   * @brief Draws the entity.
+   * @param d Display to draw on.
+   */
+  virtual void draw(St7789Display& d) const = 0;
 };

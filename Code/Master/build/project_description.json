@@ -1195,8 +1195,8 @@
             "managed_reqs": [],
             "managed_priv_reqs": [],
             "file": "C:/Users/wpiso/Documents/GitHub/Game_The_mana_snapper/Code/Master/build/esp-idf/main/libmain.a",
-            "sources": [ "C:/Users/wpiso/Documents/GitHub/Game_The_mana_snapper/Code/Master/main/main.cpp", "C:/Users/wpiso/Documents/GitHub/Game_The_mana_snapper/Code/Master/States/StateMachine.cpp", "C:/Users/wpiso/Documents/GitHub/Game_The_mana_snapper/Code/Master/API/API.cpp", "C:/Users/wpiso/Documents/GitHub/Game_The_mana_snapper/Code/Master/collection/Data.cpp", "C:/Users/wpiso/Documents/GitHub/Game_The_mana_snapper/Code/Master/display/DisplayCommunication.cpp", "C:/Users/wpiso/Documents/GitHub/Game_The_mana_snapper/Code/Master/image_reconition/CamCommunication.cpp", "C:/Users/wpiso/Documents/GitHub/Game_The_mana_snapper/Code/Master/image_reconition/ImageReconition.cpp" ],
-            "include_dirs": [ ".", "../States", "../API", "../collection", "../display", "../image_reconition" ]
+            "sources": [ "C:/Users/wpiso/Documents/GitHub/Game_The_mana_snapper/Code/Master/main/main.cpp", "C:/Users/wpiso/Documents/GitHub/Game_The_mana_snapper/Code/Master/States/StateMachine.cpp", "C:/Users/wpiso/Documents/GitHub/Game_The_mana_snapper/Code/Master/API/API.cpp", "C:/Users/wpiso/Documents/GitHub/Game_The_mana_snapper/Code/Master/collection/Data.cpp", "C:/Users/wpiso/Documents/GitHub/Game_The_mana_snapper/Code/Master/display/DisplayCommunication.cpp", "C:/Users/wpiso/Documents/GitHub/Game_The_mana_snapper/Code/Master/image_recognition/CamCommunication.cpp", "C:/Users/wpiso/Documents/GitHub/Game_The_mana_snapper/Code/Master/image_recognition/ImageRecognition.cpp" ],
+            "include_dirs": [ ".", "../States", "../API", "../collection", "../display", "../image_recognition" ]
         },
         "mbedtls": {
             "alias": "idf::mbedtls",
@@ -2845,7 +2845,7 @@
             "priv_reqs": [],
             "managed_reqs": [],
             "managed_priv_reqs": [],
-            "include_dirs": [ ".", "../States", "../API", "../collection", "../display", "../image_reconition" ]
+            "include_dirs": [ ".", "../States", "../API", "../collection", "../display", "../image_recognition" ]
         }
     },
     "debug_prefix_map_gdbinit": ""

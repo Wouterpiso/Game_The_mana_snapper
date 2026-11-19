@@ -25,8 +25,8 @@
         "COMPONENT_KCONFIGS_PROJBUILD" : "C:/Espressif/esp-idf/components/bootloader/Kconfig.projbuild;C:/Espressif/esp-idf/components/esp_app_format/Kconfig.projbuild;C:/Espressif/esp-idf/components/esp_rom/Kconfig.projbuild;C:/Espressif/esp-idf/components/esptool_py/Kconfig.projbuild;C:/Espressif/esp-idf/components/partition_table/Kconfig.projbuild"
     },
     "common_component_reqs": [ "cxx", "newlib", "freertos", "esp_hw_support", "heap", "log", "soc", "hal", "esp_rom", "esp_common", "esp_system", "xtensa" ],
-    "build_components" : [ "app_trace", "app_update", "bootloader", "bootloader_support", "bt", "cmock", "console", "cxx", "drawables", "driver", "drivers", "efuse", "entities", "esp-tls", "esp_adc", "esp_app_format", "esp_bootloader_format", "esp_coex", "esp_common", "esp_driver_ana_cmpr", "esp_driver_cam", "esp_driver_dac", "esp_driver_gpio", "esp_driver_gptimer", "esp_driver_i2c", "esp_driver_i2s", "esp_driver_isp", "esp_driver_jpeg", "esp_driver_ledc", "esp_driver_mcpwm", "esp_driver_parlio", "esp_driver_pcnt", "esp_driver_ppa", "esp_driver_rmt", "esp_driver_sdio", "esp_driver_sdm", "esp_driver_sdmmc", "esp_driver_sdspi", "esp_driver_spi", "esp_driver_touch_sens", "esp_driver_tsens", "esp_driver_uart", "esp_driver_usb_serial_jtag", "esp_eth", "esp_event", "esp_gdbstub", "esp_hid", "esp_http_client", "esp_http_server", "esp_https_ota", "esp_https_server", "esp_hw_support", "esp_lcd", "esp_local_ctrl", "esp_mm", "esp_netif", "esp_netif_stack", "esp_partition", "esp_phy", "esp_pm", "esp_psram", "esp_ringbuf", "esp_rom", "esp_security", "esp_system", "esp_timer", "esp_vfs_console", "esp_wifi", "espcoredump", "espressif__esp_jpeg", "espressif__esp_lcd_ili9341", "esptool_py", "fatfs", "freertos", "hal", "heap", "http_parser", "idf_test", "ieee802154", "ili9341_display", "json", "log", "lwip", "main", "mbedtls", "mqtt", "newlib", "nvs_flash", "nvs_sec_provider", "openthread", "partition_table", "perfmon", "protobuf-c", "protocomm", "pthread", "rt", "sdmmc", "soc", "spi_flash", "spiffs", "sprites", "tcp_transport", "ulp", "unity", "usb", "vfs", "wear_levelling", "wifi_provisioning", "wpa_supplicant", "xtensa", "" ],
-    "build_component_paths" : [ "C:/Espressif/esp-idf/components/app_trace", "C:/Espressif/esp-idf/components/app_update", "C:/Espressif/esp-idf/components/bootloader", "C:/Espressif/esp-idf/components/bootloader_support", "C:/Espressif/esp-idf/components/bt", "C:/Espressif/esp-idf/components/cmock", "C:/Espressif/esp-idf/components/console", "C:/Espressif/esp-idf/components/cxx", "C:/Users/wpiso/Documents/GitHub/Game_The_mana_snapper/Code/Screen/components/drawables", "C:/Espressif/esp-idf/components/driver", "C:/Users/wpiso/Documents/GitHub/Game_The_mana_snapper/Code/Screen/components/drivers", "C:/Espressif/esp-idf/components/efuse", "C:/Users/wpiso/Documents/GitHub/Game_The_mana_snapper/Code/Screen/components/entities", "C:/Espressif/esp-idf/components/esp-tls", "C:/Espressif/esp-idf/components/esp_adc", "C:/Espressif/esp-idf/components/esp_app_format", "C:/Espressif/esp-idf/components/esp_bootloader_format", "C:/Espressif/esp-idf/components/esp_coex", "C:/Espressif/esp-idf/components/esp_common", "C:/Espressif/esp-idf/components/esp_driver_ana_cmpr", "C:/Espressif/esp-idf/components/esp_driver_cam", "C:/Espressif/esp-idf/components/esp_driver_dac", "C:/Espressif/esp-idf/components/esp_driver_gpio", "C:/Espressif/esp-idf/components/esp_driver_gptimer", "C:/Espressif/esp-idf/components/esp_driver_i2c", "C:/Espressif/esp-idf/components/esp_driver_i2s", "C:/Espressif/esp-idf/components/esp_driver_isp", "C:/Espressif/esp-idf/components/esp_driver_jpeg", "C:/Espressif/esp-idf/components/esp_driver_ledc", "C:/Espressif/esp-idf/components/esp_driver_mcpwm", "C:/Espressif/esp-idf/components/esp_driver_parlio", "C:/Espressif/esp-idf/components/esp_driver_pcnt", "C:/Espressif/esp-idf/components/esp_driver_ppa", "C:/Espressif/esp-idf/components/esp_driver_rmt", "C:/Espressif/esp-idf/components/esp_driver_sdio", "C:/Espressif/esp-idf/components/esp_driver_sdm", "C:/Espressif/esp-idf/components/esp_driver_sdmmc", "C:/Espressif/esp-idf/components/esp_driver_sdspi", "C:/Espressif/esp-idf/components/esp_driver_spi", "C:/Espressif/esp-idf/components/esp_driver_touch_sens", "C:/Espressif/esp-idf/components/esp_driver_tsens", "C:/Espressif/esp-idf/components/esp_driver_uart", "C:/Espressif/esp-idf/components/esp_driver_usb_serial_jtag", "C:/Espressif/esp-idf/components/esp_eth", "C:/Espressif/esp-idf/components/esp_event", "C:/Espressif/esp-idf/components/esp_gdbstub", "C:/Espressif/esp-idf/components/esp_hid", "C:/Espressif/esp-idf/components/esp_http_client", "C:/Espressif/esp-idf/components/esp_http_server", "C:/Espressif/esp-idf/components/esp_https_ota", "C:/Espressif/esp-idf/components/esp_https_server", "C:/Espressif/esp-idf/components/esp_hw_support", "C:/Espressif/esp-idf/components/esp_lcd", "C:/Espressif/esp-idf/components/esp_local_ctrl", "C:/Espressif/esp-idf/components/esp_mm", "C:/Espressif/esp-idf/components/esp_netif", "C:/Espressif/esp-idf/components/esp_netif_stack", "C:/Espressif/esp-idf/components/esp_partition", "C:/Espressif/esp-idf/components/esp_phy", "C:/Espressif/esp-idf/components/esp_pm", "C:/Espressif/esp-idf/components/esp_psram", "C:/Espressif/esp-idf/components/esp_ringbuf", "C:/Espressif/esp-idf/components/esp_rom", "C:/Espressif/esp-idf/components/esp_security", "C:/Espressif/esp-idf/components/esp_system", "C:/Espressif/esp-idf/components/esp_timer", "C:/Espressif/esp-idf/components/esp_vfs_console", "C:/Espressif/esp-idf/components/esp_wifi", "C:/Espressif/esp-idf/components/espcoredump", "C:/Users/wpiso/Documents/GitHub/Game_The_mana_snapper/Code/Screen/managed_components/espressif__esp_jpeg", "C:/Users/wpiso/Documents/GitHub/Game_The_mana_snapper/Code/Screen/managed_components/espressif__esp_lcd_ili9341", "C:/Espressif/esp-idf/components/esptool_py", "C:/Espressif/esp-idf/components/fatfs", "C:/Espressif/esp-idf/components/freertos", "C:/Espressif/esp-idf/components/hal", "C:/Espressif/esp-idf/components/heap", "C:/Espressif/esp-idf/components/http_parser", "C:/Espressif/esp-idf/components/idf_test", "C:/Espressif/esp-idf/components/ieee802154", "C:/Users/wpiso/Documents/GitHub/Game_The_mana_snapper/Code/Screen/components/ili9341_display", "C:/Espressif/esp-idf/components/json", "C:/Espressif/esp-idf/components/log", "C:/Espressif/esp-idf/components/lwip", "C:/Users/wpiso/Documents/GitHub/Game_The_mana_snapper/Code/Screen/main", "C:/Espressif/esp-idf/components/mbedtls", "C:/Espressif/esp-idf/components/mqtt", "C:/Espressif/esp-idf/components/newlib", "C:/Espressif/esp-idf/components/nvs_flash", "C:/Espressif/esp-idf/components/nvs_sec_provider", "C:/Espressif/esp-idf/components/openthread", "C:/Espressif/esp-idf/components/partition_table", "C:/Espressif/esp-idf/components/perfmon", "C:/Espressif/esp-idf/components/protobuf-c", "C:/Espressif/esp-idf/components/protocomm", "C:/Espressif/esp-idf/components/pthread", "C:/Espressif/esp-idf/components/rt", "C:/Espressif/esp-idf/components/sdmmc", "C:/Espressif/esp-idf/components/soc", "C:/Espressif/esp-idf/components/spi_flash", "C:/Espressif/esp-idf/components/spiffs", "C:/Users/wpiso/Documents/GitHub/Game_The_mana_snapper/Code/Screen/components/sprites", "C:/Espressif/esp-idf/components/tcp_transport", "C:/Espressif/esp-idf/components/ulp", "C:/Espressif/esp-idf/components/unity", "C:/Espressif/esp-idf/components/usb", "C:/Espressif/esp-idf/components/vfs", "C:/Espressif/esp-idf/components/wear_levelling", "C:/Espressif/esp-idf/components/wifi_provisioning", "C:/Espressif/esp-idf/components/wpa_supplicant", "C:/Espressif/esp-idf/components/xtensa", "" ],
+    "build_components" : [ "app_trace", "app_update", "bootloader", "bootloader_support", "bt", "cmock", "console", "cxx", "driver", "drivers", "efuse", "entities", "esp-tls", "esp_adc", "esp_app_format", "esp_bootloader_format", "esp_coex", "esp_common", "esp_driver_ana_cmpr", "esp_driver_cam", "esp_driver_dac", "esp_driver_gpio", "esp_driver_gptimer", "esp_driver_i2c", "esp_driver_i2s", "esp_driver_isp", "esp_driver_jpeg", "esp_driver_ledc", "esp_driver_mcpwm", "esp_driver_parlio", "esp_driver_pcnt", "esp_driver_ppa", "esp_driver_rmt", "esp_driver_sdio", "esp_driver_sdm", "esp_driver_sdmmc", "esp_driver_sdspi", "esp_driver_spi", "esp_driver_touch_sens", "esp_driver_tsens", "esp_driver_uart", "esp_driver_usb_serial_jtag", "esp_eth", "esp_event", "esp_gdbstub", "esp_hid", "esp_http_client", "esp_http_server", "esp_https_ota", "esp_https_server", "esp_hw_support", "esp_lcd", "esp_local_ctrl", "esp_mm", "esp_netif", "esp_netif_stack", "esp_partition", "esp_phy", "esp_pm", "esp_psram", "esp_ringbuf", "esp_rom", "esp_security", "esp_system", "esp_timer", "esp_vfs_console", "esp_wifi", "espcoredump", "espressif__esp_jpeg", "esptool_py", "fatfs", "freertos", "hal", "heap", "http_parser", "idf_test", "ieee802154", "json", "log", "lwip", "main", "mbedtls", "mqtt", "newlib", "nvs_flash", "nvs_sec_provider", "openthread", "partition_table", "perfmon", "protobuf-c", "protocomm", "pthread", "rt", "sdmmc", "soc", "spi_flash", "spiffs", "sprites", "st7789_display", "tcp_transport", "ulp", "unity", "usb", "vfs", "wear_levelling", "wifi_provisioning", "wpa_supplicant", "xtensa", "" ],
+    "build_component_paths" : [ "C:/Espressif/esp-idf/components/app_trace", "C:/Espressif/esp-idf/components/app_update", "C:/Espressif/esp-idf/components/bootloader", "C:/Espressif/esp-idf/components/bootloader_support", "C:/Espressif/esp-idf/components/bt", "C:/Espressif/esp-idf/components/cmock", "C:/Espressif/esp-idf/components/console", "C:/Espressif/esp-idf/components/cxx", "C:/Espressif/esp-idf/components/driver", "C:/Users/wpiso/Documents/GitHub/Game_The_mana_snapper/Code/Screen/components/drivers", "C:/Espressif/esp-idf/components/efuse", "C:/Users/wpiso/Documents/GitHub/Game_The_mana_snapper/Code/Screen/components/entities", "C:/Espressif/esp-idf/components/esp-tls", "C:/Espressif/esp-idf/components/esp_adc", "C:/Espressif/esp-idf/components/esp_app_format", "C:/Espressif/esp-idf/components/esp_bootloader_format", "C:/Espressif/esp-idf/components/esp_coex", "C:/Espressif/esp-idf/components/esp_common", "C:/Espressif/esp-idf/components/esp_driver_ana_cmpr", "C:/Espressif/esp-idf/components/esp_driver_cam", "C:/Espressif/esp-idf/components/esp_driver_dac", "C:/Espressif/esp-idf/components/esp_driver_gpio", "C:/Espressif/esp-idf/components/esp_driver_gptimer", "C:/Espressif/esp-idf/components/esp_driver_i2c", "C:/Espressif/esp-idf/components/esp_driver_i2s", "C:/Espressif/esp-idf/components/esp_driver_isp", "C:/Espressif/esp-idf/components/esp_driver_jpeg", "C:/Espressif/esp-idf/components/esp_driver_ledc", "C:/Espressif/esp-idf/components/esp_driver_mcpwm", "C:/Espressif/esp-idf/components/esp_driver_parlio", "C:/Espressif/esp-idf/components/esp_driver_pcnt", "C:/Espressif/esp-idf/components/esp_driver_ppa", "C:/Espressif/esp-idf/components/esp_driver_rmt", "C:/Espressif/esp-idf/components/esp_driver_sdio", "C:/Espressif/esp-idf/components/esp_driver_sdm", "C:/Espressif/esp-idf/components/esp_driver_sdmmc", "C:/Espressif/esp-idf/components/esp_driver_sdspi", "C:/Espressif/esp-idf/components/esp_driver_spi", "C:/Espressif/esp-idf/components/esp_driver_touch_sens", "C:/Espressif/esp-idf/components/esp_driver_tsens", "C:/Espressif/esp-idf/components/esp_driver_uart", "C:/Espressif/esp-idf/components/esp_driver_usb_serial_jtag", "C:/Espressif/esp-idf/components/esp_eth", "C:/Espressif/esp-idf/components/esp_event", "C:/Espressif/esp-idf/components/esp_gdbstub", "C:/Espressif/esp-idf/components/esp_hid", "C:/Espressif/esp-idf/components/esp_http_client", "C:/Espressif/esp-idf/components/esp_http_server", "C:/Espressif/esp-idf/components/esp_https_ota", "C:/Espressif/esp-idf/components/esp_https_server", "C:/Espressif/esp-idf/components/esp_hw_support", "C:/Espressif/esp-idf/components/esp_lcd", "C:/Espressif/esp-idf/components/esp_local_ctrl", "C:/Espressif/esp-idf/components/esp_mm", "C:/Espressif/esp-idf/components/esp_netif", "C:/Espressif/esp-idf/components/esp_netif_stack", "C:/Espressif/esp-idf/components/esp_partition", "C:/Espressif/esp-idf/components/esp_phy", "C:/Espressif/esp-idf/components/esp_pm", "C:/Espressif/esp-idf/components/esp_psram", "C:/Espressif/esp-idf/components/esp_ringbuf", "C:/Espressif/esp-idf/components/esp_rom", "C:/Espressif/esp-idf/components/esp_security", "C:/Espressif/esp-idf/components/esp_system", "C:/Espressif/esp-idf/components/esp_timer", "C:/Espressif/esp-idf/components/esp_vfs_console", "C:/Espressif/esp-idf/components/esp_wifi", "C:/Espressif/esp-idf/components/espcoredump", "C:/Users/wpiso/Documents/GitHub/Game_The_mana_snapper/Code/Screen/managed_components/espressif__esp_jpeg", "C:/Espressif/esp-idf/components/esptool_py", "C:/Espressif/esp-idf/components/fatfs", "C:/Espressif/esp-idf/components/freertos", "C:/Espressif/esp-idf/components/hal", "C:/Espressif/esp-idf/components/heap", "C:/Espressif/esp-idf/components/http_parser", "C:/Espressif/esp-idf/components/idf_test", "C:/Espressif/esp-idf/components/ieee802154", "C:/Espressif/esp-idf/components/json", "C:/Espressif/esp-idf/components/log", "C:/Espressif/esp-idf/components/lwip", "C:/Users/wpiso/Documents/GitHub/Game_The_mana_snapper/Code/Screen/main", "C:/Espressif/esp-idf/components/mbedtls", "C:/Espressif/esp-idf/components/mqtt", "C:/Espressif/esp-idf/components/newlib", "C:/Espressif/esp-idf/components/nvs_flash", "C:/Espressif/esp-idf/components/nvs_sec_provider", "C:/Espressif/esp-idf/components/openthread", "C:/Espressif/esp-idf/components/partition_table", "C:/Espressif/esp-idf/components/perfmon", "C:/Espressif/esp-idf/components/protobuf-c", "C:/Espressif/esp-idf/components/protocomm", "C:/Espressif/esp-idf/components/pthread", "C:/Espressif/esp-idf/components/rt", "C:/Espressif/esp-idf/components/sdmmc", "C:/Espressif/esp-idf/components/soc", "C:/Espressif/esp-idf/components/spi_flash", "C:/Espressif/esp-idf/components/spiffs", "C:/Users/wpiso/Documents/GitHub/Game_The_mana_snapper/Code/Screen/components/sprites", "C:/Users/wpiso/Documents/GitHub/Game_The_mana_snapper/Code/Screen/components/st7789_display", "C:/Espressif/esp-idf/components/tcp_transport", "C:/Espressif/esp-idf/components/ulp", "C:/Espressif/esp-idf/components/unity", "C:/Espressif/esp-idf/components/usb", "C:/Espressif/esp-idf/components/vfs", "C:/Espressif/esp-idf/components/wear_levelling", "C:/Espressif/esp-idf/components/wifi_provisioning", "C:/Espressif/esp-idf/components/wpa_supplicant", "C:/Espressif/esp-idf/components/xtensa", "" ],
     "build_component_info" : {
         "app_trace": {
             "alias": "idf::app_trace",
@@ -148,21 +148,6 @@
             "sources": [ "C:/Espressif/esp-idf/components/cxx/cxx_exception_stubs.cpp", "C:/Espressif/esp-idf/components/cxx/cxx_guards.cpp", "C:/Espressif/esp-idf/components/cxx/cxx_init.cpp" ],
             "include_dirs": []
         },
-        "drawables": {
-            "alias": "idf::drawables",
-            "target": "___idf_drawables",
-            "prefix": "idf",
-            "dir": "C:/Users/wpiso/Documents/GitHub/Game_The_mana_snapper/Code/Screen/components/drawables",
-            "type": "LIBRARY",
-            "lib": "__idf_drawables",
-            "reqs": [ "ili9341_display" ],
-            "priv_reqs": [],
-            "managed_reqs": [],
-            "managed_priv_reqs": [],
-            "file": "C:/Users/wpiso/Documents/GitHub/Game_The_mana_snapper/Code/Screen/build/esp-idf/drawables/libdrawables.a",
-            "sources": [ "C:/Users/wpiso/Documents/GitHub/Game_The_mana_snapper/Code/Screen/components/drawables/Drawable.cpp", "C:/Users/wpiso/Documents/GitHub/Game_The_mana_snapper/Code/Screen/components/drawables/Line.cpp", "C:/Users/wpiso/Documents/GitHub/Game_The_mana_snapper/Code/Screen/components/drawables/Rectangle.cpp", "C:/Users/wpiso/Documents/GitHub/Game_The_mana_snapper/Code/Screen/components/drawables/Square.cpp", "C:/Users/wpiso/Documents/GitHub/Game_The_mana_snapper/Code/Screen/components/drawables/Circle.cpp", "C:/Users/wpiso/Documents/GitHub/Game_The_mana_snapper/Code/Screen/components/drawables/Triangle.cpp" ],
-            "include_dirs": [ "." ]
-        },
         "driver": {
             "alias": "idf::driver",
             "target": "___idf_driver",
@@ -215,7 +200,7 @@
             "dir": "C:/Users/wpiso/Documents/GitHub/Game_The_mana_snapper/Code/Screen/components/entities",
             "type": "LIBRARY",
             "lib": "__idf_entities",
-            "reqs": [ "sprites", "ili9341_display" ],
+            "reqs": [ "sprites", "st7789_display" ],
             "priv_reqs": [],
             "managed_reqs": [],
             "managed_priv_reqs": [],
@@ -1078,21 +1063,6 @@
             "sources": [ "C:/Users/wpiso/Documents/GitHub/Game_The_mana_snapper/Code/Screen/managed_components/espressif__esp_jpeg/jpeg_decoder.c" ],
             "include_dirs": [ "include" ]
         },
-        "espressif__esp_lcd_ili9341": {
-            "alias": "idf::espressif__esp_lcd_ili9341",
-            "target": "___idf_espressif__esp_lcd_ili9341",
-            "prefix": "idf",
-            "dir": "C:/Users/wpiso/Documents/GitHub/Game_The_mana_snapper/Code/Screen/managed_components/espressif__esp_lcd_ili9341",
-            "type": "LIBRARY",
-            "lib": "__idf_espressif__esp_lcd_ili9341",
-            "reqs": [ "driver", "esp_lcd" ],
-            "priv_reqs": [],
-            "managed_reqs": [],
-            "managed_priv_reqs": [],
-            "file": "C:/Users/wpiso/Documents/GitHub/Game_The_mana_snapper/Code/Screen/build/esp-idf/espressif__esp_lcd_ili9341/libespressif__esp_lcd_ili9341.a",
-            "sources": [ "C:/Users/wpiso/Documents/GitHub/Game_The_mana_snapper/Code/Screen/managed_components/espressif__esp_lcd_ili9341/esp_lcd_ili9341.c" ],
-            "include_dirs": [ "include" ]
-        },
         "esptool_py": {
             "alias": "idf::esptool_py",
             "target": "___idf_esptool_py",
@@ -1213,21 +1183,6 @@
             "sources": [],
             "include_dirs": [ "include" ]
         },
-        "ili9341_display": {
-            "alias": "idf::ili9341_display",
-            "target": "___idf_ili9341_display",
-            "prefix": "idf",
-            "dir": "C:/Users/wpiso/Documents/GitHub/Game_The_mana_snapper/Code/Screen/components/ili9341_display",
-            "type": "LIBRARY",
-            "lib": "__idf_ili9341_display",
-            "reqs": [ "driver", "esp_timer", "esp_lcd", "espressif__esp_lcd_ili9341" ],
-            "priv_reqs": [],
-            "managed_reqs": [],
-            "managed_priv_reqs": [],
-            "file": "C:/Users/wpiso/Documents/GitHub/Game_The_mana_snapper/Code/Screen/build/esp-idf/ili9341_display/libili9341_display.a",
-            "sources": [ "C:/Users/wpiso/Documents/GitHub/Game_The_mana_snapper/Code/Screen/components/ili9341_display/Ili9341Display.cpp" ],
-            "include_dirs": [ "." ]
-        },
         "json": {
             "alias": "idf::json",
             "target": "___idf_json",
@@ -1280,10 +1235,10 @@
             "dir": "C:/Users/wpiso/Documents/GitHub/Game_The_mana_snapper/Code/Screen/main",
             "type": "LIBRARY",
             "lib": "__idf_main",
-            "reqs": [ "driver", "drivers", "entities", "ili9341_display", "json" ],
-            "priv_reqs": [ "espressif__esp_jpeg", "espressif__esp_lcd_ili9341" ],
+            "reqs": [ "driver", "drivers", "entities", "st7789_display", "json" ],
+            "priv_reqs": [ "espressif__esp_jpeg" ],
             "managed_reqs": [],
-            "managed_priv_reqs": [ "espressif__esp_jpeg", "espressif__esp_lcd_ili9341" ],
+            "managed_priv_reqs": [ "espressif__esp_jpeg" ],
             "file": "C:/Users/wpiso/Documents/GitHub/Game_The_mana_snapper/Code/Screen/build/esp-idf/main/libmain.a",
             "sources": [ "C:/Users/wpiso/Documents/GitHub/Game_The_mana_snapper/Code/Screen/main/main.cpp", "C:/Users/wpiso/Documents/GitHub/Game_The_mana_snapper/Code/Screen/main/MenuScreen.cpp" ],
             "include_dirs": [ "." ]
@@ -1541,6 +1496,21 @@
             "managed_priv_reqs": [],
             "file": "C:/Users/wpiso/Documents/GitHub/Game_The_mana_snapper/Code/Screen/build/esp-idf/sprites/libsprites.a",
             "sources": [ "C:/Users/wpiso/Documents/GitHub/Game_The_mana_snapper/Code/Screen/components/sprites/Sprites.cpp", "C:/Users/wpiso/Documents/GitHub/Game_The_mana_snapper/Code/Screen/img/TheManaSnapper.c" ],
+            "include_dirs": [ "." ]
+        },
+        "st7789_display": {
+            "alias": "idf::st7789_display",
+            "target": "___idf_st7789_display",
+            "prefix": "idf",
+            "dir": "C:/Users/wpiso/Documents/GitHub/Game_The_mana_snapper/Code/Screen/components/st7789_display",
+            "type": "LIBRARY",
+            "lib": "__idf_st7789_display",
+            "reqs": [ "driver", "esp_timer", "esp_lcd" ],
+            "priv_reqs": [],
+            "managed_reqs": [],
+            "managed_priv_reqs": [],
+            "file": "C:/Users/wpiso/Documents/GitHub/Game_The_mana_snapper/Code/Screen/build/esp-idf/st7789_display/libst7789_display.a",
+            "sources": [ "C:/Users/wpiso/Documents/GitHub/Game_The_mana_snapper/Code/Screen/components/st7789_display/St7789Display.cpp" ],
             "include_dirs": [ "." ]
         },
         "tcp_transport": {
@@ -2946,22 +2916,10 @@
             "prefix": "idf",
             "dir": "C:/Users/wpiso/Documents/GitHub/Game_The_mana_snapper/Code/Screen/main",
             "lib": "__idf_main",
-            "reqs": [ "driver", "drivers", "entities", "ili9341_display", "json" ],
-            "priv_reqs": [ "espressif__esp_jpeg", "espressif__esp_lcd_ili9341" ],
+            "reqs": [ "driver", "drivers", "entities", "st7789_display", "json" ],
+            "priv_reqs": [ "espressif__esp_jpeg" ],
             "managed_reqs": [],
-            "managed_priv_reqs": [ "espressif__esp_jpeg", "espressif__esp_lcd_ili9341" ],
-            "include_dirs": [ "." ]
-        },
-        "drawables": {
-            "alias": "idf::drawables",
-            "target": "___idf_drawables",
-            "prefix": "idf",
-            "dir": "C:/Users/wpiso/Documents/GitHub/Game_The_mana_snapper/Code/Screen/components/drawables",
-            "lib": "__idf_drawables",
-            "reqs": [ "ili9341_display" ],
-            "priv_reqs": [],
-            "managed_reqs": [],
-            "managed_priv_reqs": [],
+            "managed_priv_reqs": [ "espressif__esp_jpeg" ],
             "include_dirs": [ "." ]
         },
         "drivers": {
@@ -2982,19 +2940,7 @@
             "prefix": "idf",
             "dir": "C:/Users/wpiso/Documents/GitHub/Game_The_mana_snapper/Code/Screen/components/entities",
             "lib": "__idf_entities",
-            "reqs": [ "sprites", "ili9341_display" ],
-            "priv_reqs": [],
-            "managed_reqs": [],
-            "managed_priv_reqs": [],
-            "include_dirs": [ "." ]
-        },
-        "ili9341_display": {
-            "alias": "idf::ili9341_display",
-            "target": "___idf_ili9341_display",
-            "prefix": "idf",
-            "dir": "C:/Users/wpiso/Documents/GitHub/Game_The_mana_snapper/Code/Screen/components/ili9341_display",
-            "lib": "__idf_ili9341_display",
-            "reqs": [ "driver", "esp_timer", "esp_lcd", "espressif__esp_lcd_ili9341" ],
+            "reqs": [ "sprites", "st7789_display" ],
             "priv_reqs": [],
             "managed_reqs": [],
             "managed_priv_reqs": [],
@@ -3012,6 +2958,18 @@
             "managed_priv_reqs": [],
             "include_dirs": [ "." ]
         },
+        "st7789_display": {
+            "alias": "idf::st7789_display",
+            "target": "___idf_st7789_display",
+            "prefix": "idf",
+            "dir": "C:/Users/wpiso/Documents/GitHub/Game_The_mana_snapper/Code/Screen/components/st7789_display",
+            "lib": "__idf_st7789_display",
+            "reqs": [ "driver", "esp_timer", "esp_lcd" ],
+            "priv_reqs": [],
+            "managed_reqs": [],
+            "managed_priv_reqs": [],
+            "include_dirs": [ "." ]
+        },
         "espressif__esp_jpeg": {
             "alias": "idf::espressif__esp_jpeg",
             "target": "___idf_espressif__esp_jpeg",
@@ -3019,18 +2977,6 @@
             "dir": "C:/Users/wpiso/Documents/GitHub/Game_The_mana_snapper/Code/Screen/managed_components/espressif__esp_jpeg",
             "lib": "__idf_espressif__esp_jpeg",
             "reqs": [],
-            "priv_reqs": [],
-            "managed_reqs": [],
-            "managed_priv_reqs": [],
-            "include_dirs": [ "include" ]
-        },
-        "espressif__esp_lcd_ili9341": {
-            "alias": "idf::espressif__esp_lcd_ili9341",
-            "target": "___idf_espressif__esp_lcd_ili9341",
-            "prefix": "idf",
-            "dir": "C:/Users/wpiso/Documents/GitHub/Game_The_mana_snapper/Code/Screen/managed_components/espressif__esp_lcd_ili9341",
-            "lib": "__idf_espressif__esp_lcd_ili9341",
-            "reqs": [ "driver", "esp_lcd" ],
             "priv_reqs": [],
             "managed_reqs": [],
             "managed_priv_reqs": [],

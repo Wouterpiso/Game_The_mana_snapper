@@ -1,17 +1,22 @@
-/*! \brief A sprites API
- *
+/**
+ * @file Sprites.hpp
+ * @brief Minimal sprite description shared by renderers.
  */
 #pragma once
 #include <cstdint>
 
 namespace sprites {
 
-// Minimal POD that any renderer can consume.
-// pixels: RGB565 byte stream (little-endian), row-major, 2 bytes per pixel.
+/**
+ * @brief Plain sprite description.
+ *
+ * @c pixels is an RGB565 byte stream (little-endian), row-major, two bytes per
+ * pixel.
+ */
 struct Sprite {
-    uint16_t w;
-    uint16_t h;
-    const uint8_t* pixels; // RGB565, little-endian, row-major
+  uint16_t w;            /**< Sprite width in pixels. */
+  uint16_t h;            /**< Sprite height in pixels. */
+  const uint8_t* pixels; /**< RGB565 pixels, little-endian, row-major. */
 };
 
-} 
+} // namespace sprites

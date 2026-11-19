@@ -1,3 +1,3 @@
 idf_component_register(SRCS "main.cpp" "MenuScreen.cpp"
                        INCLUDE_DIRS "."
-                       REQUIRES driver drivers entities ili9341_display json)
+                       REQUIRES driver drivers entities st7789_display json)

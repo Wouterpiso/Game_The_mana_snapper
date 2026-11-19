@@ -8,4 +8,11 @@ config MANA_SNAPPER_WIFI_PASSWORD
     string "Wi-Fi password"
     default ""
 
+config MANA_SNAPPER_SERVER_URL
+    string "Card server base URL"
+    default "http://192.168.1.79:5000"
+    help
+        Base URL of the PaddleOCR Flask server, without a trailing slash.
+        The Master uses <base>/ocr, <base>/export and <base>/import.
+
 endmenu

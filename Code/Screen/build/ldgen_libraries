@@ -83,9 +83,7 @@ C:/Users/wpiso/Documents/GitHub/Game_The_mana_snapper/Code/Screen/build/esp-idf/
 C:/Users/wpiso/Documents/GitHub/Game_The_mana_snapper/Code/Screen/build/esp-idf/wifi_provisioning/libwifi_provisioning.a
 C:/Users/wpiso/Documents/GitHub/Game_The_mana_snapper/Code/Screen/build/esp-idf/drivers/libdrivers.a
 C:/Users/wpiso/Documents/GitHub/Game_The_mana_snapper/Code/Screen/build/esp-idf/sprites/libsprites.a
-C:/Users/wpiso/Documents/GitHub/Game_The_mana_snapper/Code/Screen/build/esp-idf/espressif__esp_lcd_ili9341/libespressif__esp_lcd_ili9341.a
-C:/Users/wpiso/Documents/GitHub/Game_The_mana_snapper/Code/Screen/build/esp-idf/ili9341_display/libili9341_display.a
+C:/Users/wpiso/Documents/GitHub/Game_The_mana_snapper/Code/Screen/build/esp-idf/st7789_display/libst7789_display.a
 C:/Users/wpiso/Documents/GitHub/Game_The_mana_snapper/Code/Screen/build/esp-idf/entities/libentities.a
 C:/Users/wpiso/Documents/GitHub/Game_The_mana_snapper/Code/Screen/build/esp-idf/espressif__esp_jpeg/libespressif__esp_jpeg.a
 C:/Users/wpiso/Documents/GitHub/Game_The_mana_snapper/Code/Screen/build/esp-idf/main/libmain.a
-C:/Users/wpiso/Documents/GitHub/Game_The_mana_snapper/Code/Screen/build/esp-idf/drawables/libdrawables.a

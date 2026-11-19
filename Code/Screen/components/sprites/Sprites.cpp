@@ -1,5 +1,6 @@
-/*! \brief Sprites implementation
- *
+/**
+ * @file Sprites.cpp
+ * @brief Implements the sprite module.
  */
 #include "Sprites.hpp"
 
