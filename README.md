@@ -1,7 +1,5 @@
 # The ManaSnapper
 
-![The ManaSnapper](Media/THE.jpg)
-
 The ManaSnapper is a portable Magic: The Gathering card scanner and collection
 manager. Three ESP32 boards work together: a camera board frames a card, a
 master board looks it up on Scryfall and keeps the collection, and a touch-screen
