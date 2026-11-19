@@ -9,7 +9,7 @@ app = Flask(__name__)
 # Initialiseer PaddleOCR met de nieuwe parameters.
 # use_textline_orientation vervangt use_angle_cls.
 # PaddleOCR-gpu selecteert nu automatisch je GPU.
-ocr = PaddleOCR(use_textline_orientation=True, lang='en')
+ocr = PaddleOCR(use_textline_orientation=True, lang='en', enable_mkldnn=False)
 
 @app.route('/ocr', methods=['POST'])
 def process_ocr():
