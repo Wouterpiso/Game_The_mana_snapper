@@ -20,13 +20,6 @@
 #include "esp_heap_caps.h" // for heap_caps_malloc
 #include "esp_timer.h" // for esp_timer_get_time for fine grain timing
 
-#include "Line.hpp"
-#include "Rectangle.hpp"
-#include "Square.hpp"
-#include "Circle.hpp"
-#include "Triangle.hpp"
-#include <vector>
-
 // comment this out for the 2.4 inch display (or change it to DISPLAY24)
 #define DISPLAY28
 
@@ -43,8 +36,6 @@ public:
     void fillScreen(uint16_t color);
     void backlightOn();
     void backlightOff();
-    void diagnostics();
-    void diagnostics_drawables();
     uint16_t rgb565(uint8_t r, uint8_t g, uint8_t b);
 
     // Drawing Primitives

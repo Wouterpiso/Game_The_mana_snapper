@@ -72,7 +72,6 @@ void masterCommunicationInit()
 void sendMasterCommand(const char* command)
 {
     const size_t commandLength = std::strlen(command);
-    ESP_LOGD(Tag, "TX command: %s", command);
     const int bytesWritten =
         uart_write_bytes(MasterUart, command, commandLength);
     if (bytesWritten != static_cast<int>(commandLength)) {
@@ -192,10 +191,6 @@ MasterEvent handleMasterLine(Ili9341Display& display, MenuScreen& menu,
         return beginImage(line + sizeof(camPhotoPrefix) - 1, true, true, keepPhoto);
     }
     if (std::strncmp(line, camImagePrefix, sizeof(camImagePrefix) - 1) == 0) {
-        if (liveCamera) {
-            ESP_LOGD(Tag, "Camera picture: %ld bytes",
-                     std::atol(line + sizeof(camImagePrefix) - 1));
-        }
         return beginImage(line + sizeof(camImagePrefix) - 1, true, false, liveCamera);
     }
     if (std::strncmp(line, imagePrefix, sizeof(imagePrefix) - 1) == 0) {
@@ -369,9 +364,6 @@ extern "C" void app_main(void) {
 
     Ili9341Display display(lcdMosi, lcdSclk, lcdCs, lcdDc, lcdRst, lcdBacklight);
     display.init();
-    ESP_LOGI(Tag, "free DRAM %u, largest DMA block %u",
-             (unsigned)heap_caps_get_free_size(MALLOC_CAP_INTERNAL),
-             (unsigned)heap_caps_get_largest_free_block(MALLOC_CAP_DMA));
 
     StartScreenEntity startScreen;
     display.fillScreen(display.rgb565(255, 255, 255));
@@ -502,17 +494,10 @@ extern "C" void app_main(void) {
         if (page == Page::Scan && cameraView == CameraView::Live &&
             masterEvent == MasterEvent::CamImage) {
             // Live camera preview; a failed frame keeps the last picture.
-            const size_t heapBefore =
-                heap_caps_get_free_size(MALLOC_CAP_INTERNAL);
             if (menu.drawCameraView(display, receivedImage, receivedImageLength)) {
-                if (!cameraFrameSeen) {
-                    ESP_LOGI(Tag, "camera frame drawn, free DRAM %u",
-                             (unsigned)heapBefore);
-                }
                 cameraFrameSeen = true;
             } else {
-                ESP_LOGW(Tag, "camera frame not decodable, free DRAM %u",
-                         (unsigned)heapBefore);
+                ESP_LOGW(Tag, "Camera frame not decodable");
                 if (!cameraFrameSeen) {
                     menu.drawCameraWaiting(display, "NO SIGNAL");
                 }
@@ -533,12 +518,9 @@ extern "C" void app_main(void) {
             // The preview frame behind SNAP arrived: show it with the demo
             // disclaimer, then drop the copy in RAM (the screen keeps the
             // picture buffer on the display).
-            ESP_LOGI(Tag, "capture photo received: %u bytes",
-                     (unsigned)receivedImageLength);
             cameraView = CameraView::Review;
             if (!menu.drawDemoPhoto(display, receivedImage, receivedImageLength)) {
-                ESP_LOGW(Tag, "capture photo not decodable (free DRAM %u)",
-                         (unsigned)heap_caps_get_free_size(MALLOC_CAP_INTERNAL));
+                ESP_LOGW(Tag, "Capture photo not decodable");
             }
         } else if (page == Page::Scan && cameraView == CameraView::Taking &&
                    (masterEvent == MasterEvent::CaptureFailed ||

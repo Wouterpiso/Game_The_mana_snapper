@@ -4,7 +4,6 @@
 #include <stdint.h>
 
 void imageRecognitionInit();
-bool imageRecognitionSubmit(const uint8_t* imageData, size_t imageLength);
 
 // Waits (up to ~10 s) for the WiFi connection to have an IP address.
 bool imageRecognitionEnsureWifi();

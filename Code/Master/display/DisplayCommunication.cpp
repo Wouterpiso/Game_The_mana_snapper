@@ -6,7 +6,6 @@
 #include <cstdio>
 #include <cstdlib>
 #include <cstring>
-#include <stdio.h>
 
 namespace {
 constexpr uart_port_t DisplayUart = UART_NUM_1;
@@ -20,11 +19,7 @@ char lastTitle[MaxTitleLength + 1];
 bool sendBytes(const char* data, size_t length)
 {
     const int bytesWritten = uart_write_bytes(DisplayUart, data, length);
-    if (bytesWritten != static_cast<int>(length)) {
-        printf("Failed to send data to screen\n");
-        return false;
-    }
-    return true;
+    return bytesWritten == static_cast<int>(length);
 }
 
 DisplayRequest commandFromLine(const char* line, size_t length)
@@ -131,9 +126,7 @@ DisplayRequest displayCommunicationReadRequest()
         available < sizeof(data) - 1 ? available : sizeof(data) - 1;
     if (bytesToRead > 0) {
         const int bytesRead = uart_read_bytes(DisplayUart, data, bytesToRead, 0);
-        printf("DISPLAY RX %d bytes: %.*s\n", bytesRead, bytesRead > 0 ? bytesRead : 0, (const char*)data);
         if (bytesRead < 0) {
-            printf("Failed to read from screen\n");
             return DisplayRequest::Idle;
         }
         for (int index = 0; index < bytesRead; ++index) {

@@ -70,9 +70,7 @@ void Ili9341Display::setupSPI()
         .intr_flags = 0
     };
 
-    ESP_LOGI(TAG, "Setup SPI");
     ESP_ERROR_CHECK(spi_bus_initialize(_host, &buscfg, SPI_DMA_CH_AUTO));
-
     esp_lcd_panel_io_spi_config_t io_config = {
         .cs_gpio_num = _cs,
         .dc_gpio_num = _dc,
@@ -97,7 +95,6 @@ void Ili9341Display::setupSPI()
         }
     };
 
-    ESP_LOGI(TAG, "Setup LCD panel io to SPI");
     ESP_ERROR_CHECK(esp_lcd_new_panel_io_spi(_host, &io_config, &_io));
 }
 
@@ -153,8 +150,6 @@ void Ili9341Display::setupPanel() {
     ESP_ERROR_CHECK(esp_lcd_panel_set_gap(_panel, 0, 0));
     ESP_ERROR_CHECK(esp_lcd_panel_invert_color(_panel, INVERT_COLOR));
     ESP_ERROR_CHECK(esp_lcd_panel_disp_on_off(_panel, true));
-
-    ESP_LOGI(TAG, "ESP LCD-panel setup complete.");
 }
 
 /*! \brief convert 24-bit RGB into 16-bit RGB565 format
@@ -209,7 +204,6 @@ void Ili9341Display::backlightOn() {
                            .intr_type = GPIO_INTR_DISABLE};
   gpio_config(&io_conf);
   gpio_set_level(static_cast<gpio_num_t>(_bl), 1);
-  ESP_LOGI(TAG, "backlightOn: OK");
 }
 
 void Ili9341Display::backlightOff() {
@@ -218,118 +212,6 @@ void Ili9341Display::backlightOff() {
   }
 
   gpio_set_level(static_cast<gpio_num_t>(_bl), 0);
-  ESP_LOGI(TAG, "backlightOff: OK");
-}
-
-void Ili9341Display::diagnostics() {
-  uint16_t red     = rgb565(0xFF, 0x00, 0x00);
-  uint16_t green   = rgb565(0x00, 0xFF, 0x00);
-  uint16_t blue    = rgb565(0x00, 0x00, 0xFF);
-
-  ESP_LOGI(TAG, "Diagnostics Start");
-  ESP_LOGI(TAG, "MOSI GPIO: %d", _mosi);
-  ESP_LOGI(TAG, "SCLK GPIO: %d", _sclk);
-  ESP_LOGI(TAG, "CS   GPIO: %d", _cs);
-  ESP_LOGI(TAG, "DC   GPIO: %d", _dc);
-  ESP_LOGI(TAG, "RST  GPIO: %d", _rst);
-  ESP_LOGI(TAG, "BCKL GPIO: %d", _bl);
-
-  if (_io) {
-    ESP_LOGI(TAG, "SPI IO interface is initialized.");
-  } else {
-    ESP_LOGW(TAG, "SPI IO interface is NULL.");
-  }
-
-  if (_panel) {
-    ESP_LOGI(TAG, "Panel object is initialized.");
-  } else {
-    ESP_LOGW(TAG, "Panel object is NULL.");
-  }
-
-  ESP_LOGI(TAG, "Calling fillScreen with RED to test...");
-  fillScreen(red);
-  present();  // flush the backbuffer
-  vTaskDelay(pdMS_TO_TICKS(1000));
-
-  ESP_LOGI(TAG, "Calling fillScreen with GREEN to test...");
-  fillScreen(green);
-  present();  // flush the backbuffer
-  vTaskDelay(pdMS_TO_TICKS(1000));
-
-  ESP_LOGI(TAG, "Calling fillScreen with BLUE to test...");
-  fillScreen(blue);
-  present();  // flush the backbuffer
-  vTaskDelay(pdMS_TO_TICKS(1000));
-
-  // check which borders are addressed
-  ESP_LOGI(TAG, "Calling fillScreen with BLACK");
-  fillScreen(rgb565(0, 0, 0));  // black
-  present();
-  vTaskDelay(pdMS_TO_TICKS(1000));
-
-  ESP_LOGI(TAG, "BLUE top (y=0)");
-  drawLine(0, 0, WIDTH - 1, 0, blue);
-  present();
-  vTaskDelay(pdMS_TO_TICKS(1000));
-
-  ESP_LOGI(TAG, "BLUE bottom");
-  drawLine(0, HEIGHT - 1, WIDTH - 1, HEIGHT - 1, blue);
-  present();
-  vTaskDelay(pdMS_TO_TICKS(1000));
-
-  ESP_LOGI(TAG, "BLUE left (x=0)");
-  drawLine(0, 0, 0, HEIGHT - 1, blue);
-  present();
-  vTaskDelay(pdMS_TO_TICKS(1000));
-
-  ESP_LOGI(TAG, "BLUE right");
-  drawLine(WIDTH - 1, 0, WIDTH - 1, HEIGHT - 1, blue);
-  present();
-  vTaskDelay(pdMS_TO_TICKS(1000));
-
-  ESP_LOGI(TAG, "Backlight off");
-  backlightOff();
-  vTaskDelay(pdMS_TO_TICKS(2000));
-
-  ESP_LOGI(TAG, "Backlight on");
-  backlightOn();
-}
-
-void Ili9341Display::diagnostics_drawables() {
-  uint16_t red     = rgb565(0xFF, 0x00, 0x00);
-  uint16_t green   = rgb565(0x00, 0xFF, 0x00);
-  uint16_t blue    = rgb565(0x00, 0x00, 0xFF);
-  uint16_t yellow  = rgb565(0xFF, 0xFF, 0x00);
-  uint16_t magenta = rgb565(0xFF, 0x00, 0xFF);
-  uint16_t cyan    = rgb565(0x00, 0xFF, 0xFF);
-  uint16_t orange  = rgb565(0xFF, 0xCC, 0x00);
-  uint16_t white   = rgb565(0xFF, 0xFF, 0xFF);
-
-  std::vector<Drawable*> shapes = {
-      new Line(10, 10, 120, 10, red),
-      new Line(0, 15, WIDTH - 1, 15, green),
-
-      new Rectangle(10, 20, 60, 40, blue),
-      new Rectangle(80, 20, 40, 40, yellow, true),
-
-      // NB: Square inherits from Rectangle
-      new Square(10, 70, 30, red), 
-      new Square(50, 70, 30, green, true),
-
-      new Circle(40, 130, 20, cyan), 
-      new Circle(100, 130, 20, orange, true),
-
-      new Triangle(10, 190, 50, 190, 30, 160, magenta),
-      new Triangle(80, 190, 120, 190, 100, 160, white, true)};
-
-  fillScreen(rgb565(0, 0, 0));  // clear screen (set to black)
-  ESP_LOGI(TAG, "diagnostics_drawables: start primitive test");
-  for (const auto& shape : shapes) {
-    shape->draw(*this);
-    delete shape;
-  }
-  ESP_LOGI(TAG, "diagnostics_drawables: end   primitive test");
-  present();  // present the shapes after drawing all of them
 }
 
 /*! \brief start of Drawing Primitives

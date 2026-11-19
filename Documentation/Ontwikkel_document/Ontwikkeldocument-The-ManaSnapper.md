@@ -29,18 +29,11 @@ Team: The ManaEngineer
     - [Klassediagrammen](#klassediagrammen)
     - [STD's](#stds)
   - [Realisatie](#realisatie)
-    - [Fysieke View](#fysieke-view)
     - [Code](#code)
-    - [Unit Tests](#unit-tests)
-    - [Integratie Tests](#integratie-tests)
     - [Eindresultaat](#eindresultaat)
   - [Conclusie en Advies](#conclusie-en-advies)
   - [Appendices](#appendices)
-    - [Appendix 1: Mindmaps](#appendix-1-mindmaps)
-    - [Appendix 2: Gespreksverslagen](#appendix-2-gespreksverslagen)
-      - [Notities bij Kickoff-Meeting](#notities-bij-kickoff-meeting)
-    - [Appendix 3: Upgradeonderzoeksverslagen](#appendix-3-upgradeonderzoeksverslagen)
-    - [Appendix 4: Referenties](#appendix-4-referenties)
+    - [Appendix 1: Referenties](#appendix-1-referenties)
 
 ## Inleiding
 
@@ -223,23 +216,9 @@ soort verwerking uitvoeren worden samengevoegd tot één taak.
 
 ``leg uit waarin de realisatie zich onderscheidt van het ontwerp, en noem kort de rollen van de subhoofdstukken``
 
-### Fysieke View
-
-``Ontwerp de fysieke decompositie (een SysML Bdd). (de functionele decompositie biedt daarvoor meestal goede aanknopingspunten). Verduidelijk fysieke compositie-relaties middels "Constraints" (NB: dat zijn in dit geval gekwantificeerde ontwerpkeuzes die zowel uit de eerdere constraints als de niet-functionele requirements bestaan.``
-
 ### Code
 
 ``Ontwerp vanuit de STD's de bijbehorende code. Geef waar nodig additionele toelichting. Voeg per STD een link toe naar de betreffende code in de team repo. Voeg ook links naar de overige code toe``
-
-### Unit Tests
-
-``Voeg in dit hoofdstuk sub-hoofdstukken toe met Unit Tests, elk bestaande uit een Testplan, een link naar de testcode, een samenvatting van de bevindingen van de meest recente uitvoer van die test en een link naar een bestand met die meest recente test-output.``
-
-### Integratie Tests
-
-``Voeg in dit hoofdstuk sub-hoofdstukken toe met Integratie Tests, elk bestaande uit een Testplan, een link naar de testcode, een samenvatting van de bevindingen van de meest recente uitvoer van die test en een link naar een bestand met die meest recente test-output. Belangrijke integratie-tests zijn uiteraard ook de tests van het complete product. Hoe goed doet het product wat het moet doen?``
-
-``Verder zou je in dit hoofdstuk Realisatie ook subhoofdstukken kunnen opnemen met : beslissingstabellen, waarin gemaakte realisatiekeuzes worden verantwoord, Failure Mode Effect Analyses, en andere realisatie gerelateerde overwegingen.``
 
 ### Eindresultaat
 
@@ -251,21 +230,7 @@ soort verwerking uitvoeren worden samengevoegd tot één taak.
 
 ## Appendices
 
-### Appendix 1: Mindmaps
-
-`` Bijvoorbeeld voorafgaand aan het maken van het systeem context diagram is een mooi moment om met zijn allen een mindmap te maken die een samenhang duidt van alles wat je als team maar kunt bedenken in relatie tot het systeem. ``
-
-### Appendix 2: Gespreksverslagen
-
-#### Notities bij Kickoff-Meeting
-
-``... etc``
-
-### Appendix 3: Upgradeonderzoeksverslagen
-
-``zet hier een lijst met links naar de upgradeonderzoeksverslagen. Licht het toe met wat tekst met de belangrijkste samenvatttingen ervan.``
-
-### Appendix 4: Referenties
+### Appendix 1: Referenties
 
 `` lijst 3rd party materiaal waar naar verwezen is. Boeken, site-links.``
 

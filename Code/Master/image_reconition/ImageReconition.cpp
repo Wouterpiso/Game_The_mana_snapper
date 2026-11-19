@@ -24,7 +24,7 @@ constexpr char MultipartBoundary[] = "ManaSnapperBoundary";
 EventGroupHandle_t wifiEvents = nullptr;
 constexpr EventBits_t GotIpBit = BIT0;
 
-void onWifiEvent(void*, esp_event_base_t base, int32_t id, void* data)
+void onWifiEvent(void*, esp_event_base_t base, int32_t id, void*)
 {
     if (base == WIFI_EVENT && id == WIFI_EVENT_STA_START) {
         esp_wifi_connect();
@@ -33,8 +33,6 @@ void onWifiEvent(void*, esp_event_base_t base, int32_t id, void* data)
         ESP_LOGW(Tag, "WiFi disconnected, retrying");
         esp_wifi_connect();
     } else if (base == IP_EVENT && id == IP_EVENT_STA_GOT_IP) {
-        const auto* event = static_cast<ip_event_got_ip_t*>(data);
-        ESP_LOGI(Tag, "Got IP: " IPSTR, IP2STR(&event->ip_info.ip));
         xEventGroupSetBits(wifiEvents, GotIpBit);
     }
 }
@@ -63,7 +61,7 @@ void wifiInit()
     ESP_ERROR_CHECK(esp_wifi_start());
 }
 
-// Logs every OCR line and copies the first non-empty one into `name`.
+// Copies the first non-empty OCR line into `name`.
 // The first line of a card is its title, so that is what we treat as the name.
 bool extractCardName(const char* responseBody, char* name, size_t nameSize)
 {
@@ -80,7 +78,6 @@ bool extractCardName(const char* responseBody, char* name, size_t nameSize)
         if (!cJSON_IsString(word) || word->valuestring == nullptr) {
             continue;
         }
-        ESP_LOGI(Tag, "OCR word: %s", word->valuestring);
         if (!found && word->valuestring[0] != '\0') {
             std::snprintf(name, nameSize, "%s", word->valuestring);
             found = true;
@@ -206,7 +203,6 @@ bool imageRecognitionGetCardName(const uint8_t* imageData, size_t imageLength,
     const int finalStatus = esp_http_client_get_status_code(client);
     if (bytesRead >= 0) {
         response[bytesRead] = '\0';
-        ESP_LOGI(Tag, "OCR HTTP status: %d", finalStatus);
         if (finalStatus == 200) {
             gotName = extractCardName(response, name, nameSize);
         } else {
@@ -218,15 +214,4 @@ bool imageRecognitionGetCardName(const uint8_t* imageData, size_t imageLength,
     esp_http_client_close(client);
     esp_http_client_cleanup(client);
     return gotName;
-}
-
-bool imageRecognitionSubmit(const uint8_t* imageData, size_t imageLength)
-{
-    char name[128];
-    const bool ok = imageRecognitionGetCardName(imageData, imageLength, name,
-                                                sizeof(name));
-    if (ok) {
-        ESP_LOGI(Tag, "Recognised card name: %s", name);
-    }
-    return ok;
 }

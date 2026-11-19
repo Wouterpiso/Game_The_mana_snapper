@@ -110,7 +110,6 @@ extern "C" void app_main(void)
         ESP_LOGE(Tag, "Camera init failed (0x%x)", error);
         return;
     }
-    ESP_LOGI(Tag, "Camera ready, streaming to the U0T pad");
     // UART1 is routed over GPIO1, which hides the console output from here on.
     esp_log_level_set(Tag, ESP_LOG_NONE);
 

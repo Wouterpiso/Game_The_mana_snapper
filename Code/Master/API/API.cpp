@@ -445,7 +445,6 @@ char* apiFetchCardByName(const char* cardName)
     }
 
     const std::string url = std::string(ScryfallNamedUrl) + urlEncode(cardName);
-    ESP_LOGI(Tag, "Scryfall lookup: %s", cardName);
 
     char* body = httpGet(url.c_str(), "application/json", MaxResponseSize, nullptr);
     if (body == nullptr) {
@@ -483,7 +482,6 @@ int apiFetchPrintings(const char* cardName, ApiPrinting* printings, int maxPrint
         if (page > 1) {
             url += "&page=" + std::to_string(page);
         }
-        ESP_LOGI(Tag, "Scryfall printings of %s, page %d", canonical, page);
         const int before = scanner.count;
         streamGet(url.c_str(), "application/json", MaxSearchResponseSize, feedScanner,
                   &scanner);
@@ -493,7 +491,6 @@ int apiFetchPrintings(const char* cardName, ApiPrinting* printings, int maxPrint
     }
 
     const int found = scanner.count < maxPrintings ? scanner.count : maxPrintings;
-    ESP_LOGI(Tag, "%d printings of %s", found, canonical);
     return found;
 }
 
@@ -506,7 +503,6 @@ char* apiFetchCardByPrinting(const char* set, const char* collectorNumber)
 
     const std::string url = std::string(ScryfallCardUrl) + urlEncode(set) + "/" +
                             urlEncode(collectorNumber);
-    ESP_LOGI(Tag, "Scryfall card: %s", url.c_str());
 
     char* body = httpGet(url.c_str(), "application/json", MaxResponseSize, nullptr);
     if (body == nullptr) {
@@ -521,7 +517,6 @@ uint8_t* apiFetchBinary(const char* url, size_t maxBytes, size_t* length)
         return nullptr;
     }
     *length = 0;
-    ESP_LOGI(Tag, "Download: %s", url);
     char* body = httpGet(url, "image/jpeg,*/*", maxBytes, length);
     if (body != nullptr && *length == 0) {
         std::free(body);
@@ -540,7 +535,6 @@ bool apiExportCollection(const char* collectionJson)
     if (collectionJson == nullptr) {
         return false;
     }
-    ESP_LOGI(Tag, "Exporting the collection");
 
     esp_http_client_config_t config = {};
     config.url = ServerExportUrl;
@@ -558,13 +552,11 @@ bool apiExportCollection(const char* collectionJson)
     const esp_err_t err = esp_http_client_perform(client);
     const int status = esp_http_client_get_status_code(client);
     esp_http_client_cleanup(client);
-    ESP_LOGI(Tag, "Export answered HTTP %d", status);
     return err == ESP_OK && status == 200;
 }
 
 char* apiFetchCollectionJson()
 {
-    ESP_LOGI(Tag, "Importing the collection");
     return httpGet(ServerImportUrl, "application/json", MaxCollectionImportSize,
                    nullptr);
 }

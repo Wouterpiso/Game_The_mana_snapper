@@ -1,7 +1,7 @@
 {
     "version":            "1.1",
     "project_name":       "ManaSnapperCam",
-    "project_version":    "dbb6078-dirty",
+    "project_version":    "83f134e-dirty",
     "project_path":       "C:/Users/wpiso/Documents/GitHub/Game_The_mana_snapper/Code/Cam",
     "idf_path":           "C:/Espressif/esp-idf",
     "build_dir":          "C:/Users/wpiso/Documents/GitHub/Game_The_mana_snapper/Code/Cam/build",

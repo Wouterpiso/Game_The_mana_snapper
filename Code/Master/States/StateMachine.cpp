@@ -26,37 +26,6 @@ ApiPrinting pendingPrintings[MaxPrintings];
 int pendingCount = 0;
 char setListPayload[4 * 1024];
 
-const char* stateName(State state)
-{
-    switch (state) {
-    case State::Display:
-        return "DISPLAY";
-    case State::Collection:
-        return "COLLECTION";
-    case State::Cam:
-        return "CAM";
-    case State::AddCard:
-        return "ADD_CARD";
-    case State::OcrDemo:
-        return "OCR_DEMO";
-    case State::CardInfo:
-        return "CARD_INFO";
-    case State::CardImage:
-        return "CARD_IMAGE";
-    case State::CardRemove:
-        return "CARD_REMOVE";
-    case State::CardRemoveOne:
-        return "CARD_REMOVE_ONE";
-    case State::Import:
-        return "IMPORT";
-    case State::Export:
-        return "EXPORT";
-    case State::Idle:
-    default:
-        return "IDLE";
-    }
-}
-
 // Typed card name -> Scryfall -> collection.
 bool addCardByTitle(const char* title)
 {
@@ -67,29 +36,19 @@ bool addCardByTitle(const char* title)
         ++title;
     }
     if (title[0] == '\0') {
-        printf("Add card: empty card name\n");
         return false;
     }
-    printf("Add card: looking up \"%s\"\n", title);
     char* cardJson = apiFetchCardByName(title);
     if (cardJson == nullptr) {
-        printf("Add card: Scryfall lookup failed for \"%s\"\n", title);
         return false;
     }
 
     const DataResult result = dataAddCard(cardJson);
     apiFreeJson(cardJson);
     if (result == DataResult::AlreadyExists) {
-        printf("Add card: \"%s\" is already in the collection\n", title);
         return true;
     }
-    if (result != DataResult::Ok) {
-        printf("Add card: could not store the card (error %d)\n",
-               static_cast<int>(result));
-        return false;
-    }
-    printf("Add card: \"%s\" added to the collection\n", title);
-    return true;
+    return result == DataResult::Ok;
 }
 
 // Card name -> every set it was printed in -> the screen asks which one.
@@ -101,14 +60,11 @@ bool startSetSelection(const char* cardName)
         ++cardName;
     }
     if (cardName == nullptr || cardName[0] == '\0') {
-        printf("Add card: empty card name\n");
         return false;
     }
 
-    printf("Add card: looking up printings of \"%s\"\n", cardName);
     pendingCount = apiFetchPrintings(cardName, pendingPrintings, MaxPrintings);
     if (pendingCount <= 0) {
-        printf("Add card: no printings for \"%s\"\n", cardName);
         return false;
     }
 
@@ -132,12 +88,9 @@ bool startSetSelection(const char* cardName)
         length += static_cast<size_t>(written);
     }
     if (pendingCount == 0 || !displayCommunicationSendAddCardSets(setListPayload)) {
-        printf("Add card: failed to send the set list\n");
         pendingCount = 0;
         return false;
     }
-    printf("Add card: %d printings of \"%s\" sent to the screen\n", pendingCount,
-           cardName);
     return true;
 }
 
@@ -147,21 +100,15 @@ void choosePrinting(int index)
     bool added = false;
     if (index >= 0 && index < pendingCount) {
         const ApiPrinting& printing = pendingPrintings[index];
-        printf("Add card: fetching %s #%s (%s)\n", printing.set, printing.number,
-               printing.setName);
         char* cardJson = apiFetchCardByPrinting(printing.set, printing.number);
         if (cardJson != nullptr) {
             const DataResult result = dataAddCard(cardJson);
             apiFreeJson(cardJson);
             added = result == DataResult::Ok || result == DataResult::AlreadyExists;
         }
-    } else {
-        printf("Add card: bad set choice %d\n", index);
     }
     pendingCount = 0;
-    if (!displayCommunicationSendAddCardResult(added)) {
-        printf("Failed to send add card result\n");
-    }
+    displayCommunicationSendAddCardResult(added);
 }
 
 void testImagePath(int number, char* path, size_t pathSize)
@@ -193,7 +140,6 @@ uint8_t* readTestImage(int number, size_t* length)
     const long size = ftell(file);
     fseek(file, 0, SEEK_SET);
     if (size <= 0 || size > static_cast<long>(MaxTestImageBytes)) {
-        printf("OCR demo: %s has an unusable size (%ld)\n", path, size);
         fclose(file);
         return nullptr;
     }
@@ -201,7 +147,6 @@ uint8_t* readTestImage(int number, size_t* length)
     const size_t read = data != nullptr ? fread(data, 1, static_cast<size_t>(size), file) : 0;
     fclose(file);
     if (data == nullptr || read != static_cast<size_t>(size)) {
-        printf("OCR demo: could not read %s\n", path);
         free(data);
         return nullptr;
     }
@@ -220,8 +165,6 @@ void runOcrDemo()
         }
     }
     if (count == 0) {
-        printf("OCR demo: no test images found; copy test1.jpeg .. test9.jpeg "
-               "into Code/Master/test_Image and flash again\n");
         displayCommunicationSendOcrDemoFailed();
         return;
     }
@@ -235,16 +178,13 @@ void runOcrDemo()
     free(image);
 
     if (!recognised) {
-        printf("OCR demo: test%d.jpeg could not be read\n", number);
         displayCommunicationSendOcrDemoFailed();
         return;
     }
-    printf("OCR demo: test%d.jpeg -> \"%s\"\n", number, name);
     // The demo card goes into the collection like a typed one: first let the
     // user pick the set, then fall back to the fuzzy match.
-    if (!startSetSelection(name) &&
-        !displayCommunicationSendAddCardResult(addCardByTitle(name))) {
-        printf("Failed to send the OCR demo result\n");
+    if (!startSetSelection(name)) {
+        displayCommunicationSendAddCardResult(addCardByTitle(name));
     }
 }
 
@@ -253,7 +193,6 @@ void sendCardInfo(int index)
 {
     char* cardJson = dataGetCardDetail(index);
     if (cardJson == nullptr || !displayCommunicationSendCardInfo(cardJson)) {
-        printf("Card info: could not send card %d\n", index);
         displayCommunicationSendCardInfoFailed();
     }
     dataFreeJson(cardJson);
@@ -264,17 +203,7 @@ void removeCard(int index, bool onlyOneCopy)
 {
     const DataResult result = onlyOneCopy ? dataRemoveOneCardByIndex(index)
                                           : dataDeleteCardByIndex(index);
-    if (result != DataResult::Ok) {
-        printf("Remove card: could not remove card %d (error %d)\n", index,
-               static_cast<int>(result));
-    } else if (onlyOneCopy) {
-        printf("Remove card: one copy of card %d removed\n", index);
-    } else {
-        printf("Remove card: card %d removed\n", index);
-    }
-    if (!displayCommunicationSendCardRemoveResult(result == DataResult::Ok)) {
-        printf("Failed to send remove card result\n");
-    }
+    displayCommunicationSendCardRemoveResult(result == DataResult::Ok);
 }
 
 // Card number -> thumbnail URL -> download -> screen.
@@ -285,10 +214,7 @@ void sendCardImage(int index)
     uint8_t* image =
         url != nullptr ? apiFetchBinary(url, MaxCardImageBytes, &imageLength) : nullptr;
     if (image == nullptr || !displayCommunicationSendCardImage(image, imageLength)) {
-        printf("Card image: could not send image of card %d\n", index);
         displayCommunicationSendCardImageFailed();
-    } else {
-        printf("Card image: sent %u bytes\n", static_cast<unsigned>(imageLength));
     }
     apiFreeBinary(image);
     dataFreeJson(url);
@@ -301,8 +227,6 @@ void exportCollection()
     const bool exported =
         json != nullptr && imageRecognitionEnsureWifi() && apiExportCollection(json);
     dataFreeJson(json);
-    printf("Export: %s\n", exported ? "collection saved on the server"
-                                    : "could not save the collection");
     displayCommunicationSendExportResult(exported);
 }
 
@@ -312,18 +236,9 @@ void importCollection()
     char* json = imageRecognitionEnsureWifi() ? apiFetchCollectionJson() : nullptr;
     bool imported = false;
     if (json != nullptr) {
-        const DataResult result = dataReplaceCollection(json);
-        imported = result == DataResult::Ok;
-        if (!imported) {
-            printf("Import: could not store the collection (error %d)\n",
-                   static_cast<int>(result));
-        }
-    } else {
-        printf("Import: no collection file received\n");
+        imported = dataReplaceCollection(json) == DataResult::Ok;
     }
     apiFreeJson(json);
-    printf("Import: %s\n", imported ? "collection replaced"
-                                    : "collection left unchanged");
     displayCommunicationSendImportResult(imported);
 }
 }
@@ -331,13 +246,6 @@ void importCollection()
 void stateMachineInit()
 {
     currentState = State::Idle;
-    printf("OCR demo images on /storage:");
-    for (int number = 1; number <= TestImageCount; ++number) {
-        if (hasTestImage(number)) {
-            printf(" test%d", number);
-        }
-    }
-    printf("\n");
 }
 
 void stateMachineRun()
@@ -367,9 +275,8 @@ void stateMachineRun()
             currentState = State::AddCard;
             {
                 const char* title = displayCommunicationReadTitle();
-                if (!startSetSelection(title) &&
-                    !displayCommunicationSendAddCardResult(addCardByTitle(title))) {
-                    printf("Failed to send add card result\n");
+                if (!startSetSelection(title)) {
+                    displayCommunicationSendAddCardResult(addCardByTitle(title));
                 }
             }
             stateChanged = true;
@@ -441,15 +348,9 @@ void stateMachineRun()
             }
             if (currentState == State::Collection) {
                 char* collectionList = dataGetCardNamesAndColors();
-                if (collectionList == nullptr ||
-                    !displayCommunicationSendCollectionList(collectionList)) {
-                    printf("Failed to send collection list\n");
-                } else {
-                    printf("Collection list sent to display\n");
-                }
+                displayCommunicationSendCollectionList(collectionList);
                 dataFreeJson(collectionList);
             }
-            printf("Current state: %s\n", stateName(currentState));
             currentState = State::Idle;
         }
     }

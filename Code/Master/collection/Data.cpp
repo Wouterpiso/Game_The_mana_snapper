@@ -108,8 +108,6 @@ bool writeStoredCollection()
         ESP_LOGE(Tag, "Could not save %s", StoragePath);
         return false;
     }
-    ESP_LOGI(Tag, "Collection saved to %s (%u bytes)", StoragePath,
-             static_cast<unsigned>(length));
     return true;
 }
 
@@ -219,7 +217,6 @@ DataResult dataInitializeDefault()
         const DataResult result = dataInitialize(stored);
         std::free(stored);
         if (result == DataResult::Ok) {
-            ESP_LOGI(Tag, "Collection loaded from %s", StoragePath);
             return result;
         }
         ESP_LOGW(Tag, "Stored collection is invalid (error %d); using the default",

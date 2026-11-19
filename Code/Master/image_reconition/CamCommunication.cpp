@@ -76,7 +76,6 @@ void resetReceive()
 void selectRxPin(size_t index)
 {
     rxPinIndex = index;
-    ESP_LOGW(Tag, "Listening for the camera on IO%d", CamRxPins[index]);
     ESP_ERROR_CHECK(uart_set_pin(CamUart, UART_PIN_NO_CHANGE, CamRxPins[index],
                                  UART_PIN_NO_CHANGE, UART_PIN_NO_CHANGE));
     uart_flush_input(CamUart);
@@ -152,15 +151,11 @@ void handleCompleteFrame()
         jpegDimensions(imageBuffer, imageLength, &width) && width >= PhotoMinWidth;
     lastFrameWidth = width;
     lastFrameLength = imageLength;
-    ESP_LOGD(Tag, "Received %s frame: %u bytes, %u wide", isPhoto ? "photo" : "preview",
-             (unsigned)imageLength, (unsigned)width);
 
     if (captureArmed && !isPhoto) {
         // Scan demo: the preview frame itself is the photo. It is forwarded
         // straight to the screen and never stored.
         captureArmed = false;
-        ESP_LOGI(Tag, "Capture: preview photo (%u bytes, %u wide)",
-                 (unsigned)imageLength, (unsigned)width);
         if (imageLength > MaxScreenFrameBytes) {
             ESP_LOGW(Tag, "Capture: frame of %u bytes is too big for the screen",
                      (unsigned)imageLength);
@@ -306,13 +301,9 @@ void camCommunicationStartCapture()
     // Preview frames are not wanted while the screen waits for the photo.
     previewActive = false;
     frameRequested = false;
-    ESP_LOGI(Tag, "Capture: waiting for the next preview frame");
 }
 
 void camCommunicationCancelCapture()
 {
-    if (captureArmed) {
-        ESP_LOGI(Tag, "Capture: cancelled");
-    }
     captureArmed = false;
 }
