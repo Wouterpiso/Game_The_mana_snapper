@@ -6,7 +6,7 @@ Team: The ManaEngineer
 
 ## Inhoudsopgave
 
-- [Ontwikkeldocument Project The ManaSnapper](#ontwikkeldocument-project-projectnaam)
+- [Ontwikkeldocument Project The ManaSnapper](#ontwikkeldocument-project-the-manasnapper)
   - [Inhoudsopgave](#inhoudsopgave)
   - [Inleiding](#inleiding)
   - [Leeswijzer](#leeswijzer)
@@ -43,17 +43,17 @@ Naast het fysieke apparaat wordt een computer app voorzien. De collectie kan tus
 
 ## Leeswijzer
 
-Dit ontwikkeldocument beschrijft de ontwikkeling van The ManaSnapper van aanleiding en uitgangspunten tot ontwerp, realisatie en evaluatie.
+Dit ontwikkeldocument beschrijft de ontwikkeling van The ManaSnapper van aanleiding en uitgangspunten tot ontwerp, realisatie en evaluatie. De hoofdstukken volgen de ontwikkeling van het product en bouwen op elkaar voort.
 
-In het hoofdstuk **Uitgangspunten** wordt beschreven welke uitgangspunten de basis vormen voor de requirements. Hierbij worden de systeemcontext, de betrokken stakeholders en de belangrijkste key drivers van The ManaSnapper behandeld.
+In **Uitgangspunten** worden de systeemcontext, de betrokken stakeholders en de belangrijkste key drivers van The ManaSnapper beschreven. Deze bepalen samen met de opdrachtbeschrijving welke eisen belangrijk zijn.
 
-In het hoofdstuk **Requirements** wordt beschreven wat The ManaSnapper moet kunnen en aan welke voorwaarden het systeem moet voldoen. De functionele en niet-functionele requirements, constraints en use cases vormen samen de basis voor het ontwerp.
+In **Requirements** zijn die eisen uitgewerkt als functionele en niet-functionele requirements, constraints en use cases. Samen vormen zij de meetlat voor het ontwerp en de oplevering.
 
-In het hoofdstuk **Ontwerp** wordt uitgewerkt hoe The ManaSnapper wordt opgebouwd om aan de requirements te voldoen. De functionele decompositie beschrijft de hoofdonderdelen en hun interfaces, waarna de objectmodellen, taakstructurering, klassediagrammen en state transition diagrams de samenwerking, verwerking en toestanden van deze onderdelen verder uitwerken.
+In **Ontwerp** wordt uitgewerkt hoe The ManaSnapper aan die eisen voldoet. De functionele decompositie verdeelt het systeem in subsystemen en interfaces, waarna objectmodellen, taakstructurering, klassediagrammen en state transition diagrams (STD's) de samenwerking en toestanden verder uitwerken. Samen vormen deze onderdelen de basis voor de realisatie.
 
-``leg uit wat er in de hoogste-niveau-hoofdstukken wordt behandeld en hoe deze onderwerpen met elkaar in verband staan``
+**Realisatie** vertaalt het ontwerp naar de daadwerkelijke firmware en PC-service. Het onderdeel **Code** koppelt iedere STD aan de bijbehorende bestanden in de repository. **Eindresultaat** vat samen welke requirements zijn behaald, welke prestaties zijn gerealiseerd en wat nog niet in de MVP zit.
 
-``zal gemaakt worden per hoofdstuk zodra ze klaar zijn - wouter``
+**Conclusie en Advies** sluit af met een reflectie op de behaalde requirements en aanbevelingen voor doorontwikkeling. In de **Appendices** staat de lijst met gebruikte externe bronnen en licenties.
 
 ## Uitgangspunten
 
@@ -214,24 +214,141 @@ soort verwerking uitvoeren worden samengevoegd tot één taak.
 
 ## Realisatie
 
-``leg uit waarin de realisatie zich onderscheidt van het ontwerp, en noem kort de rollen van de subhoofdstukken``
+De realisatie bestaat uit drie ESP-IDF-firmwares (Cam, Master en Screen) en één PC-service voor OCR en gegevensuitwisseling. Alle firmwares zijn geschreven in C++17 bovenop ESP-IDF 5.4 en communiceren via twee vaste UART-protocollen. De code staat in de map [`Code/`](../../Code), met per board een eigen ESP-IDF-project en een gedeelde README met de bouw- en flashinstructies.
+
+De realisatie wijkt op een aantal punten af van het ontwerp:
+
+- **Drie boards in plaats van één systeem.** Het objectmodel beschrijft The ManaSnapper als één systeem. Fysiek zijn de controllers verdeeld: `MenuController` en `Display` draaien op de Screen, `CardTitleRecognitionController`, `APIController`, `CollectionController` en `ExportAndImportController` op de Master, en `Camera` op de Cam. De ComputerApp is in de MVP uitgevoerd als een kleine Flask-service zonder grafische interface.
+- **Opslag in SPIFFS in plaats van microSD.** De collectie staat in `/storage/collection.json` op de interne flash. De microSD-module is nog niet aangesloten; de opslaglaag is zo opgezet dat alleen de partitie, het mountpunt en het pad aangepast hoeven te worden.
+- **OCR op de PC.** De Master kan PaddleOCR niet lokaal draaien. De Master stuurt daarom een JPEG via HTTP naar de PC, waar de OCR-service de kaarttitel herkent en teruggeeft.
+- **Eventgestuurde requestlus in plaats van één centrale toestandsmachine.** De STD's zijn geïmplementeerd als een request/response-protocol. De Screen houdt de paginatoestand bij, de Master verwerkt elk verzoek synchroon en keert daarna terug naar `Idle`. De toestandsenums in de code maken deze afhandeling expliciet en leesbaar.
+
+De rol van de subhoofdstukken sluit hierop aan: **Code** koppelt de STD's aan de concrete bestanden en licht de belangrijkste implementatiekeuzes toe. **Eindresultaat** vat samen welke functionaliteit en prestaties zijn opgeleverd en welke onderdelen nog buiten de MVP vallen.
 
 ### Code
 
-``Ontwerp vanuit de STD's de bijbehorende code. Geef waar nodig additionele toelichting. Voeg per STD een link toe naar de betreffende code in de team repo. Voeg ook links naar de overige code toe``
+De repository is als volgt opgebouwd:
+
+| Onderdeel | Rol | Code |
+|---|---|---|
+| **Cam** | ESP32-CAM-firmware: leest de sensor uit en stuurt JPEG-frames met een magic/length-header naar de Master. | [`Code/Cam/main/main.cpp`](../../Code/Cam/main/main.cpp) |
+| **Master** | Centrale firmware: WiFi, OCR-aanvragen, Scryfall, collectieopslag en het UART-protocol naar Cam en Screen. | [`Code/Master/`](../../Code/Master) |
+| **Screen** | CYD-firmware: ST7789-scherm, XPT2046-touch, menu's, cameraweergave en JPEG-decodering. | [`Code/Screen/`](../../Code/Screen) |
+| **PC-service** | Flask-service met `/ocr`, `/export` en `/import`; draait PaddleOCR en bewaart de collectie als JSON. | [`Code/paddleOCR/server.py`](../../Code/paddleOCR/server.py) |
+
+Iedere firmware bevat een eigen `CMakeLists.txt` en `sdkconfig`; de Master en de Screen hebben daarnaast een eigen partitietabel. De gedeelde afspraken zitten in de UART-protocollen en in het JSON-formaat van de collectie. Bouwen en flashen gebeurt met `idf.py build` en `idf.py flash`; de volgorde (eerst Cam, dan Master, dan Screen) en de Python-installatie staan in [`Code/README.md`](../../Code/README.md).
+
+**STD 1 — MenuController en Display (Screen).** De gebruikersinterface is een expliciete paginatoestand in [`main.cpp`](../../Code/Screen/main/main.cpp#L349). `Page` bevat het hoofdmenu, het ADD CARD-menu, het toetsenbord, de scanfunctie, de OCR-demo, de collectie en de placeholder-pagina voor decks. Binnen de collectie beschrijft [`CollectionView`](../../Code/Screen/main/main.cpp#L363) de subtoestanden: lijst, detail laden, detailmenu, afbeelding laden, verwijderbevestiging, kaart-, legalities- en other-weergave en het import/exportmenu. De camera kent daarnaast [`CameraView`](../../Code/Screen/main/main.cpp#L380) met `Live`, `Taking` en `Review`.
+
+De hoofdlus in [`app_main`](../../Code/Screen/main/main.cpp#L401) leest touch-events, past de paginatoestand aan en stuurt een commando naar de Master. De Master antwoordt met een van de gebeurtenissen die [`receiveMasterData`](../../Code/Screen/main/main.cpp#L252) verwerkt. Tekenen en hit-testing zijn gescheiden in [`MenuScreen`](../../Code/Screen/main/MenuScreen.hpp#L19); bijvoorbeeld [`drawHome`](../../Code/Screen/main/MenuScreen.cpp#L479) voor het hoofdmenu en [`hitTest`](../../Code/Screen/main/MenuScreen.cpp#L1036) voor de knoppen. Het scherm zelf wordt aangestuurd door [`St7789Display`](../../Code/Screen/components/st7789_display/St7789Display.hpp#L21), de touch door [`TouchReader`](../../Code/Screen/components/drivers/TouchReader.hpp#L16).
+
+**STD 2 — Requestverwerking op de Master.** De Master kent de toestanden [`Idle` tot en met `Export`](../../Code/Master/States/StateMachine.hpp#L10). Elke regel die de Screen stuurt, wordt in [`commandFromLine`](../../Code/Master/display/DisplayCommunication.cpp#L40) omgezet in een `DisplayRequest`. [`stateMachineRun`](../../Code/Master/States/StateMachine.cpp#L284) verwerkt dat verzoek: de toestand wordt gezet, de bijbehorende actie wordt uitgevoerd en het resultaat gaat terug naar de Screen. Daarna keert de Master terug naar `Idle`. Bij `CAPTURE` wordt de opname in de cameramodule "armed" gezet; `CamFrame` houdt de preview lopend door telkens één nieuw frame aan te vragen. Onbekende of lege regels leiden tot `Idle`, zodat de Master nooit in een ongeldige toestand blijft hangen.
+
+**STD 3 — Camera en kaartherkenning.** De Cam start in [`app_main`](../../Code/Cam/main/main.cpp#L115) de sensor op QVGA-resolutie en biedt met een interval van 40 ms een JPEG-frame aan via [`sendFrame`](../../Code/Cam/main/main.cpp#L87). Het frameformaat is `A5 5A E7 C3`, gevolgd door een 4-byte little-endian lengte en de JPEG-bytes. De Master leest dit formaat in [`CamCommunication.cpp`](../../Code/Master/image_recognition/CamCommunication.cpp#L25) en verwerkt een compleet frame in [`handleCompleteFrame`](../../Code/Master/image_recognition/CamCommunication.cpp#L169). De preview wordt alleen doorgestuurd als de Screen erom vraagt (`CAM_FRAME`), zodat de UART niet sneller volloopt dan het scherm kan tekenen. Bij `CAPTURE` wordt het volgende previewframe als foto naar de Screen gestuurd (`CAM_PHOTO`) en niet opgeslagen.
+
+De OCR-route begint in [`imageRecognitionGetCardName`](../../Code/Master/image_recognition/ImageRecognition.cpp#L116): de Master bouwt een multipart-request en stuurt dat als POST naar `/ocr`. De OCR-demo op de Screen gebruikt negen testfoto's uit de SPIFFS-partitie; [`runOcrDemo`](../../Code/Master/States/StateMachine.cpp#L185) kiest er willekeurig één, laat de titel herkennen en start daarna dezelfde toevoegflow als een getypte naam. De printings van de gevonden kaart worden via [`startSetSelection`](../../Code/Master/States/StateMachine.cpp#L70) naar de Screen gestuurd; de gebruiker kiest een printing en [`choosePrinting`](../../Code/Master/States/StateMachine.cpp#L110) haalt die specifieke kaart op bij Scryfall.
+
+**STD 4 — Collectiebeheer.** De collectie wordt in het geheugen als cJSON-document bijgehouden en na iedere wijziging naar SPIFFS geschreven. [`dataInitialize`](../../Code/Master/collection/Data.cpp#L205) laadt een document, [`dataAddCard`](../../Code/Master/collection/Data.cpp#L250) voegt een kaart toe of verhoogt het aantal wanneer dezelfde kaart (naam en set) al aanwezig is, en [`dataDeleteCard`](../../Code/Master/collection/Data.cpp#L293) verwijdert alle exemplaren. [`dataRemoveOneCardByIndex`](../../Code/Master/collection/Data.cpp#L325) verlaagt het aantal met één en verwijdert de kaart pas bij het laatste exemplaar. De collectielijst voor de Screen komt uit [`dataGetCardNamesAndColors`](../../Code/Master/collection/Data.cpp#L390); de detailweergave en de afbeeldings-URL worden apart opgevraagd. [`writeStoredCollection`](../../Code/Master/collection/Data.cpp#L99) schrijft het document naar `/storage/collection.json`. Scryfall-koppelingen staan in [`API.cpp`](../../Code/Master/API/API.cpp#L507), inclusief het streaming uitlezen van de printingslijst in [`apiFetchPrintings`](../../Code/Master/API/API.cpp#L525).
+
+**STD 5 — Importeren en exporteren.** Het import/exportmenu op de Screen is een subtoestand van `CollectionView` en stuurt `IMPORT` of `EXPORT` naar de Master. [`exportCollection`](../../Code/Master/States/StateMachine.cpp#L258) stuurt het volledige collectiedocument naar `/export`; [`importCollection`](../../Code/Master/States/StateMachine.cpp#L269) haalt `/import` op en vervangt de collectie via `dataReplaceCollection`. De HTTP-kant staat in [`apiExportCollection`](../../Code/Master/API/API.cpp#L591) en [`apiFetchCollectionJson`](../../Code/Master/API/API.cpp#L618). De server bewaart het document in `paddleOCR/collection_export.json` en gebruikt voor `/ocr`, `/export` en `/import` dezelfde Flask-app in [`server.py`](../../Code/paddleOCR/server.py#L19).
+
+**Overige code.** De communicatielaag naar de Screen staat in [`DisplayCommunication`](../../Code/Master/display/DisplayCommunication.cpp#L40), de cameraprotocollaag in [`CamCommunication`](../../Code/Master/image_recognition/CamCommunication.cpp#L25) en de WiFi/OCR-laag in [`ImageRecognition`](../../Code/Master/image_recognition/ImageRecognition.cpp#L107). Aan de Screen-kant verzorgen [`MenuScreen`](../../Code/Screen/main/MenuScreen.cpp#L479) en de entiteiten in [`components/entities`](../../Code/Screen/components/entities/Entity.hpp#L13) de weergave, en [`St7789Display`](../../Code/Screen/components/st7789_display/St7789Display.cpp) de volledige frame-buffer en het tekenwerk. De code is voorzien van Doxygen-commentaar, opgemaakt met clang-format (2 spaties inspringing) en bouwt zonder compilerwaarschuwingen.
 
 ### Eindresultaat
 
-`` Nog eens op een rijtje de behaalde functionaliteiten en de performance. ``
+De MVP is opgeleverd: het apparaat toont een hoofdmenu, kan kaarten via de camera bekijken en fotograferen, kan een kaartnaam via het toetsenbord of de OCR-demo herkennen, haalt de kaartgegevens bij Scryfall op, beheert de collectie en kan de collectie met de PC uitwisselen. De status per requirement is hieronder samengevat.
+
+| Requirement | Status | Resultaat |
+|---|---|---|
+| **F01 - Navigeren** | Behaald | Hoofdmenu met ADD CARD, COLLECTION en DECKS; vanuit iedere pagina keer je met EXIT terug. DECKS opent nog een lege pagina. |
+| **F02 - Kaart identificeren** | Deels behaald | De camera werkt (live preview en SNAP-foto) en de OCR-demo herkent een kaarttitel uit negen testfoto's. Het live foto→OCR-pad is niet in de MVP opgenomen; de Screen toont daarvoor een demo-melding. |
+| **F03 - Kaartgegevens ophalen** | Behaald | Scryfall wordt gebruikt voor naam, printing, detailgegevens en kaartafbeeldingen; fouten en time-outs worden afgevangen. |
+| **F04 - Kaartgegevens tonen** | Behaald | De gevonden kaart wordt met naam, set en printing getoond; de gebruiker bevestigt de printing of annuleert. |
+| **F05 - Kaart toevoegen** | Behaald | Toevoegen werkt vanuit het toetsenbord en de OCR-demo; dezelfde kaart verhoogt het aantal en de collectie wordt direct opgeslagen. |
+| **F06 - Collectie bekijken** | Behaald | Collectielijst met aantal en kleuren, detailpagina, kaartafbeelding, legalities en overige velden. |
+| **F07 - Kaart verwijderen** | Behaald | Verwijderen vraagt om bevestiging en kan alle exemplaren of één exemplaar verwijderen. |
+| **F08 - Collectie importeren** | Behaald | Via IMPORT haalt de Master het JSON-bestand van de PC-service op en vervangt de collectie. |
+| **F09 - Collectie exporteren** | Behaald | Via EXPORT stuurt de Master de collectie als JSON naar de PC-service, die het bestand bewaart. |
+| **F10 - Fouten melden** | Behaald | Iedere actie kent een resultaat- of foutscherm (bijvoorbeeld FAILED, CAPTURE_FAILED en OCR FAILED); de collectie blijft bij een fout ongewijzigd. |
+
+| Requirement | Status | Resultaat |
+|---|---|---|
+| **NF01 - Betrouwbaarheid** | Behaald | Mislukte OCR-, Scryfall- of serveracties leveren een foutmelding op en laten de bestaande collectie intact. |
+| **NF02 - Gegevensbehoud** | Behaald | Iedere wijziging wordt via `writeStoredCollection` opgeslagen voordat het resultaat naar de Screen gaat. |
+| **NF03 - Gebruiksvriendelijkheid** | Behaald | Iedere pagina heeft een zichtbare EXIT-terugweg; touch-knoppen hebben een minimale grootte en dezelfde indeling. |
+| **NF04 - Prestaties** | Deels behaald | Menu- en schermacties reageren direct. Een OCR-aanvraag kan langer dan 3 seconden duren; daarvoor geldt een time-out van 12 seconden. |
+| **NF05 - Foutmeldingen** | Behaald | Korte, eenduidige labels en statusschermen geven aan dat een actie mislukte en bieden een terugweg naar het menu. |
+| **NF06 - Draagbaarheid** | Behaald | Het apparaat werkt op de 18650-accu met TP4056-lader en MT3608-omvormer, zonder permanente computerverbinding. |
+| **NF07 - Gegevensuitwisseling** | Behaald | Import en export gebruiken hetzelfde JSON-formaat als de collectie; ongeldige bestanden worden niet verwerkt. |
+| **NF08 - Uitbreidbaarheid** | Behaald | Display, touch, communicatie, API, opslag en OCR zijn als afzonderlijke componenten of modules opgezet. |
+
+| Constraint | Status | Toelichting |
+|---|---|---|
+| **C01 - Bediening via het apparaat** | Behaald | Bediening via het scherm en de stylus; geen toetsenbord of muis nodig. |
+| **C02 - Oplaadbare voeding** | Behaald | 18650-accu met TP4056-laadmodule en MT3608-omvormer. |
+| **C03 - Lokale opslag** | Afgeweken | De collectie staat in SPIFFS op de interne flash in plaats van op de microSD-module. De opslaglaag is wel geïsoleerd, zodat omzetten naar SD later beperkt blijft tot de partitie, het mountpunt en het pad. |
+| **C04 - Afhankelijkheid van Scryfall** | Behaald | Scryfall is de enige kaartbron; netwerk- en API-fouten worden als fout gemeld en niet als lokale data opgeslagen. |
+| **C05 - Eenduidig gegevensformaat** | Behaald | Import en export gebruiken hetzelfde JSON-document; de server en de Master valideren het formaat voordat de collectie wordt vervangen. |
+
+**Performance en technische kenmerken.** De belangrijkste waarden uit de implementatie staan hieronder. Er zijn geen formele doorlooptijdmetingen met een stopwatch uitgevoerd; de genoemde tijden zijn de in de code ingestelde time-outs en de firmwaregroottes komen uit de laatste build.
+
+| Aspect | Waarde |
+|---|---|
+| Scherm | 320 × 240 RGB565, SPI op 30 MHz, volledige DMA-backbuffer van 153.600 bytes |
+| Touch | XPT2046 via SPI3, weerstandmeting met stylus |
+| UART Master ↔ Screen | 921.600 baud, regelgebaseerd protocol met commando's en resultaatregels |
+| UART Cam → Master | 921.600 baud, magic/length-frame met JPEG-payload |
+| Camera | QVGA JPEG, kwaliteit 22, frame-interval 40 ms; maximaal 60 KB per doorgestuurd frame |
+| Netwerk | OCR-time-out 12 s, Scryfall-time-out 15 s, capture-wacht 6 s |
+| Scherm-time-outs | 40 s op de printingslijst, 30 s op import/export, 3 s op een onderbroken beeldtransfer |
+| Limieten | 48 printings per kaart, 256 KB import, 40 KB kaartafbeelding, 128 KB testfoto |
+| Flashgebruik Master | 0xfea30 van 0x100000 (1% vrij) |
+| Flashgebruik Screen | 0x2de420 van 0x300000 (4% vrij) |
+| Flashgebruik Cam | 0x57d50 van 0x177000 (77% vrij) |
+| Build | ESP-IDF 5.4, C++17, geen compilerwaarschuwingen |
+
+**Wat nog niet in de MVP zit.** De volgende punten zijn bewust doorgeschoven of blijven als bekende beperking staan:
+
+- Het live foto→OCR-pad: de OCR-demo gebruikt vaste testfoto's. De Master-partitie van 1 MB is te klein om een grotere OCR- of beeldverwerkingscomponent toe te voegen; op het scherm staat daarom een demo-melding.
+- De DECKS-pagina is een placeholder; decks maken en beheren hoort bij de optionele uitbreidingen.
+- Opslag op microSD in plaats van SPIFFS (zie C03).
+- Een grafische computerapplicatie: de PC-kant is een Flask-service met JSON-bestanden, geen desktop-app.
+- De Master-partitie is met 1% vrije ruimte bijna vol. Iedere flash van de Master vervangt bovendien de SPIFFS-partitie, waardoor de opgeslagen collectie verdwijnt en de testfoto's opnieuw worden geplaatst.
+- Er zijn nog geen formele prestatiemetingen van de volledige scanketen; de time-outs hierboven zijn ontwerpwaarden.
 
 ## Conclusie en Advies
 
-`` Reflecteer op in welke mate de aanvankelijk opgestelde requirements daadwerkelijk zijn behaald. Geef goed onderbouwde aanbevelingen t.a.v. mogelijke toekomstige doorontwikkeling.`` 
+De deadline voor dit project kwam sneller dan ik had verwacht vergeleken met de vorige periode en daardoor heb ik wat dingen die ik heel graag wilde implementeren voor na de deadline moeten zetten. voor example, de custom PCB en de 3d printed casing.
+
+ik vond dit een heel leuk project maar volgende keer ga ik er veel eerder mee beginen. maar ik moet wel zeggen dat veel van de informatie die nodig was voor het project pas kwam in de laatste maand van de project deadline. er was gewoon meer tijd nodig en ik denk dat ik nogsteeds door ga met het goed afmaken van de manasnapper zelfs na de deadline om echt goed te laten zien dat ik het wel kan.
 
 ## Appendices
 
 ### Appendix 1: Referenties
 
-`` lijst 3rd party materiaal waar naar verwezen is. Boeken, site-links.``
+Er zijn geen boeken gebruikt voor dit project. Onderstaande bronnen zijn documentatie, datasheets en open-sourcebibliotheken waar in het ontwerp of de realisatie gebruik van is gemaakt.
 
-`` Verder mogelijk nog appendices over: de geschiedenis van de ontwikkeling van het product in grote lijnen (inclusief inmiddels afgeschoten tussenproducten), over het opzetten van de ontwikkelomgevingen, over hoe te debuggen. Houdt het bij samenvattende dingen. Lange teksten (zoals testuitvoer) niet in de appendices maar via links naar bestanden opnemen.``
+| Nr. | Bron | Gebruik in het project |
+|---|---|---|
+| 1 | [Scryfall API-documentatie](https://scryfall.com/docs/api) | Zoeken van kaarten op naam en printing, ophalen van kaartgegevens en afbeeldingen. |
+| 2 | [ESP-IDF v5.4 Programmeerhandleiding](https://docs.espressif.com/projects/esp-idf/en/v5.4/) | Basis voor alle drie de firmwares: build systeem, FreeRTOS, drivers en opslag. |
+| 3 | [ESP-IDF LCD-driver (esp_lcd)](https://docs.espressif.com/projects/esp-idf/en/v5.4/esp32/api-reference/peripherals/lcd.html) | Aansturen van het ST7789-paneel via SPI. |
+| 4 | [ESP-IDF UART-driver](https://docs.espressif.com/projects/esp-idf/en/v5.4/esp32/api-reference/peripherals/uart.html) | Communicatie tussen Cam, Master en Screen. |
+| 5 | [ESP-IDF SPIFFS-bestandssysteem](https://docs.espressif.com/projects/esp-idf/en/v5.4/esp32/api-reference/storage/spiffs.html) | Opslag van `collection.json` en de OCR-testfoto's. |
+| 6 | [ESP-IDF HTTP-client](https://docs.espressif.com/projects/esp-idf/en/v5.4/esp32/api-reference/protocols/esp_http_client.html) | Aanvragen naar Scryfall en naar de OCR-/collectieserver. |
+| 7 | [esp_jpeg-component](https://components.espressif.com/components/espressif/esp_jpeg) | Decoderen van JPEG-frames van de camera en kaartafbeeldingen. |
+| 8 | [esp32-camera](https://github.com/espressif/esp32-camera) | Cameradriver voor de ESP32-CAM. |
+| 9 | [cJSON](https://github.com/DaveGamble/cJSON) | Lezen en schrijven van de collectie- en Scryfall-JSON. |
+| 10 | [FreeRTOS](https://www.freertos.org/) | Taken, delays en tijdmetingen in de firmwares. |
+| 11 | [PaddleOCR](https://github.com/PaddlePaddle/PaddleOCR) | Herkennen van de kaarttitel op de PC. |
+| 12 | [Flask](https://flask.palletsprojects.com/) | HTTP-service voor `/ocr`, `/export` en `/import`. |
+| 13 | [ESP-IDF Component Manager](https://docs.espressif.com/projects/idf-component-manager/en/latest/) | Beheren van de externe component `esp_jpeg`. |
+| 14 | [Clang-format](https://clang.llvm.org/docs/ClangFormat.html) | Eenduidige code-opmaak (2 spaties, LLVM-basisstijl). |
+| 15 | [Doxygen](https://www.doxygen.nl/) | Documentatiecommentaar in de headers en bronbestanden. |
+| 16 | [Magic: The Gathering](https://magic.wizards.com/) | Kaartnamen, kaartgegevens en kaartafbeeldingen zijn eigendom van Wizards of the Coast en worden via Scryfall gebruikt voor dit niet-commerciële onderwijsproject. |
+
+**Datasheets van gebruikte hardware.** Voor de hardware zijn de datasheets van de leveranciers gebruikt:
+
+- Sitronix **ST7789V** — displaycontroller van de TPM408-2.8-module.
+- XPTEK **XPT2046** — touchcontroller van het scherm.
+- Espressif **ESP32** en **ESP32-CAM** — microcontroller en cameramodule.
