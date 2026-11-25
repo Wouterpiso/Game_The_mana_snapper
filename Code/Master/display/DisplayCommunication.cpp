@@ -38,7 +38,8 @@ bool sendBytes(const char* data, size_t length) {
  * @return Parsed request, or DisplayRequest::Idle for an unknown line.
  */
 DisplayRequest commandFromLine(const char* line, size_t length) {
-  if (length > 0 && line[length - 1] == '\r') {
+  if (length > 0 && line[length - 1] == '
+') {
     --length;
   }
   constexpr size_t titlePrefixLength = sizeof("ADD_CARD_TITLE ") - 1;
@@ -149,7 +150,8 @@ DisplayRequest displayCommunicationReadRequest() {
   }
 
   for (size_t lineEnd = 0; lineEnd < commandLength; ++lineEnd) {
-    if (commandBuffer[lineEnd] != '\n') {
+    if (commandBuffer[lineEnd] != '
+') {
       continue;
     }
 
@@ -171,7 +173,8 @@ bool displayCommunicationSendCollectionList(const char* collectionListJson) {
   }
 
   constexpr char prefix[] = "COLLECTION_LIST ";
-  constexpr char suffix[] = "\n";
+  constexpr char suffix[] = "
+";
   return sendBytes(prefix, sizeof(prefix) - 1) &&
          sendBytes(collectionListJson, std::strlen(collectionListJson)) &&
          sendBytes(suffix, sizeof(suffix) - 1) &&
@@ -179,7 +182,9 @@ bool displayCommunicationSendCollectionList(const char* collectionListJson) {
 }
 
 bool displayCommunicationSendAddCardResult(bool success) {
-  const char* message = success ? "ADD_CARD_DONE\n" : "ADD_CARD_FAILED\n";
+  const char* message = success ? "ADD_CARD_DONE
+" : "ADD_CARD_FAILED
+";
   return sendBytes(message, std::strlen(message)) &&
          uart_wait_tx_done(DisplayUart, pdMS_TO_TICKS(100)) == ESP_OK;
 }
@@ -197,7 +202,8 @@ bool displayCommunicationSendAddCardSets(const char* payload) {
     return false;
   }
   constexpr char prefix[] = "ADD_CARD_SETS ";
-  constexpr char suffix[] = "\n";
+  constexpr char suffix[] = "
+";
   return sendBytes(prefix, sizeof(prefix) - 1) && sendBytes(payload, std::strlen(payload)) &&
          sendBytes(suffix, sizeof(suffix) - 1) &&
          uart_wait_tx_done(DisplayUart, pdMS_TO_TICKS(2000)) == ESP_OK;
@@ -210,12 +216,14 @@ bool displayCommunicationSendOcrDemoResult(int testImage, const char* text) {
   char header[40];
   const int headerLength = std::snprintf(header, sizeof(header), "OCR_DEMO_RESULT %d ", testImage);
   return sendBytes(header, static_cast<size_t>(headerLength)) &&
-         sendBytes(text, std::strlen(text)) && sendBytes("\n", 1) &&
+         sendBytes(text, std::strlen(text)) && sendBytes("
+", 1) &&
          uart_wait_tx_done(DisplayUart, pdMS_TO_TICKS(500)) == ESP_OK;
 }
 
 bool displayCommunicationSendOcrDemoFailed() {
-  const char* message = "OCR_DEMO_FAILED\n";
+  const char* message = "OCR_DEMO_FAILED
+";
   return sendBytes(message, std::strlen(message)) &&
          uart_wait_tx_done(DisplayUart, pdMS_TO_TICKS(100)) == ESP_OK;
 }
@@ -225,14 +233,16 @@ bool displayCommunicationSendCardInfo(const char* cardJson) {
     return false;
   }
   constexpr char prefix[] = "CARD_INFO ";
-  constexpr char suffix[] = "\n";
+  constexpr char suffix[] = "
+";
   return sendBytes(prefix, sizeof(prefix) - 1) && sendBytes(cardJson, std::strlen(cardJson)) &&
          sendBytes(suffix, sizeof(suffix) - 1) &&
          uart_wait_tx_done(DisplayUart, pdMS_TO_TICKS(500)) == ESP_OK;
 }
 
 bool displayCommunicationSendCardInfoFailed() {
-  const char* message = "CARD_INFO_FAILED\n";
+  const char* message = "CARD_INFO_FAILED
+";
   return sendBytes(message, std::strlen(message)) &&
          uart_wait_tx_done(DisplayUart, pdMS_TO_TICKS(100)) == ESP_OK;
 }
@@ -243,14 +253,16 @@ bool displayCommunicationSendCardImage(const uint8_t* data, size_t length) {
   }
   char header[32];
   const int headerLength =
-      std::snprintf(header, sizeof(header), "CARD_IMAGE %u\n", static_cast<unsigned>(length));
+      std::snprintf(header, sizeof(header), "CARD_IMAGE %u
+", static_cast<unsigned>(length));
   return sendBytes(header, static_cast<size_t>(headerLength)) &&
          sendBytes(reinterpret_cast<const char*>(data), length) &&
          uart_wait_tx_done(DisplayUart, pdMS_TO_TICKS(3000)) == ESP_OK;
 }
 
 bool displayCommunicationSendCardImageFailed() {
-  const char* message = "CARD_IMAGE_FAILED\n";
+  const char* message = "CARD_IMAGE_FAILED
+";
   return sendBytes(message, std::strlen(message)) &&
          uart_wait_tx_done(DisplayUart, pdMS_TO_TICKS(100)) == ESP_OK;
 }
@@ -261,7 +273,8 @@ bool displayCommunicationSendCamImage(const uint8_t* data, size_t length) {
   }
   char header[32];
   const int headerLength =
-      std::snprintf(header, sizeof(header), "CAM_IMAGE %u\n", static_cast<unsigned>(length));
+      std::snprintf(header, sizeof(header), "CAM_IMAGE %u
+", static_cast<unsigned>(length));
   return sendBytes(header, static_cast<size_t>(headerLength)) &&
          sendBytes(reinterpret_cast<const char*>(data), length) &&
          uart_wait_tx_done(DisplayUart, pdMS_TO_TICKS(5000)) == ESP_OK;
@@ -273,32 +286,40 @@ bool displayCommunicationSendCamPhoto(const uint8_t* data, size_t length) {
   }
   char header[32];
   const int headerLength =
-      std::snprintf(header, sizeof(header), "CAM_PHOTO %u\n", static_cast<unsigned>(length));
+      std::snprintf(header, sizeof(header), "CAM_PHOTO %u
+", static_cast<unsigned>(length));
   return sendBytes(header, static_cast<size_t>(headerLength)) &&
          sendBytes(reinterpret_cast<const char*>(data), length) &&
          uart_wait_tx_done(DisplayUart, pdMS_TO_TICKS(5000)) == ESP_OK;
 }
 
 bool displayCommunicationSendCaptureFailed() {
-  const char* message = "CAPTURE_FAILED\n";
+  const char* message = "CAPTURE_FAILED
+";
   return sendBytes(message, std::strlen(message)) &&
          uart_wait_tx_done(DisplayUart, pdMS_TO_TICKS(100)) == ESP_OK;
 }
 
 bool displayCommunicationSendCardRemoveResult(bool success) {
-  const char* message = success ? "CARD_REMOVE_DONE\n" : "CARD_REMOVE_FAILED\n";
+  const char* message = success ? "CARD_REMOVE_DONE
+" : "CARD_REMOVE_FAILED
+";
   return sendBytes(message, std::strlen(message)) &&
          uart_wait_tx_done(DisplayUart, pdMS_TO_TICKS(100)) == ESP_OK;
 }
 
 bool displayCommunicationSendImportResult(bool success) {
-  const char* message = success ? "IMPORT_DONE\n" : "IMPORT_FAILED\n";
+  const char* message = success ? "IMPORT_DONE
+" : "IMPORT_FAILED
+";
   return sendBytes(message, std::strlen(message)) &&
          uart_wait_tx_done(DisplayUart, pdMS_TO_TICKS(100)) == ESP_OK;
 }
 
 bool displayCommunicationSendExportResult(bool success) {
-  const char* message = success ? "EXPORT_DONE\n" : "EXPORT_FAILED\n";
+  const char* message = success ? "EXPORT_DONE
+" : "EXPORT_FAILED
+";
   return sendBytes(message, std::strlen(message)) &&
          uart_wait_tx_done(DisplayUart, pdMS_TO_TICKS(100)) == ESP_OK;
 }

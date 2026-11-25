@@ -136,12 +136,24 @@ bool imageRecognitionGetCardName(const uint8_t* imageData, size_t imageLength, c
   char header[512];
   const int headerLength = std::snprintf(
       header, sizeof(header),
-      "--%s\r\nContent-Disposition: form-data; name=\"image\"; filename=\"card.jpg\"\r\n"
-      "Content-Type: image/jpeg\r\n\r\n",
+      "--%s
+
+Content-Disposition: form-data; name=\"image\"; filename=\"card.jpg\"
+
+"
+      "Content-Type: image/jpeg
+
+
+
+",
       MultipartBoundary);
   char footer[128];
   const int footerLength =
-      std::snprintf(footer, sizeof(footer), "\r\n--%s--\r\n", MultipartBoundary);
+      std::snprintf(footer, sizeof(footer), "
+
+--%s--
+
+", MultipartBoundary);
 
   if (headerLength < 0 || footerLength < 0) {
     ESP_LOGE(Tag, "Failed to build multipart request");

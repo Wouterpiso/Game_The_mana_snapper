@@ -262,12 +262,14 @@ std::string cleanText(const char* text) {
   return out;
 }
 
-// Word-wraps `text` (honouring '\n') into lines that fit `maxWidth` pixels.
+// Word-wraps `text` (honouring '
+') into lines that fit `maxWidth` pixels.
 std::vector<std::string> wrapLines(const std::string& text, int maxWidth) {
   std::vector<std::string> lines;
   size_t start = 0;
   while (start <= text.size()) {
-    size_t end = text.find('\n', start);
+    size_t end = text.find('
+', start);
     if (end == std::string::npos) {
       end = text.size();
     }
@@ -1065,7 +1067,8 @@ char MenuScreen::hitKeyboardKey(int x, int y) const {
   int v = 0;
   touchToReader(x, y, u, v);
   if (u >= kEnterU && u <= kEnterU + kEnterWidth && v >= kEnterV && v <= kEnterV + kEnterHeight) {
-    return '\n';
+    return '
+';
   }
   if (v < kKeyFirstV || v >= kKeyFirstV + 4 * kKeyRowStep) {
     return 0;

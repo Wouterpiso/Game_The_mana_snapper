@@ -31,7 +31,8 @@ constexpr TickType_t ImageStallTimeout = pdMS_TO_TICKS(3000);
 char masterReceiveBuffer[MasterReceiveBufferSize];
 size_t masterReceiveLength = 0;
 
-// A picture arrives as "<CARD_IMAGE|CAM_IMAGE> <bytes>\n" followed by that many
+// A picture arrives as "<CARD_IMAGE|CAM_IMAGE> <bytes>
+" followed by that many
 // raw bytes.
 uint8_t* imageBuffer = nullptr; // being filled (nullptr while skipping a picture)
 size_t imageExpected = 0;
@@ -323,7 +324,8 @@ MasterEvent receiveMasterData(St7789Display& display, MenuScreen& menu, bool liv
       }
 
       const char character = static_cast<char>(data[index]);
-      if (character == '\n') {
+      if (character == '
+') {
         masterReceiveBuffer[masterReceiveLength] = '\0';
         const MasterEvent lineEvent = handleMasterLine(display, menu, liveCamera, keepPhoto);
         if (lineEvent != MasterEvent::None) {
@@ -390,7 +392,8 @@ enum class CameraView {
  */
 void sendCardCommand(const char* command, int cardNumber) {
   char text[32];
-  std::snprintf(text, sizeof(text), "%s %d\n", command, cardNumber);
+  std::snprintf(text, sizeof(text), "%s %d
+", command, cardNumber);
   sendMasterCommand(text);
 }
 } // namespace
@@ -415,7 +418,8 @@ extern "C" void app_main(void) {
   display.fillScreen(display.rgb565(255, 255, 255));
   startScreen.draw(display);
   display.present();
-  sendMasterCommand("IDLE\n");
+  sendMasterCommand("IDLE
+");
 
   MenuScreen menu;
   // TPM408-2.8 / XPT2046 touch wiring.
@@ -429,7 +433,8 @@ extern "C" void app_main(void) {
   touch.waitForRelease();
 
   menu.drawHome(display);
-  sendMasterCommand("IDLE\n");
+  sendMasterCommand("IDLE
+");
   Page page = Page::Home;
   int collectionPage = 0;
   CollectionView view = CollectionView::List;
@@ -471,7 +476,8 @@ extern "C" void app_main(void) {
       vTaskDelay(pdMS_TO_TICKS(1500));
       page = Page::Home;
       menu.drawHome(display);
-      sendMasterCommand("IDLE\n");
+      sendMasterCommand("IDLE
+");
       continue;
     }
     if (masterEvent == MasterEvent::AddCardSets &&
@@ -490,7 +496,8 @@ extern "C" void app_main(void) {
     if (page != Page::AddSets && masterEvent == MasterEvent::AddCardSets) {
       // A lookup the user walked away from; drop the list and restore
       // the page the master's line drew over.
-      sendMasterCommand("IDLE\n");
+      sendMasterCommand("IDLE
+");
       if (page == Page::Home) {
         menu.drawHome(display);
       } else if (page == Page::AddMenu) {
@@ -507,7 +514,8 @@ extern "C" void app_main(void) {
       vTaskDelay(pdMS_TO_TICKS(1500));
       page = Page::Home;
       menu.drawHome(display);
-      sendMasterCommand("IDLE\n");
+      sendMasterCommand("IDLE
+");
       continue;
     }
     if (page == Page::Ocr) {
@@ -524,7 +532,8 @@ extern "C" void app_main(void) {
         vTaskDelay(pdMS_TO_TICKS(1500));
         page = Page::Home;
         menu.drawHome(display);
-        sendMasterCommand("IDLE\n");
+        sendMasterCommand("IDLE
+");
         continue;
       } else if (masterEvent == MasterEvent::AddCardFailed) {
         ocrWaiting = false;
@@ -544,14 +553,16 @@ extern "C" void app_main(void) {
       }
       // The master sends one frame per request; ask for the next one
       // once this frame is on screen.
-      sendMasterCommand("CAM_FRAME\n");
+      sendMasterCommand("CAM_FRAME
+");
       cameraRequestTick = xTaskGetTickCount();
     } else if (page == Page::Scan && cameraView == CameraView::Live &&
                masterEvent == MasterEvent::CamImageFailed) {
       if (!cameraFrameSeen) {
         menu.drawCameraWaiting(display, "NO SIGNAL");
       }
-      sendMasterCommand("CAM_FRAME\n");
+      sendMasterCommand("CAM_FRAME
+");
       cameraRequestTick = xTaskGetTickCount();
     } else if (page == Page::Scan && cameraView == CameraView::Taking &&
                masterEvent == MasterEvent::CapturePhoto) {
@@ -568,8 +579,10 @@ extern "C" void app_main(void) {
       cameraView = CameraView::Live;
       cameraTimeoutShown = true;
       menu.drawCameraWaiting(display, "NO PHOTO");
-      sendMasterCommand("CAPTURE_ABORT\n");
-      sendMasterCommand("CAM_FRAME\n");
+      sendMasterCommand("CAPTURE_ABORT
+");
+      sendMasterCommand("CAM_FRAME
+");
       cameraRequestTick = xTaskGetTickCount();
     }
     if (page == Page::Collection && view == CollectionView::InfoLoading) {
@@ -591,7 +604,8 @@ extern "C" void app_main(void) {
         collectionPage = 0;
         selectedCard = -1;
         menu.drawCollectionLoading(display);
-        sendMasterCommand("COLLECTION\n");
+        sendMasterCommand("COLLECTION
+");
       } else {
         menu.drawPage(display, "FAILED");
         vTaskDelay(pdMS_TO_TICKS(1500));
@@ -612,7 +626,8 @@ extern "C" void app_main(void) {
       view = CollectionView::List;
       collectionPage = 0;
       menu.drawCollectionLoading(display);
-      sendMasterCommand("COLLECTION\n");
+      sendMasterCommand("COLLECTION
+");
     } else if (page == Page::Collection && view == CollectionView::ImageLoading &&
                (masterEvent == MasterEvent::CardImage ||
                 masterEvent == MasterEvent::CardImageFailed)) {
@@ -627,7 +642,8 @@ extern "C" void app_main(void) {
     if (page == Page::Scan && cameraView == CameraView::Live && imageExpected == 0 &&
         xTaskGetTickCount() - cameraRequestTick > pdMS_TO_TICKS(2000)) {
       // The request or the frame got lost; ask for a frame again.
-      sendMasterCommand("CAM_FRAME\n");
+      sendMasterCommand("CAM_FRAME
+");
       cameraRequestTick = xTaskGetTickCount();
     }
     if (page == Page::Scan && cameraView == CameraView::Taking &&
@@ -636,8 +652,10 @@ extern "C" void app_main(void) {
       cameraView = CameraView::Live;
       cameraTimeoutShown = true;
       menu.drawCameraWaiting(display, "NO PHOTO");
-      sendMasterCommand("CAPTURE_ABORT\n");
-      sendMasterCommand("CAM_FRAME\n");
+      sendMasterCommand("CAPTURE_ABORT
+");
+      sendMasterCommand("CAM_FRAME
+");
       cameraRequestTick = xTaskGetTickCount();
     }
     if (page == Page::Scan && cameraView == CameraView::Live && !cameraFrameSeen &&
@@ -659,7 +677,8 @@ extern "C" void app_main(void) {
       vTaskDelay(pdMS_TO_TICKS(1200));
       page = Page::AddMenu;
       menu.drawAddMenu(display);
-      sendMasterCommand("IDLE\n");
+      sendMasterCommand("IDLE
+");
     }
     if (page == Page::AddSets && addSetsSending &&
         xTaskGetTickCount() - addSetsTick > pdMS_TO_TICKS(40000)) {
@@ -667,7 +686,8 @@ extern "C" void app_main(void) {
       addSetsSending = false;
       page = Page::Home;
       menu.drawHome(display);
-      sendMasterCommand("IDLE\n");
+      sendMasterCommand("IDLE
+");
     }
     if (page == Page::Collection && view == CollectionView::TransferWaiting &&
         xTaskGetTickCount() - transferTick > pdMS_TO_TICKS(30000)) {
@@ -694,17 +714,20 @@ extern "C" void app_main(void) {
         collectionPage = 0;
         view = CollectionView::List;
         menu.drawCollectionLoading(display);
-        sendMasterCommand("COLLECTION\n");
+        sendMasterCommand("COLLECTION
+");
       } else if (homeButton == 2) {
         page = Page::Decks;
         menu.drawPage(display, "DECKS");
-        sendMasterCommand("DECKS\n");
+        sendMasterCommand("DECKS
+");
       }
     } else if (page == Page::AddMenu) {
       if (menu.hitExit(point.x, point.y)) {
         page = Page::Home;
         menu.drawHome(display);
-        sendMasterCommand("IDLE\n");
+        sendMasterCommand("IDLE
+");
         continue;
       }
       const int choice = menu.hitAddMenu(point.x, point.y);
@@ -721,7 +744,8 @@ extern "C" void app_main(void) {
         cameraFrameSeen = false;
         cameraTimeoutShown = false;
         menu.drawCameraWaiting(display, "SCAN DEMO");
-        sendMasterCommand("CAM_FRAME\n");
+        sendMasterCommand("CAM_FRAME
+");
         cameraRequestTick = xTaskGetTickCount();
       } else if (choice == 2) {
         page = Page::Ocr;
@@ -730,7 +754,8 @@ extern "C" void app_main(void) {
         ocrDemoText[0] = '\0';
         ocrDemoImage = 0;
         menu.drawOcrLoading(display);
-        sendMasterCommand("OCR_DEMO\n");
+        sendMasterCommand("OCR_DEMO
+");
       }
     } else if (page == Page::Keyboard) {
       if (keyboardSending) {
@@ -740,11 +765,13 @@ extern "C" void app_main(void) {
         page = Page::AddMenu;
         keyboardLength = 0;
         menu.drawAddMenu(display);
-        sendMasterCommand("IDLE\n");
+        sendMasterCommand("IDLE
+");
         continue;
       }
       const char key = menu.hitKeyboardKey(point.x, point.y);
-      if (key == '\n') {
+      if (key == '
+') {
         if (keyboardLength == 0) {
           continue;
         }
@@ -753,7 +780,8 @@ extern "C" void app_main(void) {
         keyboardTakeTick = xTaskGetTickCount();
         menu.drawKeyboard(display, keyboardText, "SENDING");
         char command[72];
-        std::snprintf(command, sizeof(command), "ADD_CARD_TITLE %s\n", keyboardText);
+        std::snprintf(command, sizeof(command), "ADD_CARD_TITLE %s
+", keyboardText);
         sendMasterCommand(command);
       } else if (key == '\b') {
         if (keyboardLength > 0) {
@@ -775,7 +803,8 @@ extern "C" void app_main(void) {
       if (menu.hitExit(point.x, point.y)) {
         page = Page::Home;
         menu.drawHome(display);
-        sendMasterCommand("IDLE\n");
+        sendMasterCommand("IDLE
+");
       } else if (menu.hitCollectionPrevious(point.x, point.y)) {
         if (addSetsPage > 0) {
           addSetsPage = menu.drawAddSetsPage(display, addSetsPage - 1);
@@ -795,18 +824,21 @@ extern "C" void app_main(void) {
       if (menu.hitExit(point.x, point.y)) {
         page = Page::AddMenu;
         menu.drawAddMenu(display);
-        sendMasterCommand("IDLE\n");
+        sendMasterCommand("IDLE
+");
       }
     } else if (page == Page::Scan) {
       if (menu.hitExit(point.x, point.y)) {
         // EXIT works in every camera view.
         if (cameraView != CameraView::Live) {
-          sendMasterCommand("CAPTURE_ABORT\n");
+          sendMasterCommand("CAPTURE_ABORT
+");
         }
         cameraView = CameraView::Live;
         page = Page::AddMenu;
         menu.drawAddMenu(display);
-        sendMasterCommand("IDLE\n");
+        sendMasterCommand("IDLE
+");
       } else if (cameraView == CameraView::Live && cameraFrameSeen &&
                  menu.hitCameraShutter(point.x, point.y)) {
         // SNAP: the master forwards the next preview frame while the
@@ -814,12 +846,14 @@ extern "C" void app_main(void) {
         cameraView = CameraView::Taking;
         cameraTakeTick = xTaskGetTickCount();
         menu.drawCaptureSending(display, "TAKING PHOTO");
-        sendMasterCommand("CAPTURE\n");
+        sendMasterCommand("CAPTURE
+");
       } else if (cameraView == CameraView::Review && menu.hitDemoBack(point.x, point.y)) {
         cameraView = CameraView::Live;
         cameraTimeoutShown = true;
         menu.drawCameraWaiting(display, "WAITING");
-        sendMasterCommand("CAM_FRAME\n");
+        sendMasterCommand("CAM_FRAME
+");
         cameraRequestTick = xTaskGetTickCount();
       }
     } else if (page == Page::Collection) {
@@ -839,7 +873,8 @@ extern "C" void app_main(void) {
           page = Page::Home;
           collectionPage = 0;
           menu.drawHome(display);
-          sendMasterCommand("IDLE\n");
+          sendMasterCommand("IDLE
+");
         } else {
           const int card = menu.hitCollectionRow(point.x, point.y, collectionPage);
           if (card >= 0) {
@@ -908,7 +943,9 @@ extern "C" void app_main(void) {
           view = CollectionView::TransferWaiting;
           transferTick = xTaskGetTickCount();
           menu.drawPage(display, transferImport ? "IMPORTING" : "EXPORTING");
-          sendMasterCommand(transferImport ? "IMPORT\n" : "EXPORT\n");
+          sendMasterCommand(transferImport ? "IMPORT
+" : "EXPORT
+");
         }
         break;
       }
@@ -929,7 +966,8 @@ extern "C" void app_main(void) {
       page = Page::Home;
       collectionPage = 0;
       menu.drawHome(display);
-      sendMasterCommand("IDLE\n");
+      sendMasterCommand("IDLE
+");
     }
   }
 }
