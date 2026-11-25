@@ -1,0 +1,244 @@
+{
+  "object": "list",
+  "total_cards": 5,
+  "has_more": false,
+  "next_page": null,
+  "data": [
+    {
+      "name": "Mighty Leap",
+      "mana_cost": "{1}{W}",
+      "cmc": 2,
+      "type_line": "Instant",
+      "oracle_text": "Target creature gets +2/+2 and gains flying until end of turn.",
+      "colors": [
+        "W"
+      ],
+      "color_identity": [
+        "W"
+      ],
+      "keywords": [],
+      "legalities": {
+        "standard": "not_legal",
+        "future": "not_legal",
+        "historic": "legal",
+        "timeless": "legal",
+        "gladiator": "legal",
+        "pioneer": "legal",
+        "modern": "legal",
+        "legacy": "legal",
+        "pauper": "legal",
+        "vintage": "legal",
+        "penny": "legal",
+        "commander": "legal",
+        "oathbreaker": "legal",
+        "standardbrawl": "not_legal",
+        "brawl": "legal",
+        "competitivebrawl": "legal",
+        "alchemy": "not_legal",
+        "paupercommander": "legal",
+        "duel": "legal",
+        "oldschool": "not_legal",
+        "premodern": "not_legal",
+        "predh": "legal",
+        "tlr": "legal"
+      },
+      "reserved": false,
+      "game_changer": false,
+      "set": "m19",
+      "rarity": "common",
+      "flavor_text": "\"I feel the presence of the God-Pharaoh in the Second Sun, and I rise upon its rays.\"",
+      "image": {
+        "thumb": "https://wsrv.nl/?url=https%3A%2F%2Fcards.scryfall.io%2Fsmall%2Ffront%2Fd%2Fc%2Fdc45dcdd-ed92-43f6-b6d2-670b3252ed27.jpg%3F1783934600&output=jpg&w=146&h=204&q=85"
+      },
+      "amount": 1
+    },
+    {
+      "name": "Volcanic Island",
+      "mana_cost": "",
+      "cmc": 0,
+      "type_line": "Land — Island Mountain",
+      "oracle_text": "({T}: Add {U} or {R}.)",
+      "colors": [],
+      "color_identity": [
+        "R",
+        "U"
+      ],
+      "keywords": [],
+      "legalities": {
+        "standard": "not_legal",
+        "future": "not_legal",
+        "historic": "not_legal",
+        "timeless": "not_legal",
+        "gladiator": "not_legal",
+        "pioneer": "not_legal",
+        "modern": "not_legal",
+        "legacy": "legal",
+        "pauper": "not_legal",
+        "vintage": "legal",
+        "penny": "not_legal",
+        "commander": "legal",
+        "oathbreaker": "legal",
+        "standardbrawl": "not_legal",
+        "brawl": "not_legal",
+        "competitivebrawl": "not_legal",
+        "alchemy": "not_legal",
+        "paupercommander": "not_legal",
+        "duel": "legal",
+        "oldschool": "legal",
+        "premodern": "not_legal",
+        "predh": "legal",
+        "tlr": "legal"
+      },
+      "reserved": true,
+      "game_changer": false,
+      "set": "3ed",
+      "rarity": "rare",
+      "image": {
+        "thumb": "https://wsrv.nl/?url=https%3A%2F%2Fcards.scryfall.io%2Fsmall%2Ffront%2Fb%2F1%2Fb12e5430-0e80-47dd-80ac-85728b656a24.jpg%3F1783948277&output=jpg&w=146&h=204&q=85"
+      },
+      "amount": 1
+    },
+    {
+      "name": "Aang's Defense",
+      "mana_cost": "{W}",
+      "cmc": 1,
+      "type_line": "Instant",
+      "oracle_text": "Target blocking creature you control gets +2/+2 until end of turn.\nDraw a card.",
+      "colors": [
+        "W"
+      ],
+      "color_identity": [
+        "W"
+      ],
+      "keywords": [],
+      "legalities": {
+        "standard": "not_legal",
+        "future": "not_legal",
+        "historic": "legal",
+        "timeless": "legal",
+        "gladiator": "legal",
+        "pioneer": "not_legal",
+        "modern": "not_legal",
+        "legacy": "legal",
+        "pauper": "legal",
+        "vintage": "legal",
+        "penny": "not_legal",
+        "commander": "legal",
+        "oathbreaker": "legal",
+        "standardbrawl": "not_legal",
+        "brawl": "legal",
+        "competitivebrawl": "legal",
+        "alchemy": "not_legal",
+        "paupercommander": "legal",
+        "duel": "legal",
+        "oldschool": "not_legal",
+        "premodern": "not_legal",
+        "predh": "not_legal",
+        "tlr": "legal"
+      },
+      "reserved": false,
+      "game_changer": false,
+      "set": "tle",
+      "rarity": "common",
+      "flavor_text": "\"I guess you've never fought an Airbender before.\"\n—Aang",
+      "image": {
+        "thumb": "https://wsrv.nl/?url=https%3A%2F%2Fcards.scryfall.io%2Fsmall%2Ffront%2F0%2Fd%2F0dbb9439-6a4c-482a-83e7-5d6aa80d0cbd.jpg%3F1783904769&output=jpg&w=146&h=204&q=85"
+      },
+      "amount": 1
+    },
+    {
+      "name": "Volcanic Island",
+      "mana_cost": "",
+      "cmc": 0,
+      "type_line": "Land — Island Mountain",
+      "oracle_text": "({T}: Add {U} or {R}.)",
+      "colors": [],
+      "color_identity": [
+        "R",
+        "U"
+      ],
+      "keywords": [],
+      "legalities": {
+        "standard": "not_legal",
+        "future": "not_legal",
+        "historic": "not_legal",
+        "timeless": "not_legal",
+        "gladiator": "not_legal",
+        "pioneer": "not_legal",
+        "modern": "not_legal",
+        "legacy": "legal",
+        "pauper": "not_legal",
+        "vintage": "legal",
+        "penny": "not_legal",
+        "commander": "legal",
+        "oathbreaker": "legal",
+        "standardbrawl": "not_legal",
+        "brawl": "not_legal",
+        "competitivebrawl": "not_legal",
+        "alchemy": "not_legal",
+        "paupercommander": "not_legal",
+        "duel": "legal",
+        "oldschool": "legal",
+        "premodern": "not_legal",
+        "predh": "legal",
+        "tlr": "legal"
+      },
+      "reserved": true,
+      "game_changer": false,
+      "set": "sum",
+      "rarity": "rare",
+      "image": {
+        "thumb": "https://wsrv.nl/?url=https%3A%2F%2Fcards.scryfall.io%2Fsmall%2Ffront%2Ff%2F7%2Ff73ea932-5aba-4847-bb13-4cc0eb5dc726.jpg%3F1783947953&output=jpg&w=146&h=204&q=85"
+      },
+      "amount": 1
+    },
+    {
+      "name": "Fling",
+      "mana_cost": "{1}{R}",
+      "cmc": 2,
+      "type_line": "Instant",
+      "oracle_text": "As an additional cost to cast this spell, sacrifice a creature.\nFling deals damage equal to the sacrificed creature's power to any target.",
+      "colors": [
+        "R"
+      ],
+      "color_identity": [
+        "R"
+      ],
+      "keywords": [],
+      "legalities": {
+        "standard": "not_legal",
+        "future": "not_legal",
+        "historic": "legal",
+        "timeless": "legal",
+        "gladiator": "legal",
+        "pioneer": "legal",
+        "modern": "legal",
+        "legacy": "legal",
+        "pauper": "legal",
+        "vintage": "legal",
+        "penny": "legal",
+        "commander": "legal",
+        "oathbreaker": "legal",
+        "standardbrawl": "not_legal",
+        "brawl": "legal",
+        "competitivebrawl": "legal",
+        "alchemy": "not_legal",
+        "paupercommander": "legal",
+        "duel": "legal",
+        "oldschool": "not_legal",
+        "premodern": "legal",
+        "predh": "legal",
+        "tlr": "legal"
+      },
+      "reserved": false,
+      "game_changer": false,
+      "set": "akh",
+      "rarity": "common",
+      "flavor_text": "Never flinch. Never falter. Never fear.",
+      "image": {
+        "thumb": "https://wsrv.nl/?url=https%3A%2F%2Fcards.scryfall.io%2Fsmall%2Ffront%2Ff%2F0%2Ff02363a7-4455-4571-bfff-4ce94c7c1e3b.jpg%3F1783936491&output=jpg&w=146&h=204&q=85"
+      },
+      "amount": 1
+    }
+  ]
+}
