@@ -210,7 +210,7 @@ soort verwerking uitvoeren worden samengevoegd tot één taak.
 
 ### STD's
 
-![no image](../../Media/TheManaSnapperSTD.png)
+![no image](../../Media/STD'sRedo.png)
 
 ## Realisatie
 
